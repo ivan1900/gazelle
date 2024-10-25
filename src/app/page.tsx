@@ -1,95 +1,39 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import { Alert, Button, Stack, Typography } from '@mui/material';
+import { headers } from 'next/headers';
 
 export default function Home() {
+  const csrfToken = headers().get('X-CSRF-Token') || 'missing';
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+    <main>
+      <Stack>
+        <Typography> Prueba de texto</Typography>
+        <Typography color={'text.primary'}> Prueba de texto</Typography>
+        <Typography color={'text.secondary'}> Prueba de texto</Typography>
+        <Typography color={'error'}> Prueba de texto</Typography>
+        <Typography color={'warning'}> Prueba de texto</Typography>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+        <Alert severity='error'>This is an error alert — check it out!</Alert>
+        <Alert severity='warning'>
+          This is a warning alert — check it out!
+        </Alert>
+        <Alert severity='info'>This is an info alert — check it out!</Alert>
+        <Alert severity='success'>
+          This is a success alert — check it out!
+        </Alert>
+        <Button variant='contained' color='error'>
+          Click me!
+        </Button>
+        <Button variant='contained' color='warning'>
+          Click me!
+        </Button>
+        <Button variant='contained' color='primary'>
+          Click me!
+        </Button>
+        <Button variant='contained' color='secondary'>
+          Click me!
+        </Button>
+      </Stack>
     </main>
   );
 }

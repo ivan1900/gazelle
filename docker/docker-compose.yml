@@ -1,0 +1,18 @@
+version: '3.7'
+services:
+  mysql8_Gazelle:
+    container_name: mysql8_gazelle
+    image: mysql:8.4.0
+    restart: unless-stopped
+    ports:
+      - ${MYSQL_PORT}:${MYSQL_CONTAINER_PORT}
+    volumes:
+      - './mysql/initdb:/docker-entrypoint-initdb.d'
+      - './mysql/datadir:/var/lib/mysql'
+    environment:
+      TZ: 'Europe/Madrid'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'no'
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
