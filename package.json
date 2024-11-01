@@ -12,26 +12,26 @@
     "prisma:generate": "prisma generate"
   },
   "dependencies": {
-    "@edge-csrf/nextjs": "^2.5.0",
+    "@edge-csrf/nextjs": "^2.5.2",
     "@emotion/cache": "^11.13.1",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
-    "@mui/icons-material": "^6.1.2",
-    "@mui/material": "^6.1.2",
-    "@mui/material-nextjs": "^6.1.2",
-    "@prisma/client": "^5.21.0",
-    "next": "14.2.14",
-    "next-auth": "^4.24.8",
+    "@mui/icons-material": "^6.1.6",
+    "@mui/material": "^6.1.6",
+    "@mui/material-nextjs": "^6.1.6",
+    "@prisma/client": "^5.21.1",
+    "next": "14.2.16",
+    "next-auth": "^4.24.10",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@types/node": "^22.7.4",
-    "@types/react": "^18.3.11",
-    "@types/react-dom": "^18.3.0",
+    "@types/node": "^22.8.6",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
     "eslint": "^8",
-    "eslint-config-next": "14.2.14",
-    "prisma": "^5.21.0",
-    "typescript": "^5.6.2"
+    "eslint-config-next": "14.2.16",
+    "prisma": "^5.21.1",
+    "typescript": "^5.6.3"
   }
 }

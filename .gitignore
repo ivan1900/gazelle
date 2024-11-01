@@ -38,3 +38,6 @@ next-env.d.ts
 
 # mysql docker
 docker/mysql
+
+# idea
+.idea
