@@ -15,8 +15,10 @@ export default class Account {
     this.id = params.id;
     this.name = params.name;
     this.email = params.email;
-    this.googleId = params.googleId ?? '';
+    this.googleId = params.googleId ?? "";
   }
 
-  // todo crear metodo statico que devuelve una instancia de account
+  static createFrom(params: AccountType): Account {
+    return new Account(params);
+  }
 }
