@@ -3,21 +3,48 @@ import prisma from '../../../db';
 import Account from '../domain/account';
 
 export default class AccountRepositoryMysql implements AccountRepository {
-  async create(account: Account) {
-    const accountCreated = await prisma.user.create({
-      data: {
-        name: account.name,
-        email: account.email,
-        google_id: account.googleId,
-      },
-    });
+  async create(account: Account): Promise<Account | null> {
+    try {
+      const accountCreated = await prisma.user.create({
+        data: {
+          name: account.name,
+          email: account.email,
+          google_id: account.googleId,
+        },
+      });
 
-    // todo crear objeto account si el response es correcto
+      const accountEntity = Account.createFrom({
+        id: accountCreated.id,
+        name: accountCreated.name,
+        email: accountCreated.email,
+        googleId: accountCreated.google_id,
+      });
 
-    return accountCreated;
+      return accountEntity;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
   }
 
   async find(email: string) {
-    return null;
+    const account = await prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    if (!account) {
+      return null;
+    }
+
+    const accountEntity = Account.createFrom({
+      id: account.id,
+      name: account.name,
+      email: account.email,
+      googleId: account.google_id,
+    });
+
+    return accountEntity;
   }
 }

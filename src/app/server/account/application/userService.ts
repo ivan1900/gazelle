@@ -1,32 +1,32 @@
+import AccountRepositoryMysql from '../repository/accountRepositoryMysql';
+
 export const userService = {
-  authenticate,
+  // authenticate,
   authenticateGoogle,
 };
 
-function authenticate(username: string, password: string) {
-  if (username !== 'admin' && password !== 'admin') {
-    return null;
-  }
+// function authenticate(username: string, password: string) {
+//   if (username !== 'admin' && password !== 'admin') {
+//     return null;
+//   }
 
-  const user = {
-    id: '9001',
-    name: 'Web Admin',
-    email: 'admin@example.com',
-  };
+//   const user = {
+//     id: '9001',
+//     name: 'Web Admin',
+//     email: 'admin@example.com',
+//   };
 
-  return user;
-}
+//   return user;
+// }
 
 async function authenticateGoogle(email: string | undefined | null) {
-  if (email !== 'ivan1900@gmail.com') {
-    return false;
+  if (!email) {
+    return null;
   }
-
-  const user = {
-    id: '9002',
-    name: 'Google User',
-    email,
-  };
-
-  return user;
+  const repository = new AccountRepositoryMysql();
+  const account = await repository.find(email);
+  if (account) {
+    return account;
+  }
+  return null;
 }
