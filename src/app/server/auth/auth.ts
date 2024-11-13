@@ -61,7 +61,7 @@ export const authOptions: NextAuthOptions = {
           password: string;
         };
 
-        return userService.authenticate(username, password); //(5)
+        return userService.authenticate(username, password);
       },
     }),
   ],

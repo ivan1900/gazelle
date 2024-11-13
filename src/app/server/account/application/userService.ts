@@ -1,23 +1,13 @@
 import AccountRepositoryMysql from '../repository/accountRepositoryMysql';
 
 export const userService = {
-  // authenticate,
+  authenticate,
   authenticateGoogle,
 };
 
-// function authenticate(username: string, password: string) {
-//   if (username !== 'admin' && password !== 'admin') {
-//     return null;
-//   }
-
-//   const user = {
-//     id: '9001',
-//     name: 'Web Admin',
-//     email: 'admin@example.com',
-//   };
-
-//   return user;
-// }
+function authenticate(username: string, password: string) {
+  return null; // return user if authenticated, null otherwise
+}
 
 async function authenticateGoogle(email: string | undefined | null) {
   if (!email) {
