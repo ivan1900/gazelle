@@ -1,7 +1,7 @@
 'use client';
 import { Roboto } from 'next/font/google';
 import { createTheme } from '@mui/material/styles';
-import { blue, grey, purple } from '@mui/material/colors';
+import { blue, green, grey, purple } from '@mui/material/colors';
 
 declare module '@mui/material/styles' {}
 
@@ -14,10 +14,10 @@ const roboto = Roboto({
 const theme = createTheme({
   palette: {
     primary: {
-      main: purple[500],
+      main: blue[600],
     },
     secondary: {
-      main: blue[700],
+      main: purple[800],
     },
     text: {
       primary: grey[800],
