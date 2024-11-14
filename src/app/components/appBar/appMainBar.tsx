@@ -7,8 +7,7 @@ import {
   Typography,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import { signOut, useSession } from 'next-auth/react';
-import { useEffect, useState } from 'react';
+import { signOut } from 'next-auth/react';
 
 interface Props {
   drawerWidth: number;
