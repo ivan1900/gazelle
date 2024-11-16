@@ -1,15 +1,9 @@
-import {
-  AppBar,
-  Box,
-  Button,
-  IconButton,
-  Toolbar,
-  Typography,
-} from '@mui/material';
+import { AppBar, Box, IconButton, Toolbar, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { signOut } from 'next-auth/react';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
+import Link from 'next/link';
 
 interface Props {
   drawerWidth: number;
@@ -47,7 +41,13 @@ export default function AppMainBar(props: Props) {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Gazelle
           </Typography>
-          <IconButton aria-label="settings" color="inherit" size="large">
+          <IconButton
+            component={Link}
+            href="/dashboard/settings"
+            aria-label="settings"
+            color="inherit"
+            size="large"
+          >
             <SettingsRoundedIcon />
           </IconButton>
           <IconButton aria-label="exit" color="inherit" size="large">
