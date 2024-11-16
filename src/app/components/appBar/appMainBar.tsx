@@ -8,6 +8,8 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { signOut } from 'next-auth/react';
+import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
+import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 
 interface Props {
   drawerWidth: number;
@@ -26,8 +28,9 @@ export default function AppMainBar(props: Props) {
       <AppBar
         position="fixed"
         sx={{
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
-          ml: { sm: `${drawerWidth}px` },
+          zIndex: (theme) => theme.zIndex.drawer + 1, // for over drawer, next lines for drawer toolbar visible
+          // width: { sm: `calc(100% - ${drawerWidth}px)` },
+          // ml: { sm: `${drawerWidth}px` },
         }}
       >
         <Toolbar>
@@ -44,9 +47,12 @@ export default function AppMainBar(props: Props) {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Gazelle
           </Typography>
-          <Button color="inherit" onClick={handleLogout}>
-            Salir
-          </Button>
+          <IconButton aria-label="settings" color="inherit" size="large">
+            <SettingsRoundedIcon />
+          </IconButton>
+          <IconButton aria-label="exit" color="inherit" size="large">
+            <LogoutRoundedIcon onClick={handleLogout} />
+          </IconButton>
         </Toolbar>
       </AppBar>
     </Box>

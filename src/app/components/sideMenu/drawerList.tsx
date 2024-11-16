@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import Link from 'next/link';
 
 const menuItems = [
   {
@@ -21,23 +22,26 @@ const menuItems = [
     name: 'Daily activities',
     label: 'Actividad',
     icon: AppRegistrationIcon,
+    path: '/dashboard/activities',
   },
 ];
 
 export default function DrawerList() {
   return (
     <div>
-      <Toolbar />
+      <Toolbar></Toolbar>
       <Divider />
       <List>
         {menuItems.map((item, index) => (
           <ListItem key={item.name} disablePadding>
-            <ListItemButton>
+            {/* <Link href={item.path}> */}
+            <ListItemButton component={Link} href={item.path}>
               <ListItemIcon>
                 <item.icon />
               </ListItemIcon>
               <ListItemText primary={item.label} />
             </ListItemButton>
+            {/* </Link> */}
           </ListItem>
         ))}
       </List>
