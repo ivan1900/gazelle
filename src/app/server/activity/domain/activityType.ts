@@ -3,7 +3,7 @@ interface ActivityTypeParms {
   name: string;
   isProductive: boolean;
   color: string | null;
-  clientId: number;
+  userId: number;
 }
 
 export default class ActivityType {
@@ -11,18 +11,18 @@ export default class ActivityType {
   name: string;
   isProductive: boolean;
   color: string | null;
-  clientId: number;
+  userId: number;
 
   constructor(params: ActivityTypeParms) {
     this.id = params.id;
     this.name = params.name;
     this.isProductive = params.isProductive;
     this.color = params.color;
-    this.clientId = params.clientId;
+    this.userId = params.userId;
   }
 
   static createFrom(params: ActivityTypeParms): ActivityType {
-    const { id, name, isProductive, color, clientId } = params;
-    return new ActivityType({ id, name, isProductive, color, clientId });
+    const { id, name, isProductive, color, userId } = params;
+    return new ActivityType({ id, name, isProductive, color, userId });
   }
 }

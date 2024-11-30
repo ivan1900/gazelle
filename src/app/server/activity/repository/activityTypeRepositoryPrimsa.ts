@@ -12,7 +12,7 @@ export default class ActivityTypeRepositoryPrisma
         name: actionType.name,
         is_productive: actionType.isProductive,
         color: actionType.color,
-        client_id: actionType.clientId,
+        user_id: actionType.userId,
       },
     });
     if (!result) {
@@ -23,14 +23,14 @@ export default class ActivityTypeRepositoryPrisma
       name: result.name,
       isProductive: result.is_productive,
       color: result.color,
-      clientId: result.client_id,
+      userId: result.user_id,
     });
   }
 
   async findByClient(id: number): Promise<ActivityTypeDto[] | []> {
     const result = await prisma.activity_type.findMany({
       where: {
-        client_id: id,
+        user_id: id,
       },
     });
     const activityTypes: ActivityTypeDto[] = result?.map((activityType) => {
@@ -39,6 +39,7 @@ export default class ActivityTypeRepositoryPrisma
         name: activityType.name,
         isProductive: activityType.is_productive,
         color: activityType.color,
+        userId: activityType.user_id,
       };
     });
     return activityTypes;

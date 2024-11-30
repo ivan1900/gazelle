@@ -48,10 +48,10 @@ model activity {
 
 model activity_type {
   id            Int     @id @default(autoincrement())
-  client_id     Int
+  user_id       Int
   name          String  @db.VarChar(60)
   is_productive Boolean @default(false)
   color         String? @db.VarChar(8)
 
-  @@unique([client_id, name], map: "activity_type_client_id_IDX")
+  @@unique([user_id, name], map: "activity_type_client_id_IDX")
 }

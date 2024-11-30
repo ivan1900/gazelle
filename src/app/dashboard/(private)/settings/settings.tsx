@@ -13,12 +13,13 @@ import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
 
 export default function Settings() {
-  const { data: session, status } = useSession();
-  useEffect(() => {
-    if (status === 'authenticated') {
-      console.log(session.user);
-    }
-  }, [session]);
+  // const { data: session, status } = useSession();
+  // useEffect(() => {
+  //   if (status === 'authenticated') {
+  //     console.log(session);
+  //     console.log(session?.user.userId);
+  //   }
+  // }, [session]);
 
   const loadActivityTypes = async () => {
     const activityTypes = await getActivityTypeAction(1);

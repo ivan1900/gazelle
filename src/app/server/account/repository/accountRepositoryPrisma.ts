@@ -33,7 +33,6 @@ export default class AccountRepositoryPrisma implements AccountRepository {
         email,
       },
     });
-
     if (!account) {
       return null;
     }

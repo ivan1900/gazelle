@@ -9,12 +9,13 @@ import getAccountByEmail from '../controllers/account/getAccountByEmail';
 export const authOptions: NextAuthOptions = {
   session: { strategy: 'jwt' },
   callbacks: {
-    async jwt({ token, account }) {
+    async jwt({ token, account, user }) {
       if (account && account.type === 'credentials') {
-        token.userId = account.providerAccountId;
+        // token.userId = account.userId;
       }
       if (account && account.provider === 'google') {
-        token.userId = account.id as string;
+        const meUser = await getAccountByEmail(user.email as string);
+        token.userId = meUser?.id || 0;
       }
       return token;
     },
@@ -30,11 +31,10 @@ export const authOptions: NextAuthOptions = {
         return authenticatedUser ? true : false;
       }
 
-      console.log('signIn', account, user);
       return false;
     },
     async session({ session, token, user }) {
-      session.user.id = token.userId;
+      session.user.userId = token.userId;
       return session;
     },
   },
