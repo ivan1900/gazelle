@@ -2,7 +2,7 @@ import { AccountRepository } from '../domain/accountRepository';
 import prisma from '../../../db';
 import Account from '../domain/account';
 
-export default class AccountRepositoryMysql implements AccountRepository {
+export default class AccountRepositoryPrisma implements AccountRepository {
   async create(account: Account): Promise<Account | null> {
     try {
       const accountCreated = await prisma.user.create({

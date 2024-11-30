@@ -1,4 +1,6 @@
-import AccountRepositoryMysql from '../repository/accountRepositoryMysql';
+import { cookies } from 'next/headers';
+import AccountRepositoryPrisma from '../repository/accountRepositoryPrisma';
+import { cookieNames } from '../../shared/constants/cookie';
 
 export const userService = {
   authenticate,
@@ -13,9 +15,11 @@ async function authenticateGoogle(email: string | undefined | null) {
   if (!email) {
     return null;
   }
-  const repository = new AccountRepositoryMysql();
+  const repository = new AccountRepositoryPrisma();
   const account = await repository.find(email);
   if (account) {
+    const cookieStore = await cookies();
+    cookieStore.set(cookieNames.CLIENT_ID, account.id.toString());
     return account;
   }
   return null;

@@ -2,19 +2,23 @@ import { getServerSession, type NextAuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { userService } from '@/app/server/account/application/userService';
+import { cookies } from 'next/headers';
+import { cookieNames } from '../shared/constants/cookie';
+import getAccountByEmail from '../controllers/account/getAccountByEmail';
 
 export const authOptions: NextAuthOptions = {
   session: { strategy: 'jwt' },
   callbacks: {
-    async jwt({ token, account, profile }) {
+    async jwt({ token, account }) {
       if (account && account.type === 'credentials') {
         token.userId = account.providerAccountId;
+      }
+      if (account && account.provider === 'google') {
+        token.userId = account.id as string;
       }
       return token;
     },
     async signIn({ account, user }) {
-      console.log(account);
-
       if (account?.type === 'credentials') {
         return false; // at the moment, we don't want to allow credentials login
       }
