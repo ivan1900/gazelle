@@ -5,34 +5,46 @@ import {
   Paper,
   Table,
   TableBody,
+  TableCell,
   TableContainer,
   TableHead,
   TableRow,
 } from '@mui/material';
-import { useSession } from 'next-auth/react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { ActivityTypeDto } from '@server/activity/domain/activityTypeDto';
 
 export default function Settings() {
-  // const { data: session, status } = useSession();
-  // useEffect(() => {
-  //   if (status === 'authenticated') {
-  //     console.log(session);
-  //     console.log(session?.user.userId);
-  //   }
-  // }, [session]);
-
+  const [activityTypes, setActivityTypes] = useState<ActivityTypeDto[]>([]);
+  useEffect(() => {
+    loadActivityTypes();
+  }, []);
   const loadActivityTypes = async () => {
-    const activityTypes = await getActivityTypeAction(1);
+    const activityTypesDto = await getActivityTypeAction();
+    console.log(activityTypesDto);
+    setActivityTypes(activityTypesDto);
   };
+
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       <TableContainer>
         <Table stickyHeader arial-label="Tipos de actividad">
           <TableHead>
-            <TableRow></TableRow>
+            <TableRow>
+              <TableCell>Nombre</TableCell>
+              <TableCell>Descripción</TableCell>
+              <TableCell>Color</TableCell>
+              <TableCell>Acciones</TableCell>
+            </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow></TableRow>
+            {activityTypes.map((activityType) => (
+              <TableRow key={activityType.id}>
+                <TableCell>{activityType.name}</TableCell>
+                <TableCell>{activityType.isProductive}</TableCell>
+                <TableCell>{activityType.color}</TableCell>
+                <TableCell></TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>
