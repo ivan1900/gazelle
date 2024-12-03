@@ -1,5 +1,5 @@
 import { AccountRepository } from '../domain/accountRepository';
-import prisma from '../../../db';
+import prisma from '../../../app/db';
 import Account from '../domain/account';
 
 export default class AccountRepositoryPrisma implements AccountRepository {

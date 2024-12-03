@@ -1,10 +1,8 @@
 import { getServerSession, type NextAuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { userService } from '@/app/server/account/application/userService';
-import { cookies } from 'next/headers';
-import { cookieNames } from '../shared/constants/cookie';
-import getAccountByEmail from '../controllers/account/getAccountByEmail';
+import { userService } from '@/contexts/account/application/userService';
+import getAccountByEmail from '@server/actions/account/getAccountByEmail';
 
 export const authOptions: NextAuthOptions = {
   session: { strategy: 'jwt' },
@@ -33,7 +31,7 @@ export const authOptions: NextAuthOptions = {
 
       return false;
     },
-    async session({ session, token, user }) {
+    async session({ session, token }) {
       session.user.userId = token.userId;
       return session;
     },

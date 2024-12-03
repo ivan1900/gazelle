@@ -1,8 +1,8 @@
 'use server';
-import { ActivityTypeDto } from '@server/activity/domain/activityTypeDto';
-import ActivityTypeCreator from '@server/activity/application/activityTypeCreator';
-import ActivityTypeRepositoryPrisma from '@server/activity/repository/activityTypeRepositoryPrimsa';
-import { ResponseActionType } from '@/app/server/shared/responseAction';
+import { ActivityTypeDto } from '@/contexts/activity/domain/activityTypeDto';
+import ActivityTypeCreator from '@/contexts/activity/application/activityTypeCreator';
+import ActivityTypeRepositoryPrisma from '@/contexts/activity/repository/activityTypeRepositoryPrimsa';
+import { ResponseActionType } from '@/contexts/shared/responseAction';
 
 export async function createActivityTypeAction(
   dto: ActivityTypeDto

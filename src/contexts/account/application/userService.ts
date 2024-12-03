@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers';
 import AccountRepositoryPrisma from '../repository/accountRepositoryPrisma';
-import { cookieNames } from '../../shared/constants/cookie';
+import { cookieNames } from '@/contexts/shared/constants/cookie';
 
 export const userService = {
   authenticate,

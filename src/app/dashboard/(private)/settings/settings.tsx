@@ -1,6 +1,6 @@
 'use client';
 
-import getActivityTypeAction from '@/app/server/controllers/activityType/getActivityTypeAction';
+import getActivityTypeAction from '@server/actions/activityType/getActivityTypeAction';
 import {
   Paper,
   Table,
@@ -12,7 +12,7 @@ import {
   Box,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { ActivityTypeDto } from '@server/activity/domain/activityTypeDto';
+import { ActivityTypeDto } from '@/contexts/activity/domain/activityTypeDto';
 
 export default function Settings() {
   const [activityTypes, setActivityTypes] = useState<ActivityTypeDto[]>([]);

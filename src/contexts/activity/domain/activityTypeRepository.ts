@@ -1,4 +1,4 @@
-import ActivityType from '@server/activity/domain/activityType';
+import ActivityType from '@/contexts/activity/domain/activityType';
 import { ActivityTypeDto } from './activityTypeDto';
 
 export default interface ActivityTypeRepository {

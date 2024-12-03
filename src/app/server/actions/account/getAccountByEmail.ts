@@ -1,7 +1,7 @@
 'use server';
 
-import UserFinder from '../../account/application/userFinder';
-import AccountRepositoryPrisma from '../../account/repository/accountRepositoryPrisma';
+import UserFinder from '@/contexts/account/application/userFinder';
+import AccountRepositoryPrisma from '@/contexts/account/repository/accountRepositoryPrisma';
 
 export default async function getAccountByEmail(email: string) {
   const repository = new AccountRepositoryPrisma();

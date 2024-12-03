@@ -1,6 +1,6 @@
-import ActivityTypeRepository from '@server/activity/domain/activityTypeRepository';
-import ActivityType from '@server/activity/domain/activityType';
-import { ActivityTypeDto } from '@server/activity/domain/activityTypeDto';
+import ActivityTypeRepository from '@/contexts/activity/domain/activityTypeRepository';
+import ActivityType from '@/contexts/activity/domain/activityType';
+import { ActivityTypeDto } from '@/contexts/activity/domain/activityTypeDto';
 
 export default class ActivityTypeCreator {
   constructor(private readonly repository: ActivityTypeRepository) {}

@@ -1,6 +1,6 @@
-import ActivityTypeRepository from '@server/activity/domain/activityTypeRepository';
-import prisma from '../../../db';
-import ActivityType from '@server/activity/domain/activityType';
+import ActivityTypeRepository from '@/contexts/activity/domain/activityTypeRepository';
+import prisma from '../../../app/db';
+import ActivityType from '@/contexts/activity/domain/activityType';
 import { ActivityTypeDto } from '../domain/activityTypeDto';
 
 export default class ActivityTypeRepositoryPrisma
