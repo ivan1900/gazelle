@@ -9,6 +9,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Box,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { ActivityTypeDto } from '@server/activity/domain/activityTypeDto';
@@ -26,28 +27,30 @@ export default function Settings() {
 
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-      <TableContainer>
-        <Table stickyHeader arial-label="Tipos de actividad">
-          <TableHead>
-            <TableRow>
-              <TableCell>Nombre</TableCell>
-              <TableCell>Descripción</TableCell>
-              <TableCell>Color</TableCell>
-              <TableCell>Acciones</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {activityTypes.map((activityType) => (
-              <TableRow key={activityType.id}>
-                <TableCell>{activityType.name}</TableCell>
-                <TableCell>{activityType.isProductive}</TableCell>
-                <TableCell>{activityType.color}</TableCell>
-                <TableCell></TableCell>
+      <Box padding={'20px'}>
+        <TableContainer>
+          <Table stickyHeader arial-label="Tipos de actividad">
+            <TableHead>
+              <TableRow>
+                <TableCell>Nombre</TableCell>
+                <TableCell>Descripción</TableCell>
+                <TableCell>Color</TableCell>
+                <TableCell>Acciones</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHead>
+            <TableBody>
+              {activityTypes.map((activityType) => (
+                <TableRow key={activityType.id}>
+                  <TableCell>{activityType.name}</TableCell>
+                  <TableCell>{activityType.isProductive}</TableCell>
+                  <TableCell>{activityType.color}</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Box>
     </Paper>
   );
 }
