@@ -1,5 +1,5 @@
 export interface ActivityTypeDto {
-  id: number;
+  id?: number;
   name: string;
   isProductive: boolean;
   userId: number;

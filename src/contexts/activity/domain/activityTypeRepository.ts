@@ -4,7 +4,6 @@ import { ActivityTypeDto } from './activityTypeDto';
 export default interface ActivityTypeRepository {
   create(actionType: ActivityType): Promise<ActivityType | null>;
   findByClient(id: number): Promise<ActivityTypeDto[] | []>;
-  // findAll(): Promise<ActionType[]>;
   // update(actionType: ActionType): Promise<ActionType | null>;
-  // delete(id: string): Promise<boolean>;
+  delete(userId: number, name: string): Promise<ActivityType | null>;
 }

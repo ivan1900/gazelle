@@ -7,12 +7,16 @@ export default class ActivityTypeCreator {
 
   async exec(dto: ActivityTypeDto): Promise<ActivityType | null> {
     const actionType = ActivityType.createFrom({
-      id: dto.id,
+      id: dto.id || 0,
       name: dto.name,
       isProductive: dto.isProductive,
       color: dto.color,
       userId: dto.userId,
     });
-    return await this.repository.create(actionType);
+    try {
+      return await this.repository.create(actionType);
+    } catch (e) {
+      throw e;
+    }
   }
 }

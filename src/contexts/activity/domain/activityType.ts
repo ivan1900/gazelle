@@ -1,3 +1,5 @@
+import { ActivityTypeDto } from './activityTypeDto';
+
 interface ActivityTypeParms {
   id: number;
   name: string;
@@ -24,5 +26,15 @@ export default class ActivityType {
   static createFrom(params: ActivityTypeParms): ActivityType {
     const { id, name, isProductive, color, userId } = params;
     return new ActivityType({ id, name, isProductive, color, userId });
+  }
+
+  toPimitives(): ActivityTypeDto {
+    return {
+      id: this.id,
+      name: this.name,
+      isProductive: this.isProductive,
+      color: this.color,
+      userId: this.userId,
+    };
   }
 }

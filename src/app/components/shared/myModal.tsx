@@ -1,4 +1,13 @@
-import { Grid2, Modal, Paper, Typography } from '@mui/material';
+import {
+  Box,
+  Fade,
+  Grid2,
+  Grow,
+  Modal,
+  Paper,
+  Typography,
+} from '@mui/material';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
 interface MyModalProps {
   isOpen: boolean;
@@ -13,27 +22,31 @@ export default function MyModal(props: MyModalProps) {
 
   return (
     <Modal open={isOpen}>
-      <Paper
-        style={{
-          width: width || 'auto',
-          position: 'absolute',
-          top: '20%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-        }}
-      >
-        <Grid2 container>
-          <Grid2 size={10}>
-            <Typography variant="h5">{props.title}</Typography>
-          </Grid2>
-          <Grid2 size={2}>
-            <Typography align="right" variant="h5" onClick={onClose}>
-              X
-            </Typography>
-          </Grid2>
-        </Grid2>
-        {props.children}
-      </Paper>
+      <Grow in={isOpen} timeout={500}>
+        <Paper
+          style={{
+            width: width || 'auto',
+            position: 'absolute',
+            top: '30%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+          }}
+        >
+          <Box p={2}>
+            <Grid2 container>
+              <Grid2 size={10}>
+                <Typography variant="h5">{props.title}</Typography>
+              </Grid2>
+              <Grid2 size={2}>
+                <Typography align="right" variant="h5" onClick={onClose}>
+                  <CloseRoundedIcon sx={{ cursor: 'pointer' }} />
+                </Typography>
+              </Grid2>
+            </Grid2>
+            {props.children}
+          </Box>
+        </Paper>
+      </Grow>
     </Modal>
   );
 }

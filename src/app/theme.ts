@@ -1,11 +1,17 @@
 'use client';
-import { Roboto } from 'next/font/google';
+import { Montserrat, Nunito, Roboto } from 'next/font/google';
 import { createTheme } from '@mui/material/styles';
 import { blue, grey, purple } from '@mui/material/colors';
 
 declare module '@mui/material/styles' {}
 
-const roboto = Roboto({
+const nunito = Nunito({
+  weight: ['300', '400', '500', '700'],
+  subsets: ['latin'],
+  display: 'swap',
+});
+
+const montserrat = Montserrat({
   weight: ['300', '400', '500', '700'],
   subsets: ['latin'],
   display: 'swap',
@@ -34,7 +40,8 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: roboto.style.fontFamily,
+    fontFamily: nunito.style.fontFamily,
+    fontSize: 16,
   },
 });
 
