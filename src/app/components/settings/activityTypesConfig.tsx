@@ -23,49 +23,37 @@ import SquareRoundedIcon from '@mui/icons-material/SquareRounded';
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 import MyDialog from '../shared/myDialog';
 import removeActivityTypeAction from '@/app/server/actions/activityType/removeActivityTypeActions';
+import useMyDialog from '../shared/useMyDialog';
+import useMyModal from '../shared/useMyModal';
+import useActivityType from '../shared/hooks/useActivityType';
 
 export default function ActivityTypesConfig() {
-  const [activityTypes, setActivityTypes] = useState<ActivityTypeDto[]>([]);
-  const [openModal, setOpenModal] = useState(false);
+  const { activityTypes, loadActivityTypes } = useActivityType();
   const [deleteActivityType, setDeleteActivityType] = useState('');
+  const { dialogTitle, dialogDescription, openDialog, setDialog, unsetDialog } =
+    useMyDialog();
+  const { openModal, onClickAdd, onCloseModal } = useMyModal();
 
   useEffect(() => {
     loadActivityTypes();
   }, [openModal]);
-
-  const loadActivityTypes = async () => {
-    const activityTypesDto = await getActivityTypeAction();
-    console.log(activityTypesDto);
-    setActivityTypes(activityTypesDto);
-  };
 
   const handleDelete = async (response: boolean) => {
     if (response) {
       await removeActivityTypeAction(deleteActivityType);
       loadActivityTypes();
     }
-    setOpenDialog(false);
+    unsetDialog();
   };
 
   const showDeleteDialog = (name: string) => {
     setDeleteActivityType(name);
-    setDialogTitle('Eliminar tipo de actividad');
-    setDialogDescription(`¿Estás seguro de eliminar ${name}?`);
-    setOpenDialog(true);
+    setDialog(
+      'Eliminar tipo de actividad',
+      `¿Estás seguro de eliminar ${name}?`
+    );
   };
 
-  // esto en un hook para dialogos
-  const [dialogTitle, setDialogTitle] = useState('');
-  const [dialogDescription, setDialogDescription] = useState('');
-  const [openDialog, setOpenDialog] = useState(false);
-  //estos dos pueden ser un custom hook asociado al modal
-  const onClickAdd = () => {
-    setOpenModal(true);
-  };
-
-  const onCloseModal = () => {
-    setOpenModal(false);
-  };
   return (
     <>
       <MyDialog

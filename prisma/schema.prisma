@@ -23,12 +23,12 @@ model user {
 
 model action_time {
   id          Int       @id @default(autoincrement())
-  bitacora_id Int
+  activity_id Int 
   start       DateTime? @db.DateTime(0)
   end         DateTime? @db.DateTime(0)
-  activity    activity? @relation(fields: [bitacora_id], references: [id])
+  activity    activity? @relation(fields: [activity_id], references: [id])
 
-  @@index([bitacora_id])
+  @@index([activity_id])
 }
 
 model activity {
@@ -38,13 +38,12 @@ model activity {
   status           String        @db.VarChar(20)
   user_id          Int
   activity_type_id Int
-  color            String?       @db.VarChar(8)
   created_at       DateTime?     @default(now()) @db.DateTime(0)
   updated_at       DateTime?     @db.DateTime(0)
   action_time      action_time[]
   user             user?         @relation(fields: [user_id], references: [id])
 
-  @@index([user_id], map: "bitacora__index_user_id")
+  @@index([user_id, name], map: "activity_user_id_name_IDX")
 }
 
 model activity_type {
