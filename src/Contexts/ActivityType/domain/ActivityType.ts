@@ -1,11 +1,11 @@
-import { ActivityTypeDto } from './activityTypeDto';
+import { ActivityTypeDto } from './ActivityTypeDto';
 
 interface ActivityTypeParms {
   id: number;
   name: string;
   isProductive: boolean;
   color: string | null;
-  userId: number;
+  accountId: number;
 }
 
 export default class ActivityType {
@@ -13,19 +13,25 @@ export default class ActivityType {
   name: string;
   isProductive: boolean;
   color: string | null;
-  userId: number;
+  accountId: number;
 
   constructor(params: ActivityTypeParms) {
     this.id = params.id;
     this.name = params.name;
     this.isProductive = params.isProductive;
     this.color = params.color;
-    this.userId = params.userId;
+    this.accountId = params.accountId;
   }
 
   static createFrom(params: ActivityTypeParms): ActivityType {
-    const { id, name, isProductive, color, userId } = params;
-    return new ActivityType({ id, name, isProductive, color, userId });
+    const { id, name, isProductive, color, accountId } = params;
+    return new ActivityType({
+      id,
+      name,
+      isProductive,
+      color,
+      accountId: accountId,
+    });
   }
 
   toPimitives(): ActivityTypeDto {
@@ -34,7 +40,7 @@ export default class ActivityType {
       name: this.name,
       isProductive: this.isProductive,
       color: this.color,
-      userId: this.userId,
+      accountId: this.accountId,
     };
   }
 }

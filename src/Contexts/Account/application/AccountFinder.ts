@@ -1,6 +1,6 @@
-import { AccountRepository } from '../domain/accountRepository';
+import { AccountRepository } from '../domain/AccountRepository';
 
-export default class UserFinder {
+export default class AccountFinder {
   constructor(private readonly repository: AccountRepository) {}
 
   byEmail(email: string) {

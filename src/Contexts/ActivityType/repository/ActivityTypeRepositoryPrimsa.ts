@@ -1,8 +1,8 @@
-import ActivityTypeRepository from '@/contexts/activity/domain/activityTypeRepository';
+import ActivityTypeRepository from '@/Contexts/ActivityType/domain/ActivityTypeRepository';
 import prisma from '../../../app/db';
-import ActivityType from '@/contexts/activity/domain/activityType';
-import { ActivityTypeDto } from '../domain/activityTypeDto';
-import { prismaErrorHandle } from '@/contexts/shared/constants/PrismaErrors';
+import ActivityType from '@/Contexts/ActivityType/domain/ActivityType';
+import { ActivityTypeDto } from '../domain/ActivityTypeDto';
+import { prismaErrorHandle } from '@/Contexts/shared/constants/PrismaErrors';
 
 export default class ActivityTypeRepositoryPrisma
   implements ActivityTypeRepository
@@ -14,7 +14,7 @@ export default class ActivityTypeRepositoryPrisma
           name: actionType.name,
           is_productive: actionType.isProductive,
           color: actionType.color,
-          user_id: actionType.userId,
+          account_id: actionType.accountId,
         },
       });
       if (!result) {
@@ -25,17 +25,17 @@ export default class ActivityTypeRepositoryPrisma
         name: result.name,
         isProductive: result.is_productive,
         color: result.color,
-        userId: result.user_id,
+        accountId: result.account_id,
       });
     } catch (e) {
       throw new Error(prismaErrorHandle(e));
     }
   }
 
-  async findByClient(id: number): Promise<ActivityTypeDto[] | []> {
+  async findByAccount(id: number): Promise<ActivityTypeDto[] | []> {
     const result = await prisma.activity_type.findMany({
       where: {
-        user_id: id,
+        account_id: id,
         deleted_at: null,
       },
     });
@@ -45,18 +45,18 @@ export default class ActivityTypeRepositoryPrisma
         name: activityType.name,
         isProductive: activityType.is_productive,
         color: activityType.color,
-        userId: activityType.user_id,
+        accountId: activityType.account_id,
       };
     });
     return activityTypes;
   }
 
-  async delete(userId: number, name: string): Promise<ActivityType | null> {
+  async delete(accountId: number, name: string): Promise<ActivityType | null> {
     const result = await prisma.activity_type.delete({
       where: {
-        user_id_name: {
-          user_id: userId,
-          name: name,
+        account_id_name: {
+          account_id: accountId,
+          name,
         },
       },
     });
@@ -65,7 +65,7 @@ export default class ActivityTypeRepositoryPrisma
       name: result.name,
       isProductive: result.is_productive,
       color: result.color,
-      userId: result.user_id,
+      accountId: result.account_id,
     });
   }
 }

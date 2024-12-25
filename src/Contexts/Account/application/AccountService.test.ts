@@ -1,17 +1,17 @@
-import { userService } from './userService';
-import AccountRepositoryPrisma from '../repository/accountRepositoryPrisma';
+import { accountServiceAuth } from './AccountServiceAuth';
+import AccountRepositoryPrisma from '../repository/AccountRepositoryPrisma';
 
 jest.mock('../repository/accountRepositoryPrisma');
 
 describe('userService', () => {
   describe('authenticateGoogle', () => {
     it('should return null if email is undefined', async () => {
-      const result = await userService.authenticateGoogle(undefined);
+      const result = await accountServiceAuth.authenticateGoogle(undefined);
       expect(result).toBeNull();
     });
 
     it('should return null if email is null', async () => {
-      const result = await userService.authenticateGoogle(null);
+      const result = await accountServiceAuth.authenticateGoogle(null);
       expect(result).toBeNull();
     });
 
@@ -19,7 +19,8 @@ describe('userService', () => {
       AccountRepositoryPrisma.prototype.find = jest
         .fn()
         .mockResolvedValue(null);
-      const result = await userService.authenticateGoogle('test@example.com');
+      const result =
+        await accountServiceAuth.authenticateGoogle('test@example.com');
       expect(result).toBeNull();
     });
 
@@ -28,7 +29,8 @@ describe('userService', () => {
       AccountRepositoryPrisma.prototype.find = jest
         .fn()
         .mockResolvedValue(mockAccount);
-      const result = await userService.authenticateGoogle('test@example.com');
+      const result =
+        await accountServiceAuth.authenticateGoogle('test@example.com');
       expect(result).toEqual(mockAccount);
     });
   });

@@ -1,6 +1,6 @@
-import ActivityTypeRepository from '@/contexts/activity/domain/activityTypeRepository';
-import ActivityType from '@/contexts/activity/domain/activityType';
-import { ActivityTypeDto } from '@/contexts/activity/domain/activityTypeDto';
+import ActivityTypeRepository from '@/Contexts/ActivityType/domain/ActivityTypeRepository';
+import ActivityType from '@/Contexts/ActivityType/domain/ActivityType';
+import { ActivityTypeDto } from '@/Contexts/ActivityType/domain/ActivityTypeDto';
 
 export default class ActivityTypeCreator {
   constructor(private readonly repository: ActivityTypeRepository) {}
@@ -11,7 +11,7 @@ export default class ActivityTypeCreator {
       name: dto.name,
       isProductive: dto.isProductive,
       color: dto.color,
-      userId: dto.userId,
+      accountId: dto.accountId,
     });
     try {
       return await this.repository.create(actionType);

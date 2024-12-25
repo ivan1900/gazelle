@@ -1,11 +1,11 @@
-import { AccountRepository } from '../domain/accountRepository';
+import { AccountRepository } from '../domain/AccountRepository';
 import prisma from '../../../app/db';
-import Account from '../domain/account';
+import Account from '../domain/Account';
 
 export default class AccountRepositoryPrisma implements AccountRepository {
   async create(account: Account): Promise<Account | null> {
     try {
-      const accountCreated = await prisma.user.create({
+      const accountCreated = await prisma.account.create({
         data: {
           name: account.name,
           email: account.email,
@@ -28,7 +28,7 @@ export default class AccountRepositoryPrisma implements AccountRepository {
   }
 
   async find(email: string) {
-    const account = await prisma.user.findUnique({
+    const account = await prisma.account.findUnique({
       where: {
         email,
       },

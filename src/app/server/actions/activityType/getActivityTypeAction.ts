@@ -1,9 +1,9 @@
 'use server';
 
-import { GetActivityType } from '@/contexts/activity/application/getActivityType';
-import ActivityTypeRepositoryPrisma from '@/contexts/activity/repository/activityTypeRepositoryPrimsa';
+import { GetActivityType } from '@/Contexts/ActivityType/application/GetActivityType';
+import ActivityTypeRepositoryPrisma from '@/Contexts/ActivityType/repository/ActivityTypeRepositoryPrimsa';
 import { getServerAuthSession } from '@server/auth/auth';
-import { ActivityTypeDto } from '@/contexts/activity/domain/activityTypeDto';
+import { ActivityTypeDto } from '@/Contexts/ActivityType/domain/ActivityTypeDto';
 
 export default async function getActivityType(): Promise<
   ActivityTypeDto[] | []
@@ -14,5 +14,5 @@ export default async function getActivityType(): Promise<
   }
   const repository = new ActivityTypeRepositoryPrisma();
   const getActivityType = new GetActivityType(repository);
-  return getActivityType.exec(session.user.userId);
+  return getActivityType.exec(session.user.accountId);
 }

@@ -1,8 +1,8 @@
 'use server';
 import { redirect } from 'next/navigation';
 import { getServerAuthSession } from '../../auth/auth';
-import ActivityTypeRepositoryPrisma from '@/contexts/activity/repository/activityTypeRepositoryPrimsa';
-import { ResponseAction } from '@/contexts/shared/responseAction';
+import ActivityTypeRepositoryPrisma from '@/Contexts/ActivityType/repository/ActivityTypeRepositoryPrimsa';
+import { ResponseAction } from '@/Contexts/shared/responseAction';
 
 export default async function removeActivityTypeAction(
   name: string
@@ -14,7 +14,7 @@ export default async function removeActivityTypeAction(
 
   const repository = new ActivityTypeRepositoryPrisma();
   try {
-    const result = await repository.delete(session.user.userId, name);
+    const result = await repository.delete(session.user.accountId, name);
     if (result) {
       return {
         ok: true,

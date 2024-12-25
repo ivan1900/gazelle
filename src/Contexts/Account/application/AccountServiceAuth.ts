@@ -1,8 +1,8 @@
 import { cookies } from 'next/headers';
-import AccountRepositoryPrisma from '../repository/accountRepositoryPrisma';
-import { cookieNames } from '@/contexts/shared/constants/cookie';
+import AccountRepositoryPrisma from '../repository/AccountRepositoryPrisma';
+import { cookieNames } from '@/Contexts/shared/constants/cookie';
 
-export const userService = {
+export const accountServiceAuth = {
   authenticate,
   authenticateGoogle,
 };
@@ -18,8 +18,8 @@ async function authenticateGoogle(email: string | undefined | null) {
   const repository = new AccountRepositoryPrisma();
   const account = await repository.find(email);
   if (account) {
-    const cookieStore = await cookies();
-    cookieStore.set(cookieNames.CLIENT_ID, account.id.toString());
+    const cookieStore = cookies();
+    cookieStore.set(cookieNames.ACCOUNT_ID, account.id.toString());
     return account;
   }
   return null;

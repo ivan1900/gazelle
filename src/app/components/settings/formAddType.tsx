@@ -1,6 +1,6 @@
 'use client';
 import { createActivityType } from '@/app/server/actions/activityType/createActivityTypeAction';
-import { ResponseAction } from '@/contexts/shared/responseAction';
+import { ResponseAction } from '@/Contexts/shared/responseAction';
 import {
   Alert,
   Button,

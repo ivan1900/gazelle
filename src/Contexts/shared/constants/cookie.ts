@@ -1,3 +1,3 @@
 export const cookieNames = {
-  CLIENT_ID: 'client_id',
+  ACCOUNT_ID: 'account_id',
 };

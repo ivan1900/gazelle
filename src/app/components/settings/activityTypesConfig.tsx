@@ -16,7 +16,7 @@ import MyModal from '../shared/myModal';
 import FormAddType from './formAddType';
 import getActivityTypeAction from '@/app/server/actions/activityType/getActivityTypeAction';
 import { useEffect, useState } from 'react';
-import { ActivityTypeDto } from '@/contexts/activity/domain/activityTypeDto';
+import { ActivityTypeDto } from '@/Contexts/ActivityType/domain/ActivityTypeDto';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import SquareRoundedIcon from '@mui/icons-material/SquareRounded';

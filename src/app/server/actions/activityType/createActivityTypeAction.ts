@@ -1,8 +1,8 @@
 'use server';
-import { ActivityTypeDto } from '@/contexts/activity/domain/activityTypeDto';
-import ActivityTypeCreator from '@/contexts/activity/application/activityTypeCreator';
-import ActivityTypeRepositoryPrisma from '@/contexts/activity/repository/activityTypeRepositoryPrimsa';
-import { ResponseAction } from '@/contexts/shared/responseAction';
+import { ActivityTypeDto } from '@/Contexts/ActivityType/domain/ActivityTypeDto';
+import ActivityTypeCreator from '@/Contexts/ActivityType/application/ActivityTypeCreator';
+import ActivityTypeRepositoryPrisma from '@/Contexts/ActivityType/repository/ActivityTypeRepositoryPrimsa';
+import { ResponseAction } from '@/Contexts/shared/responseAction';
 import { z } from 'zod';
 import { getServerAuthSession } from '../../auth/auth';
 import { redirect } from 'next/navigation';
@@ -45,7 +45,7 @@ export async function createActivityType(
   const dto: ActivityTypeDto = {
     name: validateFields.data.name,
     isProductive: validateFields.data.isProductive,
-    userId: session.user.userId,
+    accountId: session.user.accountId,
     color: validateFields.data.color,
   };
   const activityTypeCreator = new ActivityTypeCreator(

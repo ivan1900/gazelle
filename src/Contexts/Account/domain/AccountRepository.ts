@@ -1,4 +1,4 @@
-import Account from './account';
+import Account from './Account';
 
 export interface AccountRepository {
   create(account: Account): Promise<Account | null>;

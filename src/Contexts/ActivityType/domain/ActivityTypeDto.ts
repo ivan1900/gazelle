@@ -2,6 +2,6 @@ export interface ActivityTypeDto {
   id?: number;
   name: string;
   isProductive: boolean;
-  userId: number;
+  accountId: number;
   color: string | null;
 }

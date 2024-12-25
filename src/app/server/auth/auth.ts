@@ -1,7 +1,7 @@
 import { getServerSession, type NextAuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { userService } from '@/contexts/account/application/userService';
+import { accountServiceAuth } from '@/Contexts/Account/application/AccountServiceAuth';
 import getAccountByEmail from '@server/actions/account/getAccountByEmail';
 
 export const authOptions: NextAuthOptions = {
@@ -13,7 +13,7 @@ export const authOptions: NextAuthOptions = {
       }
       if (account && account.provider === 'google') {
         const meUser = await getAccountByEmail(user.email as string);
-        token.userId = meUser?.id || 0;
+        token.accountId = meUser?.id || 0;
       }
       return token;
     },
@@ -23,7 +23,7 @@ export const authOptions: NextAuthOptions = {
       }
 
       if (account?.provider === 'google') {
-        const authenticatedUser = await userService.authenticateGoogle(
+        const authenticatedUser = await accountServiceAuth.authenticateGoogle(
           user?.email
         );
         return authenticatedUser ? true : false;
@@ -32,7 +32,7 @@ export const authOptions: NextAuthOptions = {
       return false;
     },
     async session({ session, token }) {
-      session.user.userId = token.userId;
+      session.user.accountId = token.accountId;
       return session;
     },
   },
@@ -63,7 +63,7 @@ export const authOptions: NextAuthOptions = {
           password: string;
         };
 
-        return userService.authenticate(username, password);
+        return accountServiceAuth.authenticate(username, password);
       },
     }),
   ],
