@@ -12,8 +12,8 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import MyModal from '../shared/myModal';
-import FormAddType from './formAddType';
+import MyModal from '../shared/MyModal';
+import FormAddType from './FormAddType';
 import getActivityTypeAction from '@/app/server/actions/activityType/getActivityTypeAction';
 import { useEffect, useState } from 'react';
 import { ActivityTypeDto } from '@/Contexts/ActivityType/domain/ActivityTypeDto';
@@ -21,7 +21,7 @@ import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import SquareRoundedIcon from '@mui/icons-material/SquareRounded';
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
-import MyDialog from '../shared/myDialog';
+import MyDialog from '../shared/MyDialog';
 import removeActivityTypeAction from '@/app/server/actions/activityType/removeActivityTypeActions';
 import useMyDialog from '../shared/useMyDialog';
 import useMyModal from '../shared/useMyModal';

@@ -1,6 +1,6 @@
 'use client';
 import { Button, Grid2 as Grid, Paper, Stack, Typography } from '@mui/material';
-import MyModal from '../shared/myModal';
+import MyModal from '../shared/MyModal';
 import NewActivityForm from '../activity/NewActivityForm';
 import useMyModal from '../shared/useMyModal';
 

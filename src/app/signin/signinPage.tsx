@@ -1,5 +1,5 @@
 import { Card, Container, Stack, Typography } from '@mui/material';
-import Signin from '../components/signin';
+import Signin from '../components/Signin';
 
 export default function signinPage() {
   return (

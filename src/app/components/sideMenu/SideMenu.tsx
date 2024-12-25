@@ -1,5 +1,5 @@
 import { Box, Drawer } from '@mui/material';
-import DrawerList from './drawerList';
+import DrawerList from './DrawerList';
 
 interface Props {
   drawerWidth: number;
@@ -18,11 +18,12 @@ export default function SideMenu(props: Props) {
 
   return (
     <Box
-      component='nav'
+      component="nav"
       sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-      aria-label='mailbox folders'>
+      aria-label="mailbox folders"
+    >
       <Drawer
-        variant='temporary'
+        variant="temporary"
         open={mobileOpen}
         onTransitionEnd={handleDrawerTransitionEnd}
         onClose={handleDrawerClose}
@@ -35,11 +36,12 @@ export default function SideMenu(props: Props) {
             boxSizing: 'border-box',
             width: drawerWidth,
           },
-        }}>
+        }}
+      >
         <DrawerList />
       </Drawer>
       <Drawer
-        variant='permanent'
+        variant="permanent"
         sx={{
           display: { xs: 'none', sm: 'block' },
           '& .MuiDrawer-paper': {
@@ -47,7 +49,8 @@ export default function SideMenu(props: Props) {
             width: drawerWidth,
           },
         }}
-        open>
+        open
+      >
         <DrawerList />
       </Drawer>
     </Box>
