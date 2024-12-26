@@ -3,16 +3,16 @@ import { useState } from 'react';
 export default function useMyModal() {
   const [openModal, setOpenModal] = useState(false);
 
-  const onClickAdd = () => {
+  const handleClickAdd = () => {
     setOpenModal(true);
   };
 
-  const onCloseModal = () => {
+  const handleCloseModal = () => {
     setOpenModal(false);
   };
   return {
     openModal,
-    onClickAdd,
-    onCloseModal,
+    handleClickAdd,
+    handleCloseModal,
   };
 }

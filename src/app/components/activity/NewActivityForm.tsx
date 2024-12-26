@@ -2,6 +2,7 @@
 
 import { ActivityStatusDict } from '@/Contexts/shared/constants/ActivityStatus';
 import {
+  Alert,
   Button,
   FormControl,
   InputLabel,
@@ -14,7 +15,9 @@ import {
 } from '@mui/material';
 import useActivityType from '../shared/hooks/useActivityType';
 import SquareRoundedIcon from '@mui/icons-material/SquareRounded';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import createActivityAction from '@/app/server/actions/activity/createAcitvityAction';
+import { ResponseAction } from '@/Contexts/shared/responseAction';
 
 interface Inputs {
   activityName: string;
@@ -23,8 +26,16 @@ interface Inputs {
   activityType: string;
 }
 
-export default function NewActivityForm() {
+interface Props {
+  closeParent: () => void;
+}
+
+export default function NewActivityForm(props: Props) {
+  const { closeParent } = props;
   const { activityTypes } = useActivityType();
+  const [response, setResponse] = useState<ResponseAction>(
+    {} as ResponseAction
+  );
   const [inputs, setInputs] = useState<Inputs>({
     activityName: '',
     activityDescription: '',
@@ -32,9 +43,19 @@ export default function NewActivityForm() {
     activityType: '',
   });
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(event.target);
+    const result = await createActivityAction({
+      name: inputs.activityName,
+      description: inputs.activityDescription,
+      status: inputs.activityStatus,
+      activityTypeId: Number(inputs.activityType) || 0,
+    });
+
+    if (response.ok) {
+      closeParent(); // todo ver por que no se cierra al crear
+    }
+    setResponse(result);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -113,6 +134,9 @@ export default function NewActivityForm() {
             ))}
           </Select>
         </FormControl>
+        {response.message && !response.ok && (
+          <Alert severity={'error'}>{response.message}</Alert>
+        )}
         <Button type="submit" variant="contained" color="primary">
           Crear
         </Button>

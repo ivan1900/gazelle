@@ -1,5 +1,4 @@
 'use server';
-
 import AccountFinder from '@/Contexts/Account/application/AccountFinder';
 import AccountRepositoryPrisma from '@/Contexts/Account/repository/AccountRepositoryPrisma';
 

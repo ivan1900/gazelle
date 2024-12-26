@@ -32,7 +32,7 @@ export default function ActivityTypesConfig() {
   const [deleteActivityType, setDeleteActivityType] = useState('');
   const { dialogTitle, dialogDescription, openDialog, setDialog, unsetDialog } =
     useMyDialog();
-  const { openModal, onClickAdd, onCloseModal } = useMyModal();
+  const { openModal, handleClickAdd, handleCloseModal } = useMyModal();
 
   useEffect(() => {
     loadActivityTypes();
@@ -64,16 +64,16 @@ export default function ActivityTypesConfig() {
       ></MyDialog>
       <MyModal
         isOpen={openModal}
-        onClose={onCloseModal}
+        onClose={handleCloseModal}
         title="Agregar tipo de actividad"
         width="600px"
       >
-        <FormAddType closeParent={onCloseModal} />
+        <FormAddType closeParent={handleCloseModal} />
       </MyModal>
 
       <Paper sx={{ width: '100%', overflow: 'hidden' }}>
         <Stack direction="row" spacing={2} padding={'20px'}>
-          <Button variant="contained" color="primary" onClick={onClickAdd}>
+          <Button variant="contained" color="primary" onClick={handleClickAdd}>
             Agregar
           </Button>
         </Stack>
