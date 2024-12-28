@@ -1,4 +1,4 @@
-export type ResponseAction = {
+export type ActionResponse = {
   ok: boolean;
   message: string;
   data?: unknown;

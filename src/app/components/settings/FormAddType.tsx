@@ -1,6 +1,6 @@
 'use client';
 import { createActivityType } from '@/app/server/actions/activityType/createActivityTypeAction';
-import { ResponseAction } from '@/Contexts/shared/responseAction';
+import { ActionResponse } from '@/app/server/shared/responseAction';
 import {
   Alert,
   Button,
@@ -20,7 +20,7 @@ interface Props {
 export default function FormAddType(props: Props) {
   const { closeParent } = props;
   const [valueColor, setValueColor] = useState('#000000');
-  const initialState: ResponseAction = {
+  const initialState: ActionResponse = {
     ok: true,
     message: '',
   };

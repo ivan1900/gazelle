@@ -1,6 +1,6 @@
 'use server';
 import CurrentActivities from '@/app/components/activities/CurrentActivities';
-import { Paper, Stack, Typography, Grid2 as Grid } from '@mui/material';
+import { Paper, Stack, Typography, Grid2 as Grid, Box } from '@mui/material';
 
 export default async function Activity() {
   return (

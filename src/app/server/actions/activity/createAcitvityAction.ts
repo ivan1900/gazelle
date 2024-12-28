@@ -3,17 +3,18 @@
 import ActivityCreator from '@/Contexts/Activity/application/ActivityCreator';
 import { ActivityDto } from '@/Contexts/Activity/domain/AcitvityDto';
 import ActivityRepositoryPrisma from '@/Contexts/Activity/repository/ActivityRepositoryPrisma';
-import { ResponseAction } from '@/Contexts/shared/responseAction';
+import { ActionResponse } from '@/app/server/shared/responseAction';
 import { getServerAuthSession } from '../../auth/auth';
 import { redirect } from 'next/navigation';
+import { linkTo } from '../../shared/linkTo';
 
 export default async function createActivityAction(
   dto: ActivityDto
-): Promise<ResponseAction> {
+): Promise<ActionResponse> {
   try {
     const session = await getServerAuthSession();
     if (!session) {
-      redirect('/login');
+      redirect(linkTo.LOGIN);
     }
     const repository = new ActivityRepositoryPrisma();
     const creator = new ActivityCreator(repository);

@@ -2,10 +2,11 @@
 import { ActivityTypeDto } from '@/Contexts/ActivityType/domain/ActivityTypeDto';
 import ActivityTypeCreator from '@/Contexts/ActivityType/application/ActivityTypeCreator';
 import ActivityTypeRepositoryPrisma from '@/Contexts/ActivityType/repository/ActivityTypeRepositoryPrimsa';
-import { ResponseAction } from '@/Contexts/shared/responseAction';
+import { ActionResponse } from '@/app/server/shared/responseAction';
 import { z } from 'zod';
 import { getServerAuthSession } from '../../auth/auth';
 import { redirect } from 'next/navigation';
+import { linkTo } from '../../shared/linkTo';
 
 const FormSchema = z.object({
   name: z
@@ -21,12 +22,12 @@ const FormSchema = z.object({
 const CreateActivityType = FormSchema;
 
 export async function createActivityType(
-  prevState: ResponseAction,
+  prevState: ActionResponse,
   formDate: FormData
-): Promise<ResponseAction> {
+): Promise<ActionResponse> {
   const session = await getServerAuthSession();
   if (!session) {
-    redirect('/login');
+    redirect(linkTo.LOGIN);
   }
   const validateFields = CreateActivityType.safeParse({
     name: formDate.get('name') as string,

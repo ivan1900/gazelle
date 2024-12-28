@@ -2,14 +2,15 @@
 import { redirect } from 'next/navigation';
 import { getServerAuthSession } from '../../auth/auth';
 import ActivityTypeRepositoryPrisma from '@/Contexts/ActivityType/repository/ActivityTypeRepositoryPrimsa';
-import { ResponseAction } from '@/Contexts/shared/responseAction';
+import { ActionResponse } from '@/app/server/shared/responseAction';
+import { linkTo } from '../../shared/linkTo';
 
 export default async function removeActivityTypeAction(
   name: string
-): Promise<ResponseAction> {
+): Promise<ActionResponse> {
   const session = await getServerAuthSession();
   if (!session) {
-    redirect('/login');
+    redirect(linkTo.LOGIN);
   }
 
   const repository = new ActivityTypeRepositoryPrisma();

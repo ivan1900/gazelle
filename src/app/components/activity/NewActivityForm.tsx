@@ -17,7 +17,7 @@ import useActivityType from '../shared/hooks/useActivityType';
 import SquareRoundedIcon from '@mui/icons-material/SquareRounded';
 import { useState } from 'react';
 import createActivityAction from '@/app/server/actions/activity/createAcitvityAction';
-import { ResponseAction } from '@/Contexts/shared/responseAction';
+import { ActionResponse } from '@/app/server/shared/responseAction';
 
 interface Inputs {
   activityName: string;
@@ -33,8 +33,8 @@ interface Props {
 export default function NewActivityForm(props: Props) {
   const { closeParent } = props;
   const { activityTypes } = useActivityType();
-  const [response, setResponse] = useState<ResponseAction>(
-    {} as ResponseAction
+  const [response, setResponse] = useState<ActionResponse>(
+    {} as ActionResponse
   );
   const [inputs, setInputs] = useState<Inputs>({
     activityName: '',
@@ -53,7 +53,9 @@ export default function NewActivityForm(props: Props) {
     });
 
     if (response.ok) {
-      closeParent(); // todo ver por que no se cierra al crear
+      console.log('Activity created');
+      closeParent();
+      return;
     }
     setResponse(result);
   };
