@@ -28,15 +28,21 @@ export default function CurrentActivities() {
     setActivities(result);
   };
 
+  const handleClose = () => {
+    console.log('handleClose');
+    handleCloseModal();
+    loadActivities();
+  };
+
   return (
     <>
       <MyModal
         isOpen={openModal}
-        onClose={handleCloseModal}
+        onClose={handleClose}
         title="Nueva Actividad"
         width="600px"
       >
-        <NewActivityForm closeParent={handleCloseModal} />
+        <NewActivityForm closeParent={handleClose} />
       </MyModal>
       <Paper sx={{ width: '100%', overflow: 'hidden' }}>
         <Stack direction="row" spacing={2} padding={'20px'} alignItems="center">

@@ -51,9 +51,7 @@ export default function NewActivityForm(props: Props) {
       status: inputs.activityStatus,
       activityTypeId: Number(inputs.activityType) || 0,
     });
-
-    if (response.ok) {
-      console.log('Activity created');
+    if (result.ok) {
       closeParent();
       return;
     }
