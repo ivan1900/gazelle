@@ -1,5 +1,4 @@
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
-import { unknown } from 'zod';
 
 const PrismaErrors: { [key: string]: string } = {
   P2002: 'No se pudo guardar, ya existe un registro con el mismo nombre o id',

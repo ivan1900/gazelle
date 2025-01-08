@@ -1,4 +1,5 @@
 export interface ActivityDto {
+  id?: number;
   name: string;
   description: string;
   status: string;

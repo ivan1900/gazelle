@@ -3,9 +3,3 @@ export const ActivityStatusOption = {
   WAITING: 'WAITING',
   COMPLETED: 'COMPLETED',
 };
-
-export const ActivityStatusDict = [
-  { label: 'En progreso', value: ActivityStatusOption.ON_PROGRESS },
-  { label: 'En espera', value: ActivityStatusOption.WAITING },
-  { label: 'Completado', value: ActivityStatusOption.COMPLETED },
-];

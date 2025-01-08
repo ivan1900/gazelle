@@ -1,6 +1,5 @@
 'use client';
 
-import { ActivityStatusDict } from '@/Contexts/shared/constants/ActivityStatus';
 import {
   Alert,
   Button,
@@ -18,6 +17,7 @@ import SquareRoundedIcon from '@mui/icons-material/SquareRounded';
 import { useState } from 'react';
 import createActivityAction from '@/app/server/actions/activity/createAcitvityAction';
 import { ActionResponse } from '@/app/server/shared/responseAction';
+import { ActivityStatusDict } from '@/app/server/shared/constants/ActivityStatusOption';
 
 interface Inputs {
   activityName: string;

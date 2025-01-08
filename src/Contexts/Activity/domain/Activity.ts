@@ -1,5 +1,5 @@
 import DateValueObject from '../../shared/domain/value-object/DateValueObject';
-import AccountId from './accountId';
+import AccountId from './AccountId';
 import { ActivityDto } from './AcitvityDto';
 import ActivityDescription from './ActivityDescription';
 import ActivityName from './ActivityName';

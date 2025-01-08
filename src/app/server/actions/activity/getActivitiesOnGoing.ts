@@ -1,21 +1,19 @@
 'use server';
 
-import ActivitiesNotComletedFinder from '@/Contexts/Activity/application/ActivitiesNotCompletedFinder';
+import ActivitiesOnGoingFinder from '@/Contexts/Activity/application/ActivitiesOnGoingFinder';
 import ActivityRepositoryPrisma from '@/Contexts/Activity/repository/ActivityRepositoryPrisma';
 import { getServerAuthSession } from '../../auth/auth';
 import { redirect } from 'next/navigation';
 import { linkTo } from '../../shared/linkTo';
-import { ActivityDto } from '@/Contexts/Activity/domain/AcitvityDto';
+import ActivityInfo from '../../shared/types/ActivityInfo';
 
-export default async function getActivitiesNotCompleted(): Promise<
-  ActivityDto[]
-> {
+export default async function getActivitiesOnGoing(): Promise<ActivityInfo[]> {
   try {
     const session = await getServerAuthSession();
     if (!session?.user?.accountId) {
       redirect(linkTo.LOGIN);
     }
-    const activitiesNotComletedFinder = new ActivitiesNotComletedFinder(
+    const activitiesNotComletedFinder = new ActivitiesOnGoingFinder(
       new ActivityRepositoryPrisma()
     );
     return await activitiesNotComletedFinder.exec(session.user.accountId);

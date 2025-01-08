@@ -5,6 +5,7 @@ import { prismaErrorHandle } from '@/Contexts/shared/constants/PrismaErrors';
 import ActivityStatus from '../domain/ActivityStatus';
 import { ActivityStatusOption } from '@/Contexts/shared/constants/ActivityStatus';
 import { ActivityDto } from '../domain/AcitvityDto';
+import { ActivityInfo } from '../domain/ActivityInfo';
 
 export default class ActivityRepositoryPrisma implements ActivityRepository {
   async create(activity: Activity): Promise<Activity | null> {
@@ -22,6 +23,7 @@ export default class ActivityRepositoryPrisma implements ActivityRepository {
         return null;
       }
       return Activity.fromPrimitives({
+        id: result.id,
         name: result.name,
         description: result.description || '',
         status: result.status,
@@ -35,25 +37,32 @@ export default class ActivityRepositoryPrisma implements ActivityRepository {
     }
   }
 
-  async findAllNotCompleted(accountId: number): Promise<ActivityDto[]> {
+  async findAllOnGoing(accountId: number): Promise<ActivityInfo[]> {
     try {
       const result = await prisma.activity.findMany({
         where: {
           account_id: accountId,
           NOT: { status: ActivityStatusOption.COMPLETED },
         },
+        include: {
+          activity_type: true,
+        },
       });
-      const activities: ActivityDto[] = result.map((activity) => {
-        return {
+      const activities: ActivityInfo[] = result.map((activity) => {
+        const activityInfo: ActivityInfo = {
           id: activity.id,
           name: activity.name,
           description: activity.description || '',
           status: activity.status,
-          activityTypeId: activity.activity_type_id,
-          accountId: activity.account_id,
+          type: {
+            name: activity.activity_type?.name || '',
+            isProductive: activity.activity_type?.is_productive || false,
+            color: activity.activity_type?.color || '',
+          },
           createdAt: activity.created_at,
           updatedAt: activity.updated_at,
         };
+        return activityInfo;
       });
       return activities;
     } catch (e) {

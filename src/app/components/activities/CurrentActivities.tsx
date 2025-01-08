@@ -1,11 +1,33 @@
 'use client';
-import { Button, Grid2 as Grid, Paper, Stack, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Grid2 as Grid,
+  Paper,
+  Stack,
+  Typography,
+} from '@mui/material';
 import MyModal from '../shared/MyModal';
 import NewActivityForm from '../activity/NewActivityForm';
 import useMyModal from '../shared/useMyModal';
+import getActivitiesOnGoing from '@/app/server/actions/activity/getActivitiesOnGoing';
+import { useEffect, useState } from 'react';
+import ActivityCard from './activityCard';
+import ActivityInfo from '@/app/server/shared/types/ActivityInfo';
 
 export default function CurrentActivities() {
   const { handleClickAdd, handleCloseModal, openModal } = useMyModal();
+  const [activities, setActivities] = useState<ActivityInfo[]>([]);
+
+  useEffect(() => {
+    loadActivities();
+  }, []);
+
+  const loadActivities = async () => {
+    const result = await getActivitiesOnGoing();
+    setActivities(result);
+  };
+
   return (
     <>
       <MyModal
@@ -23,6 +45,11 @@ export default function CurrentActivities() {
           </Button>
           <Typography>Actividades:</Typography>
         </Stack>
+        <Box>
+          {activities.map((activity) => (
+            <ActivityCard key={activity.id} activity={activity} />
+          ))}
+        </Box>
       </Paper>
     </>
   );

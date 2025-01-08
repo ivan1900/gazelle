@@ -1,9 +1,10 @@
 import { ActivityDto } from './AcitvityDto';
 import Activity from './Activity';
+import { ActivityInfo } from './ActivityInfo';
 
 export default interface ActivityRepository {
   create(activity: Activity): Promise<Activity | null>;
-  findAllNotCompleted(accountId: number): Promise<ActivityDto[]>;
+  findAllOnGoing(accountId: number): Promise<ActivityInfo[]>;
   findCompleted({
     accountId,
     lastDays,
