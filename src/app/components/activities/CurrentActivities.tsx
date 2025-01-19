@@ -51,7 +51,7 @@ export default function CurrentActivities() {
           </Button>
           <Typography>Actividades:</Typography>
         </Stack>
-        <Box>
+        <Box sx={{ overflow: 'auto', maxHeight: '75vh' }}>
           {activities.map((activity) => (
             <ActivityCard key={activity.id} activity={activity} />
           ))}

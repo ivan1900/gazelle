@@ -4,15 +4,19 @@ import { Paper, Stack, Typography, Grid2 as Grid, Box } from '@mui/material';
 
 export default async function Activity() {
   return (
-    <Stack direction="column" spacing={2} padding={'20px'}>
-      <Paper sx={{ width: '100%', overflow: 'hidden', p: 2 }}>
-        <Typography variant="h6">Actividad</Typography>
+    <>
+      <Paper sx={{ minHeight: '3%', mt: '-25px', mx: '-26px' }}>
+        <Typography variant="h6" sx={{ px: '15px', py: '2px' }}>
+          Actividad
+        </Typography>
       </Paper>
-      <Grid container>
-        <Grid size={6}>
-          <CurrentActivities />
+      <Stack direction="column" spacing={2} py={'10px'}>
+        <Grid container>
+          <Grid size={12}>
+            <CurrentActivities />
+          </Grid>
         </Grid>
-      </Grid>
-    </Stack>
+      </Stack>
+    </>
   );
 }

@@ -1,6 +1,19 @@
 import { ActivityStatusDict } from '@/app/server/shared/constants/ActivityStatusOption';
 import ActivityInfo from '@/app/server/shared/types/ActivityInfo';
-import { Box, Card, Chip, Grid2 as Grid, Typography } from '@mui/material';
+import {
+  Button,
+  Card,
+  Chip,
+  CircularProgress,
+  Grid2 as Grid,
+  LinearProgress,
+  Tooltip,
+  Typography,
+} from '@mui/material';
+import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
+import NotesRoundedIcon from '@mui/icons-material/NotesRounded';
+import AvTimerRoundedIcon from '@mui/icons-material/AvTimerRounded';
+import { ActivityStatusOption } from '@/Contexts/shared/constants/ActivityStatus';
 
 interface Props {
   activity: ActivityInfo;
@@ -9,55 +22,90 @@ interface Props {
 export default function ActivityCard(props: Props) {
   const { activity } = props;
   return (
-    <Card sx={{ padding: '10px', margin: '10px' }}>
-      <Grid container>
-        <Grid size={6}>
-          <Typography fontWeight={700}>{activity.name}</Typography>
+    <Card
+      sx={{
+        padding: '10px',
+        margin: '10px',
+      }}
+    >
+      <Grid container spacing={1}>
+        <Grid size={12}>
+          {activity.status === ActivityStatusOption.ON_PROGRESS && (
+            <LinearProgress />
+          )}
         </Grid>
-        <Grid size={3} justifyItems={'right'}>
+        <Grid size={9} display={'flex'} direction={'row'}>
           <Chip
             size="small"
             label={activity.type.isProductive ? 'Productiva' : 'Improdutiva'}
             color={activity.type.isProductive ? 'primary' : 'secondary'}
           />
-        </Grid>
-        <Grid size={3} justifyItems={'right'}>
           <Chip
             size="small"
             variant="outlined"
             label={activity.type.name}
             sx={{
+              ml: '8px',
               color: activity.type.color,
               borderColor: activity.type.color,
             }}
           />
         </Grid>
-        <Grid size={12} display={'flex'} direction={'row'}>
-          <Typography
-            fontWeight={600}
-            fontSize={'16px'}
-            sx={{ marginRight: '8px' }}
-          >
-            Descripción:
-          </Typography>
-          <Typography>{activity.description}</Typography>
+        <Grid
+          size={3}
+          display={'flex'}
+          direction={'row'}
+          justifyContent={'flex-end'}
+        >
+          <Tooltip title="Editar">
+            <NotesRoundedIcon />
+          </Tooltip>
+          <Tooltip title="Eliminar">
+            <DeleteRoundedIcon />
+          </Tooltip>
         </Grid>
-        <Grid size={12} display={'flex'} direction={'row'}>
-          <Typography
-            fontWeight={600}
-            fontSize={'16px'}
-            sx={{ marginRight: '8px' }}
-          >
-            Estado:
-          </Typography>
-          <Typography>
-            {
+
+        <Grid size={12}>
+          <Typography fontWeight={700}>{activity.name}</Typography>
+        </Grid>
+
+        <Grid size={4} display={'flex'} direction={'row'}>
+          <Chip
+            size="small"
+            label={
               ActivityStatusDict.filter(
                 (item) => item.value === activity.status
               )[0].label
             }
-          </Typography>
+          />
         </Grid>
+        <Grid size={6} display={'flex'} direction={'row'}>
+          <Typography>Tiempo Total:</Typography>
+        </Grid>
+
+        <Grid size={4} display={'flex'} direction={'row'}>
+          <Button
+            variant="outlined"
+            color="primary"
+            endIcon={
+              activity.status === ActivityStatusOption.ON_PROGRESS ? (
+                <CircularProgress size="20px" color="success" />
+              ) : (
+                <AvTimerRoundedIcon />
+              )
+            }
+          >
+            {activity.status === ActivityStatusOption.ON_PROGRESS
+              ? 'Parar'
+              : 'Iniciar'}
+          </Button>
+        </Grid>
+        <Grid size={8} display={'flex'} justifyContent={'end'}>
+          <Button variant="outlined" color="error">
+            Finalizar
+          </Button>
+        </Grid>
+
         <Grid size={6}>
           <Typography color="text.secondary" fontSize={'12px'}>
             Creada: {activity.createdAt?.toLocaleString()}

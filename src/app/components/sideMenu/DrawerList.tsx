@@ -29,7 +29,7 @@ const menuItems = [
 ];
 
 export default function DrawerList() {
-  const [selectedIndex, setSelectedIndex] = useState(1);
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const onClick = (index: number) => {
     setSelectedIndex(index);
   };
