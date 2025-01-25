@@ -2,23 +2,18 @@
 
 import ActivitiesOnGoingFinder from '@/Contexts/Activity/application/ActivitiesOnGoingFinder';
 import ActivityRepositoryPrisma from '@/Contexts/Activity/repository/ActivityRepositoryPrisma';
-import { getServerAuthSession } from '../../auth/auth';
-import { redirect } from 'next/navigation';
-import { linkTo } from '../../shared/linkTo';
 import ActivityInfo from '../../shared/types/ActivityInfo';
 import isUserAuth from '../../shared/checkUserAuth';
 
 export default async function getActivitiesOnGoing(): Promise<ActivityInfo[]> {
   try {
     const session = await isUserAuth();
-    const activitiesNotComletedFinder = new ActivitiesOnGoingFinder(
+    const activitiesOnGoingFinder = new ActivitiesOnGoingFinder(
       new ActivityRepositoryPrisma()
     );
-    const result = await activitiesNotComletedFinder.exec(
-      session.user.accountId
-    );
+    const result = await activitiesOnGoingFinder.exec(session.user.accountId);
     return result;
   } catch (e) {
-    return []; // todo responder un status para mostrar errores en el front (todos lo action get)
+    return [];
   }
 }

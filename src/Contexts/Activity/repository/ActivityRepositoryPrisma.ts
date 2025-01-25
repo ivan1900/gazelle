@@ -46,6 +46,7 @@ export default class ActivityRepositoryPrisma implements ActivityRepository {
         },
         include: {
           activity_type: true,
+          action_time: true,
         },
       });
       const activities: ActivityInfo[] = result.map((activity) => {
@@ -59,6 +60,13 @@ export default class ActivityRepositoryPrisma implements ActivityRepository {
             isProductive: activity.activity_type?.is_productive || false,
             color: activity.activity_type?.color || '',
           },
+          actions: activity.action_time.map((action) => {
+            return {
+              id: action.id,
+              start: action.start,
+              end: action.end,
+            };
+          }),
           createdAt: activity.created_at,
           updatedAt: activity.updated_at,
         };
@@ -148,14 +156,16 @@ export default class ActivityRepositoryPrisma implements ActivityRepository {
           id: 'desc',
         },
       });
-      await prisma.action_time.update({
-        where: {
-          id: lastTimer?.id,
-        },
-        data: {
-          end: new Date(),
-        },
-      });
+      if (lastTimer) {
+        await prisma.action_time.update({
+          where: {
+            id: lastTimer?.id,
+          },
+          data: {
+            end: new Date(),
+          },
+        });
+      }
     } catch (e) {
       throw new Error(prismaErrorHandle(e));
     }

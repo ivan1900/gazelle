@@ -5,6 +5,7 @@ import {
   Card,
   Chip,
   CircularProgress,
+  duration,
   Grid2 as Grid,
   LinearProgress,
   Tooltip,
@@ -16,6 +17,8 @@ import AvTimerRoundedIcon from '@mui/icons-material/AvTimerRounded';
 import { ActivityStatusOption } from '@/Contexts/shared/constants/ActivityStatus';
 import startActivityTimer from '@/app/server/actions/activity/startActivityTimer';
 import stopActivityTimer from '@/app/server/actions/activity/stopActivityTimer';
+import { act, useEffect, useState } from 'react';
+import useTimeHook from './hooks/useTimeHook';
 
 interface Props {
   activity: ActivityInfo;
@@ -24,14 +27,19 @@ interface Props {
 
 export default function ActivityCard(props: Props) {
   const { activity, update } = props;
+  const { totalDuration, startTimer, stopTimer } = useTimeHook(
+    activity.actions
+  );
 
   const handleStartTimer = async () => {
     const ok = await startActivityTimer(activity.id);
     update();
+    startTimer();
   };
 
   const handleStopTimer = async () => {
     const ok = await stopActivityTimer(activity.id);
+    stopTimer();
     update();
   };
 
@@ -94,7 +102,7 @@ export default function ActivityCard(props: Props) {
           />
         </Grid>
         <Grid size={6} display={'flex'} direction={'row'}>
-          <Typography>Tiempo Total:</Typography>
+          <Typography>Tiempo Total: {totalDuration}</Typography>
         </Grid>
 
         <Grid size={4} display={'flex'} direction={'row'}>
