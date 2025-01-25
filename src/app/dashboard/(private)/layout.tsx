@@ -28,7 +28,6 @@ export default function DashboardLayout({
   };
 
   const handleDrawerToggle = () => {
-    console.log('handleDrawerToggle');
     if (!isClosing) {
       setMobileOpen(!mobileOpen);
     }

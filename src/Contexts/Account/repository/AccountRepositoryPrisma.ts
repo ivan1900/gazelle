@@ -22,7 +22,7 @@ export default class AccountRepositoryPrisma implements AccountRepository {
 
       return accountEntity;
     } catch (error) {
-      console.log(error);
+      console.error(error);
       return null;
     }
   }

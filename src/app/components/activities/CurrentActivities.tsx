@@ -25,12 +25,10 @@ export default function CurrentActivities() {
 
   const loadActivities = async () => {
     const result = await getActivitiesOnGoing();
-    console.log(result);
     setActivities(result);
   };
 
   const handleClose = () => {
-    console.log('handleClose');
     handleCloseModal();
     loadActivities();
   };

@@ -148,7 +148,7 @@ export default class ActivityRepositoryPrisma implements ActivityRepository {
           id: 'desc',
         },
       });
-      await prisma.action_time.updateMany({
+      await prisma.action_time.update({
         where: {
           id: lastTimer?.id,
         },
