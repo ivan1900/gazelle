@@ -9,6 +9,7 @@ export default class ActivitiesOnGoingFinder {
       const result = await this.repository.findAllOnGoing(accountId);
       return result;
     } catch (e) {
+      console.error(e);
       throw e;
     }
   }

@@ -14,13 +14,13 @@ export default async function createActivity(
     const creator = new ActivityCreator(new ActivityRepositoryPrisma());
     dto.accountId = session.user.accountId;
     const result = await creator.exec(dto);
-    if (!result?.ok) {
+    if (!result) {
       return { ok: false, message: 'Internal Server Error' };
     }
     return {
       ok: true,
       message: 'Actividad creada',
-      data: result.data,
+      data: result,
     };
   } catch (e) {
     if (e instanceof Error) {

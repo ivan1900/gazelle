@@ -13,45 +13,32 @@ describe('ActivityTimerStarter', () => {
     activityTimerStarter = new ActivityTimerStarter(activityRepository);
   });
 
-  it('should start and stop the timer successfully', async () => {
-    (activityRepository.stopTimer as jest.Mock).mockResolvedValueOnce(
-      undefined
-    );
-    (activityRepository.startTimer as jest.Mock).mockResolvedValueOnce(
-      undefined
-    );
+  it('should stop and start the timer for the given activityId', async () => {
+    const activityId = 1;
 
-    const result = await activityTimerStarter.exec(1);
+    await activityTimerStarter.exec(activityId);
 
-    expect(activityRepository.stopTimer).toHaveBeenCalledWith(1);
-    expect(activityRepository.startTimer).toHaveBeenCalledWith(1);
-    expect(result).toBe(true);
+    expect(activityRepository.stopTimer).toHaveBeenCalledWith(activityId);
+    expect(activityRepository.startTimer).toHaveBeenCalledWith(activityId);
   });
 
-  it('should return false if stopTimer throws an error', async () => {
-    (activityRepository.stopTimer as jest.Mock).mockRejectedValueOnce(
-      new Error('Error stopping timer')
-    );
+  it('should throw an error if stopTimer fails', async () => {
+    const activityId = 1;
+    const error = new Error('stopTimer failed');
+    (activityRepository.stopTimer as jest.Mock).mockRejectedValueOnce(error);
 
-    const result = await activityTimerStarter.exec(1);
-
-    expect(activityRepository.stopTimer).toHaveBeenCalledWith(1);
+    await expect(activityTimerStarter.exec(activityId)).rejects.toThrow(error);
+    expect(activityRepository.stopTimer).toHaveBeenCalledWith(activityId);
     expect(activityRepository.startTimer).not.toHaveBeenCalled();
-    expect(result).toBe(false);
   });
 
-  it('should return false if startTimer throws an error', async () => {
-    (activityRepository.stopTimer as jest.Mock).mockResolvedValueOnce(
-      undefined
-    );
-    (activityRepository.startTimer as jest.Mock).mockRejectedValueOnce(
-      new Error('Error starting timer')
-    );
+  it('should throw an error if startTimer fails', async () => {
+    const activityId = 1;
+    const error = new Error('startTimer failed');
+    (activityRepository.startTimer as jest.Mock).mockRejectedValueOnce(error);
 
-    const result = await activityTimerStarter.exec(1);
-
-    expect(activityRepository.stopTimer).toHaveBeenCalledWith(1);
-    expect(activityRepository.startTimer).toHaveBeenCalledWith(1);
-    expect(result).toBe(false);
+    await expect(activityTimerStarter.exec(activityId)).rejects.toThrow(error);
+    expect(activityRepository.stopTimer).toHaveBeenCalledWith(activityId);
+    expect(activityRepository.startTimer).toHaveBeenCalledWith(activityId);
   });
 });
