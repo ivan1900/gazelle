@@ -6,13 +6,11 @@ import { getServerAuthSession } from '../../auth/auth';
 import { redirect } from 'next/navigation';
 import { linkTo } from '../../shared/linkTo';
 import ActivityInfo from '../../shared/types/ActivityInfo';
+import isUserAuth from '../../shared/checkUserAuth';
 
 export default async function getActivitiesOnGoing(): Promise<ActivityInfo[]> {
   try {
-    const session = await getServerAuthSession();
-    if (!session?.user?.accountId) {
-      redirect(linkTo.LOGIN);
-    }
+    const session = await isUserAuth();
     const activitiesNotComletedFinder = new ActivitiesOnGoingFinder(
       new ActivityRepositoryPrisma()
     );

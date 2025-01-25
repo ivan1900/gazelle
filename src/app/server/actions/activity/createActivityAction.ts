@@ -7,15 +7,13 @@ import { ActionResponse } from '@/app/server/shared/responseAction';
 import { getServerAuthSession } from '../../auth/auth';
 import { redirect } from 'next/navigation';
 import { linkTo } from '../../shared/linkTo';
+import isUserAuth from '../../shared/checkUserAuth';
 
 export default async function createActivityAction(
   dto: ActivityDto
 ): Promise<ActionResponse> {
   try {
-    const session = await getServerAuthSession();
-    if (!session) {
-      redirect(linkTo.LOGIN);
-    }
+    const session = await isUserAuth();
     const repository = new ActivityRepositoryPrisma();
     const creator = new ActivityCreator(repository);
     dto.accountId = session.user.accountId;
