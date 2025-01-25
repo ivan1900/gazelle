@@ -14,13 +14,26 @@ import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import NotesRoundedIcon from '@mui/icons-material/NotesRounded';
 import AvTimerRoundedIcon from '@mui/icons-material/AvTimerRounded';
 import { ActivityStatusOption } from '@/Contexts/shared/constants/ActivityStatus';
+import startActivityTimerAction from '@/app/server/actions/activity/startTimerActivity';
 
 interface Props {
   activity: ActivityInfo;
+  update: () => void;
 }
 
 export default function ActivityCard(props: Props) {
-  const { activity } = props;
+  const { activity, update } = props;
+
+  const handleStartTimer = async () => {
+    const ok = await startActivityTimerAction(activity.id);
+    update();
+  };
+
+  const handleStopTimer = async () => {
+    // const ok = await stopActivityTimerAction(activity.id);
+    update();
+  };
+
   return (
     <Card
       sx={{
@@ -93,6 +106,11 @@ export default function ActivityCard(props: Props) {
               ) : (
                 <AvTimerRoundedIcon />
               )
+            }
+            onClick={
+              activity.status === ActivityStatusOption.WAITING
+                ? handleStartTimer
+                : handleStopTimer
             }
           >
             {activity.status === ActivityStatusOption.ON_PROGRESS

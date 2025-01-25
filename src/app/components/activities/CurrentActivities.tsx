@@ -25,6 +25,7 @@ export default function CurrentActivities() {
 
   const loadActivities = async () => {
     const result = await getActivitiesOnGoing();
+    console.log(result);
     setActivities(result);
   };
 
@@ -53,7 +54,11 @@ export default function CurrentActivities() {
         </Stack>
         <Box sx={{ overflow: 'auto', maxHeight: '75vh' }}>
           {activities.map((activity) => (
-            <ActivityCard key={activity.id} activity={activity} />
+            <ActivityCard
+              key={activity.id}
+              activity={activity}
+              update={loadActivities}
+            />
           ))}
         </Box>
       </Paper>

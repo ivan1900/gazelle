@@ -107,4 +107,57 @@ export default class ActivityRepositoryPrisma implements ActivityRepository {
       throw new Error(prismaErrorHandle(e));
     }
   }
+
+  async startTimer(activityId: number): Promise<void> {
+    try {
+      await prisma.activity.update({
+        where: {
+          id: activityId,
+        },
+        data: {
+          status: ActivityStatusOption.ON_PROGRESS,
+        },
+      });
+      await prisma.action_time.create({
+        data: {
+          activity_id: activityId,
+          start: new Date(),
+        },
+      });
+    } catch (e) {
+      throw new Error(prismaErrorHandle(e));
+    }
+  }
+
+  async stopTimer(activityId: number): Promise<void> {
+    try {
+      await prisma.activity.update({
+        where: {
+          id: activityId,
+        },
+        data: {
+          status: ActivityStatusOption.WAITING,
+        },
+      });
+      const lastTimer = await prisma.action_time.findFirst({
+        where: {
+          activity_id: activityId,
+          end: null,
+        },
+        orderBy: {
+          id: 'desc',
+        },
+      });
+      await prisma.action_time.updateMany({
+        where: {
+          id: lastTimer?.id,
+        },
+        data: {
+          end: new Date(),
+        },
+      });
+    } catch (e) {
+      throw new Error(prismaErrorHandle(e));
+    }
+  }
 }

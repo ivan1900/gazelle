@@ -12,4 +12,6 @@ export default interface ActivityRepository {
     accountId: number;
     lastDays: number;
   }): Promise<ActivityDto[]>;
+  startTimer(activityId: number): Promise<void>;
+  stopTimer(activityId: number): Promise<void>;
 }

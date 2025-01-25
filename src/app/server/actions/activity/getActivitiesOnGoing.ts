@@ -16,7 +16,11 @@ export default async function getActivitiesOnGoing(): Promise<ActivityInfo[]> {
     const activitiesNotComletedFinder = new ActivitiesOnGoingFinder(
       new ActivityRepositoryPrisma()
     );
-    return await activitiesNotComletedFinder.exec(session.user.accountId);
+    const result = await activitiesNotComletedFinder.exec(
+      session.user.accountId
+    );
+    console.log('result', result);
+    return result;
   } catch (e) {
     return []; // todo responder un status para mostrar errores en el front (todos lo action get)
   }

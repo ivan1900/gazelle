@@ -15,7 +15,7 @@ import {
 import useActivityType from '../shared/hooks/useActivityType';
 import SquareRoundedIcon from '@mui/icons-material/SquareRounded';
 import { useState } from 'react';
-import createActivityAction from '@/app/server/actions/activity/createAcitvityAction';
+import createActivityAction from '@/app/server/actions/activity/createActivityAction';
 import { ActionResponse } from '@/app/server/shared/responseAction';
 import { ActivityStatusDict } from '@/app/server/shared/constants/ActivityStatusOption';
 
