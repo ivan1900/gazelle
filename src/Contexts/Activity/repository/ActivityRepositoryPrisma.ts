@@ -158,6 +158,21 @@ export default class ActivityRepositoryPrisma implements ActivityRepository {
     return activityInfo;
   }
 
+  async setActivityAsCompleted(activityId: number): Promise<void> {
+    try {
+      await prisma.activity.update({
+        where: {
+          id: activityId,
+        },
+        data: {
+          status: ActivityStatusOption.COMPLETED,
+        },
+      });
+    } catch (e) {
+      throw new Error(prismaErrorHandle(e));
+    }
+  }
+
   private activityInfoMapper(
     activity: {
       action_time: {

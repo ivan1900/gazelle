@@ -8,7 +8,8 @@ export default async function startActivityTimer(
   activityId: number
 ): Promise<boolean> {
   await isUserAuth();
-  const repository = new ActivityRepositoryPrisma();
-  const startTimerActivity = new ActivityTimerStarter(repository);
+  const startTimerActivity = new ActivityTimerStarter(
+    new ActivityRepositoryPrisma()
+  );
   return await startTimerActivity.exec(activityId);
 }

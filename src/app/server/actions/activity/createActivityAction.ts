@@ -14,8 +14,7 @@ export default async function createActivityAction(
 ): Promise<ActionResponse> {
   try {
     const session = await isUserAuth();
-    const repository = new ActivityRepositoryPrisma();
-    const creator = new ActivityCreator(repository);
+    const creator = new ActivityCreator(new ActivityRepositoryPrisma());
     dto.accountId = session.user.accountId;
     const result = await creator.exec(dto);
     if (!result) {

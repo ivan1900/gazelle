@@ -17,6 +17,7 @@ import { ActivityStatusOption } from '@/Contexts/shared/constants/ActivityStatus
 import startActivityTimer from '@/app/server/actions/activity/startActivityTimer';
 import stopActivityTimer from '@/app/server/actions/activity/stopActivityTimer';
 import useTimeHook from './hooks/useTimeHook';
+import finishActivity from '@/app/server/actions/activity/finishActivity';
 
 interface Props {
   activity: ActivityInfo;
@@ -37,6 +38,12 @@ export default function ActivityCard(props: Props) {
 
   const handleStopTimer = async () => {
     const ok = await stopActivityTimer(activity.id);
+    stopTimer();
+    update();
+  };
+
+  const handleFinishActivity = async () => {
+    const ok = await finishActivity(activity.id);
     stopTimer();
     update();
   };
@@ -126,7 +133,11 @@ export default function ActivityCard(props: Props) {
           </Button>
         </Grid>
         <Grid size={8} display={'flex'} justifyContent={'end'}>
-          <Button variant="outlined" color="error">
+          <Button
+            variant="outlined"
+            color="error"
+            onClick={handleFinishActivity}
+          >
             Finalizar
           </Button>
         </Grid>

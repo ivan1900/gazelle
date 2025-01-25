@@ -1,15 +1,15 @@
 'use server';
 
-import ActivityTimerStopper from '@/Contexts/Activity/application/ActivityTimerStopper';
 import ActivityRepositoryPrisma from '@/Contexts/Activity/repository/ActivityRepositoryPrisma';
 import isUserAuth from '../../shared/checkUserAuth';
+import ActivityFinalizer from '@/Contexts/Activity/application/ActivityFinalizer';
 
-export default async function stopActivityTimer(
+export default async function finishActivity(
   activityId: number
 ): Promise<boolean> {
   await isUserAuth();
-  const activityTimerStopper = new ActivityTimerStopper(
+  const activityFinalizaer = new ActivityFinalizer(
     new ActivityRepositoryPrisma()
   );
-  return await activityTimerStopper.exec(activityId);
+  return await activityFinalizaer.exec(activityId);
 }

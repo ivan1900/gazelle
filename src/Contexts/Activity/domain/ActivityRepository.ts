@@ -15,4 +15,5 @@ export default interface ActivityRepository {
   startTimer(activityId: number): Promise<void>;
   stopTimer(activityId: number): Promise<void>;
   getActivityOnGoing(accountId: number): Promise<ActivityInfo | null>;
+  setActivityAsCompleted(activityId: number): Promise<void>;
 }
