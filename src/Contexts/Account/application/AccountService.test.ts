@@ -1,7 +1,7 @@
-import { accountServiceAuth } from './AccountServiceAuth';
 import AccountRepositoryPrisma from '../repository/AccountRepositoryPrisma';
+import { accountServiceAuth } from './AccountServiceAuth';
 
-jest.mock('../repository/accountRepositoryPrisma');
+jest.mock('../repository/AccountRepositoryPrisma');
 
 describe('userService', () => {
   describe('authenticateGoogle', () => {

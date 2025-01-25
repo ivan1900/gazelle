@@ -15,7 +15,7 @@ import {
 import useActivityType from '../shared/hooks/useActivityType';
 import SquareRoundedIcon from '@mui/icons-material/SquareRounded';
 import { useState } from 'react';
-import createActivityAction from '@/app/server/actions/activity/createActivityAction';
+import createActivity from '@/app/server/actions/activity/createActivityAction';
 import { ActionResponse } from '@/app/server/shared/responseAction';
 import { ActivityStatusDict } from '@/app/server/shared/constants/ActivityStatusOption';
 
@@ -45,7 +45,7 @@ export default function NewActivityForm(props: Props) {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const result = await createActivityAction({
+    const result = await createActivity({
       name: inputs.activityName,
       description: inputs.activityDescription,
       status: inputs.activityStatus,

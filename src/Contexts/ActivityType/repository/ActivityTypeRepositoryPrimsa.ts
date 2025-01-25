@@ -2,7 +2,7 @@ import ActivityTypeRepository from '@/Contexts/ActivityType/domain/ActivityTypeR
 import prisma from '../../../app/db';
 import ActivityType from '@/Contexts/ActivityType/domain/ActivityType';
 import { ActivityTypeDto } from '../domain/ActivityTypeDto';
-import { prismaErrorHandle } from '@/Contexts/shared/constants/PrismaErrors';
+import { prismaErrorHandle } from '@/Contexts/shared/domain/constants/PrismaErrors';
 
 export default class ActivityTypeRepositoryPrisma
   implements ActivityTypeRepository

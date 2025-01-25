@@ -1,3 +1,4 @@
+import { ResponseDto } from '@/Contexts/shared/domain/types/ResponseDto';
 import { ActivityDto } from '../domain/AcitvityDto';
 import Activity from '../domain/Activity';
 import ActivityRepository from '../domain/ActivityRepository';
@@ -5,12 +6,22 @@ import ActivityRepository from '../domain/ActivityRepository';
 export default class ActivityCreator {
   constructor(private repository: ActivityRepository) {}
 
-  async exec(dto: ActivityDto): Promise<Activity | null> {
+  async exec(dto: ActivityDto): Promise<ResponseDto | null> {
     try {
       const activity = Activity.fromPrimitives(dto);
-      return await this.repository.create(activity);
+      const newActivity = await this.repository.create(activity);
+      return {
+        ok: true,
+        message: 'Activity created',
+        data: newActivity?.toPrimitives(),
+      };
     } catch (e) {
-      throw e;
+      console.error(e);
+      return {
+        ok: false,
+        message: 'Internal Server Error',
+        data: null,
+      };
     }
   }
 }

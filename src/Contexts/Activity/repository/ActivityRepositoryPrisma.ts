@@ -1,8 +1,8 @@
 import prisma from '@/app/db';
 import ActivityRepository from '../domain/ActivityRepository';
 import Activity from '../domain/Activity';
-import { prismaErrorHandle } from '@/Contexts/shared/constants/PrismaErrors';
-import { ActivityStatusOption } from '@/Contexts/shared/constants/ActivityStatus';
+import { prismaErrorHandle } from '@/Contexts/shared/domain/constants/PrismaErrors';
+import { ActivityStatusOption } from '@/Contexts/shared/domain/constants/ActivityStatus';
 import { ActivityDto } from '../domain/AcitvityDto';
 import { ActivityInfo } from '../domain/ActivityInfo';
 

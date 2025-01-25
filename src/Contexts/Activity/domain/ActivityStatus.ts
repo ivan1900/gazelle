@@ -1,4 +1,4 @@
-import { ActivityStatusOption } from '../../shared/constants/ActivityStatus';
+import { ActivityStatusOption } from '../../shared/domain/constants/ActivityStatus';
 import EnumValueObject from '../../shared/domain/value-object/EnumValueObject';
 
 export default class ActivityStatus extends EnumValueObject<string> {

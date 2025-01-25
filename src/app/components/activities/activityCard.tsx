@@ -13,7 +13,7 @@ import {
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import NotesRoundedIcon from '@mui/icons-material/NotesRounded';
 import AvTimerRoundedIcon from '@mui/icons-material/AvTimerRounded';
-import { ActivityStatusOption } from '@/Contexts/shared/constants/ActivityStatus';
+import { ActivityStatusOption } from '@/Contexts/shared/domain/constants/ActivityStatus';
 import startActivityTimer from '@/app/server/actions/activity/startActivityTimer';
 import stopActivityTimer from '@/app/server/actions/activity/stopActivityTimer';
 import useTimeHook from './hooks/useTimeHook';
