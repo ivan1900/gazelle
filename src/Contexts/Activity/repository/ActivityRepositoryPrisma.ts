@@ -2,7 +2,6 @@ import prisma from '@/app/db';
 import ActivityRepository from '../domain/ActivityRepository';
 import Activity from '../domain/Activity';
 import { prismaErrorHandle } from '@/Contexts/shared/constants/PrismaErrors';
-import ActivityStatus from '../domain/ActivityStatus';
 import { ActivityStatusOption } from '@/Contexts/shared/constants/ActivityStatus';
 import { ActivityDto } from '../domain/AcitvityDto';
 import { ActivityInfo } from '../domain/ActivityInfo';
@@ -50,27 +49,7 @@ export default class ActivityRepositoryPrisma implements ActivityRepository {
         },
       });
       const activities: ActivityInfo[] = result.map((activity) => {
-        const activityInfo: ActivityInfo = {
-          id: activity.id,
-          name: activity.name,
-          description: activity.description || '',
-          status: activity.status,
-          type: {
-            name: activity.activity_type?.name || '',
-            isProductive: activity.activity_type?.is_productive || false,
-            color: activity.activity_type?.color || '',
-          },
-          actions: activity.action_time.map((action) => {
-            return {
-              id: action.id,
-              start: action.start,
-              end: action.end,
-            };
-          }),
-          createdAt: activity.created_at,
-          updatedAt: activity.updated_at,
-        };
-        return activityInfo;
+        return this.activityInfoMapper(activity);
       });
       return activities;
     } catch (e) {
@@ -137,29 +116,26 @@ export default class ActivityRepositoryPrisma implements ActivityRepository {
     }
   }
 
-  async stopTimer(activityId: number): Promise<void> {
+  async stopTimer(accountId: number): Promise<void> {
     try {
-      await prisma.activity.update({
+      const activitieOnGoing = await prisma.activity.findFirst({
         where: {
-          id: activityId,
+          account_id: accountId,
+          status: ActivityStatusOption.ON_PROGRESS,
+        },
+      });
+      await prisma.activity.updateMany({
+        where: {
+          account_id: accountId,
         },
         data: {
           status: ActivityStatusOption.WAITING,
         },
       });
-      const lastTimer = await prisma.action_time.findFirst({
-        where: {
-          activity_id: activityId,
-          end: null,
-        },
-        orderBy: {
-          id: 'desc',
-        },
-      });
-      if (lastTimer) {
-        await prisma.action_time.update({
+      if (activitieOnGoing) {
+        await prisma.action_time.updateMany({
           where: {
-            id: lastTimer?.id,
+            activity_id: activitieOnGoing?.id,
           },
           data: {
             end: new Date(),
@@ -169,5 +145,72 @@ export default class ActivityRepositoryPrisma implements ActivityRepository {
     } catch (e) {
       throw new Error(prismaErrorHandle(e));
     }
+  }
+
+  async getActivityOnGoing(accountId: number): Promise<ActivityInfo | null> {
+    const activity = await prisma.activity.findFirst({
+      where: {
+        account_id: accountId,
+        status: ActivityStatusOption.ON_PROGRESS,
+      },
+      include: {
+        activity_type: true,
+        action_time: true,
+      },
+    });
+    if (!activity) {
+      return null;
+    }
+    const activityInfo: ActivityInfo = this.activityInfoMapper(activity);
+    return activityInfo;
+  }
+
+  private activityInfoMapper(
+    activity: {
+      action_time: {
+        id: number;
+        activity_id: number;
+        start: Date | null;
+        end: Date | null;
+      }[];
+      activity_type: {
+        id: number;
+        name: string;
+        account_id: number;
+        is_productive: boolean;
+        color: string | null;
+        deleted_at: Date | null;
+      } | null;
+    } & {
+      id: number;
+      name: string;
+      description: string | null;
+      status: string;
+      account_id: number;
+      activity_type_id: number;
+      created_at: Date | null;
+      updated_at: Date | null;
+    }
+  ): ActivityInfo {
+    return {
+      id: activity.id,
+      name: activity.name,
+      description: activity.description || '',
+      status: activity.status,
+      type: {
+        name: activity.activity_type?.name || '',
+        isProductive: activity.activity_type?.is_productive || false,
+        color: activity.activity_type?.color || '',
+      },
+      actions: activity.action_time.map((action) => {
+        return {
+          id: action.id,
+          start: action.start,
+          end: action.end,
+        };
+      }),
+      createdAt: activity.created_at,
+      updatedAt: activity.updated_at,
+    };
   }
 }
