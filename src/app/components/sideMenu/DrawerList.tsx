@@ -10,8 +10,9 @@ import {
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import Link from 'next/link';
-import { useState } from 'react';
+import { use, useEffect, useState } from 'react';
 import { grey } from '@mui/material/colors';
+import { usePathname } from 'next/navigation';
 
 const menuItems = [
   {
@@ -30,9 +31,14 @@ const menuItems = [
 
 export default function DrawerList() {
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const onClick = (index: number) => {
+  const path = usePathname();
+
+  useEffect(() => {
+    console.log('path', path);
+    const index = menuItems.findIndex((item) => item.path === path);
     setSelectedIndex(index);
-  };
+  }, [path]);
+
   return (
     <div>
       <Toolbar></Toolbar>
@@ -47,13 +53,7 @@ export default function DrawerList() {
             }}
           >
             {/* <Link href={item.path}> */}
-            <ListItemButton
-              component={Link}
-              href={item.path}
-              onClick={() => {
-                onClick(index);
-              }}
-            >
+            <ListItemButton component={Link} href={item.path}>
               <ListItemIcon>
                 <item.icon />
               </ListItemIcon>
