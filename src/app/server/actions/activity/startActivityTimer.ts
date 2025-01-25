@@ -7,11 +7,8 @@ import isUserAuth from '../../shared/checkUserAuth';
 export default async function startActivityTimer(
   activityId: number
 ): Promise<boolean> {
-  const session = await isUserAuth();
+  await isUserAuth();
   const repository = new ActivityRepositoryPrisma();
   const startTimerActivity = new ActivityTimerStarter(repository);
-  return await startTimerActivity.exec({
-    accountId: session.user.accountId,
-    activityId,
-  });
+  return await startTimerActivity.exec(activityId);
 }

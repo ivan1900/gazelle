@@ -116,32 +116,25 @@ export default class ActivityRepositoryPrisma implements ActivityRepository {
     }
   }
 
-  async stopTimer(accountId: number): Promise<void> {
+  async stopTimer(activityId: number): Promise<void> {
     try {
-      const activitieOnGoing = await prisma.activity.findFirst({
+      await prisma.activity.update({
         where: {
-          account_id: accountId,
-          status: ActivityStatusOption.ON_PROGRESS,
-        },
-      });
-      await prisma.activity.updateMany({
-        where: {
-          account_id: accountId,
+          id: activityId,
         },
         data: {
           status: ActivityStatusOption.WAITING,
         },
       });
-      if (activitieOnGoing) {
-        await prisma.action_time.updateMany({
-          where: {
-            activity_id: activitieOnGoing?.id,
-          },
-          data: {
-            end: new Date(),
-          },
-        });
-      }
+      await prisma.action_time.updateMany({
+        where: {
+          activity_id: activityId,
+          end: null,
+        },
+        data: {
+          end: new Date(),
+        },
+      });
     } catch (e) {
       throw new Error(prismaErrorHandle(e));
     }

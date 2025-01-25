@@ -36,7 +36,7 @@ export default function ActivityCard(props: Props) {
   };
 
   const handleStopTimer = async () => {
-    const ok = await stopActivityTimer();
+    const ok = await stopActivityTimer(activity.id);
     stopTimer();
     update();
   };
