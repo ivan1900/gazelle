@@ -34,7 +34,6 @@ export default function DrawerList() {
   const path = usePathname();
 
   useEffect(() => {
-    console.log('path', path);
     const index = menuItems.findIndex((item) => item.path === path);
     setSelectedIndex(index);
   }, [path]);

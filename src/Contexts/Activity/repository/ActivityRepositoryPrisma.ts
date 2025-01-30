@@ -173,6 +173,23 @@ export default class ActivityRepositoryPrisma implements ActivityRepository {
     }
   }
 
+  async remove(activityId: number): Promise<void> {
+    try {
+      await prisma.action_time.deleteMany({
+        where: {
+          activity_id: activityId,
+        },
+      });
+      await prisma.activity.delete({
+        where: {
+          id: activityId,
+        },
+      });
+    } catch (e) {
+      throw new Error(prismaErrorHandle(e));
+    }
+  }
+
   private activityInfoMapper(
     activity: {
       action_time: {

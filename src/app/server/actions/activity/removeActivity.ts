@@ -1,22 +1,20 @@
 'use server';
 
+import ActivityRemover from '@/Contexts/Activity/application/ActivityRemover';
 import ActivityRepositoryPrisma from '@/Contexts/Activity/repository/ActivityRepositoryPrisma';
 import isUserAuth from '../../shared/checkUserAuth';
-import ActivityFinalizer from '@/Contexts/Activity/application/ActivityFinalizer';
 import { ActionResponse } from '../../shared/responseAction';
 
-export default async function finishActivity(
+export default async function removeActivity(
   activityId: number
 ): Promise<ActionResponse> {
   await isUserAuth();
   try {
-    const activityFinalizer = new ActivityFinalizer(
-      new ActivityRepositoryPrisma()
-    );
-    const result = await activityFinalizer.exec(activityId);
+    const activityRemover = new ActivityRemover(new ActivityRepositoryPrisma());
+    const response = await activityRemover.exec(activityId);
     return {
-      ok: result,
-      message: result ? 'Actividad finalizada' : 'Internal Server Error',
+      ok: response,
+      message: response ? 'Actividad eliminada' : 'Internal Server Error',
     };
   } catch (e) {
     return { ok: false, message: 'Internal Server Error' };
