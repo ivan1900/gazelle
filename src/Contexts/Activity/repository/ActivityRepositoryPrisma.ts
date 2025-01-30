@@ -63,7 +63,7 @@ export default class ActivityRepositoryPrisma implements ActivityRepository {
   }: {
     accountId: number;
     lastDays: number;
-  }): Promise<ActivityDto[]> {
+  }): Promise<ActivityInfo[]> {
     try {
       const currentLessLastDays = new Date(
         new Date().setDate(new Date().getDate() - lastDays)
@@ -76,18 +76,13 @@ export default class ActivityRepositoryPrisma implements ActivityRepository {
             gte: currentLessLastDays,
           },
         },
+        include: {
+          activity_type: true,
+          action_time: true,
+        },
       });
-      const activities: ActivityDto[] = result.map((activity) => {
-        return {
-          id: activity.id,
-          name: activity.name,
-          description: activity.description || '',
-          status: activity.status,
-          activityTypeId: activity.activity_type_id,
-          accountId: activity.account_id,
-          createdAt: activity.created_at,
-          updatedAt: activity.updated_at,
-        };
+      const activities: ActivityInfo[] = result.map((activity) => {
+        return this.activityInfoMapper(activity);
       });
       return activities;
     } catch (e) {

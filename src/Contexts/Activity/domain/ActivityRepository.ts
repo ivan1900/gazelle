@@ -1,4 +1,3 @@
-import { ActivityDto } from './AcitvityDto';
 import Activity from './Activity';
 import { ActivityInfo } from './ActivityInfo';
 
@@ -11,7 +10,7 @@ export default interface ActivityRepository {
   }: {
     accountId: number;
     lastDays: number;
-  }): Promise<ActivityDto[]>;
+  }): Promise<ActivityInfo[]>;
   startTimer(activityId: number): Promise<void>;
   stopTimer(activityId: number): Promise<void>;
   getActivityOnGoing(accountId: number): Promise<ActivityInfo | null>;

@@ -147,6 +147,7 @@ export default function ActivityCard(props: Props) {
 
           <Grid size={4} display={'flex'} direction={'row'}>
             <Button
+              disabled={activity.status === ActivityStatusOption.COMPLETED}
               variant="outlined"
               color="primary"
               endIcon={
@@ -168,13 +169,15 @@ export default function ActivityCard(props: Props) {
             </Button>
           </Grid>
           <Grid size={8} display={'flex'} justifyContent={'end'}>
-            <Button
-              variant="outlined"
-              color="error"
-              onClick={handleFinishActivity}
-            >
-              Finalizar
-            </Button>
+            {activity.status !== ActivityStatusOption.COMPLETED && (
+              <Button
+                variant="outlined"
+                color="error"
+                onClick={handleFinishActivity}
+              >
+                Finalizar
+              </Button>
+            )}
           </Grid>
 
           <Grid size={6}>

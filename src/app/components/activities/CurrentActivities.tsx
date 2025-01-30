@@ -2,9 +2,11 @@
 import {
   Box,
   Button,
+  FormControlLabel,
   Grid2 as Grid,
   Paper,
   Stack,
+  Switch,
   Typography,
 } from '@mui/material';
 import MyModal from '../shared/MyModal';
@@ -14,23 +16,31 @@ import getActivitiesOnGoing from '@/app/server/actions/activity/getActivitiesOnG
 import { useEffect, useState } from 'react';
 import ActivityCard from './activityCard';
 import ActivityInfo from '@/app/server/shared/types/ActivityInfo';
+import getActivitiesFinished from '@/app/server/actions/activity/getActivitiesFinished';
 
 export default function CurrentActivities() {
   const { handleClickAdd, handleCloseModal, openModal } = useMyModal();
   const [activities, setActivities] = useState<ActivityInfo[]>([]);
+  const [showFinished, setShowFinished] = useState(false);
 
   useEffect(() => {
     loadActivities();
-  }, []);
+  }, [showFinished]);
 
   const loadActivities = async () => {
-    const result = await getActivitiesOnGoing();
+    const result = showFinished
+      ? await getActivitiesFinished(90)
+      : await getActivitiesOnGoing();
     setActivities(result);
   };
 
   const handleClose = () => {
     handleCloseModal();
     loadActivities();
+  };
+
+  const handleOnChangeSwitch = () => {
+    setShowFinished(!showFinished);
   };
 
   return (
@@ -49,6 +59,13 @@ export default function CurrentActivities() {
             Nueva
           </Button>
           <Typography>Actividades:</Typography>
+          <FormControlLabel
+            checked={showFinished}
+            control={<Switch color="primary" />}
+            label="Finalizadas"
+            labelPlacement="end"
+            onChange={handleOnChangeSwitch}
+          />
         </Stack>
         <Box sx={{ overflow: 'auto', maxHeight: '75vh' }}>
           {activities.map((activity) => (
