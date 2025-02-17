@@ -23,6 +23,17 @@ jobs:
       - name: Build Gazelle
         run: npm run build
 
+      - name: Make envfile
+        uses: SpicyPizza/create-envfile@v2.0
+        with:
+          envkey_HOST_API_KEY: ${{ secrets.HOST_API_KEY }}
+          envkey_HOST_API: ${{ vars.HOST_API }}
+          envkey_GOOGLE_ID: ${{ secrets.GOOGLE_ID }}
+          envkey_GOOGLE_SECRET: ${{ secrets.GOOGLE_SECRET }}
+          envkey_NEXT_AUTH_SECRET: ${{ secrets.NEXT_AUTH_SECRET }}
+          envkey_NEXTAUTH_URL: ${{ vars.NEXTAUTH_URL }}
+          envkey_DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
       - name: Deploy to Server
         uses: easingthemes/ssh-deploy@v5.1.0
         with:
@@ -32,5 +43,5 @@ jobs:
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
-          TARGET: ${{ secrets.REMOTE_TARGET }}
+          TARGET: '/gazelle'
           EXCLUDE: '/dist/, /node_modules/'
