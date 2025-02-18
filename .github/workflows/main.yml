@@ -43,5 +43,5 @@ jobs:
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
-          TARGET: '/gazelle'
+          TARGET: 'gazelle'
           EXCLUDE: '/dist/, /node_modules/'
