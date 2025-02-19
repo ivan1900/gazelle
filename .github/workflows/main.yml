@@ -39,7 +39,12 @@ jobs:
         with:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           ARGS: '-rlgoDzvc -i --delete'
-          SOURCE: '.'
+          SOURCE: '
+            .next/**
+            public/**
+            node_modules/**
+            package.json
+            '
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
