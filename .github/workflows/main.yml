@@ -45,3 +45,5 @@ jobs:
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           TARGET: 'gazelle'
           EXCLUDE: '/dist/'
+          SCRIPT_BEFORE: |
+            npm install
