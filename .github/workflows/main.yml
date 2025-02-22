@@ -23,15 +23,6 @@ jobs:
       - name: Build Gazelle
         run: npm run build
 
-      - name: Install SSH Key
-        uses: shimataro/ssh-key-action@v2
-        with:
-          key: ${{ secrets.SSH_REMOTE_PUB_KEY }}
-          known_hosts: 'unnecessary'
-
-      - name: Adding Known Hosts
-        run: ssh-keyscan -H ${{ secrets.REMOTE_HOST }} >> ~/.ssh/known_hosts
-
       - name: Make envfile
         uses: SpicyPizza/create-envfile@v2.0
         with:
@@ -43,15 +34,14 @@ jobs:
           envkey_NEXTAUTH_URL: ${{ vars.NEXTAUTH_URL }}
           envkey_DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
-      - name: Deploy with rsync
-        run: rsync -aRvz --delete .env .next next-env.d.ts next.config.mjs package-lock.json package.json tsconfig.json public ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:gazelle
-
-      - name: restart pm2
-        run: |
-          ssh ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_PORT }} '
-            export PATH=$PATH:/home/nodejs/.nvm/versions/node/v22.14.0/bin
-            source ~/.nvm/nvm.sh
-            nvm use lts/jod
-            npm install
-            pm2 restart gazelle --update-env
-          '
+      - name: Deploy to Server
+        uses: easingthemes/ssh-deploy@v5.1.0
+        with:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          ARGS: '-aRvz --delete'
+          SOURCE: '.next next-env.d.ts next.config.mjs package-lock.json package.json tsconfig.json public'
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          TARGET: 'gazelle'
+          EXCLUDE: '/dist/'
