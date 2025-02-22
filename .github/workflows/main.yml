@@ -46,7 +46,8 @@ jobs:
           TARGET: 'gazelle'
           EXCLUDE: '/dist/'
           SCRIPT_BEFORE: |
-            export PATH=$PATH:/home/nodejs/.nvm/versions/node/v20.16.0/bin
+            export PATH=$PATH:/home/nodejs/.nvm/versions/node/v22.14.0/bin
             source ~/.nvm/nvm.sh
-            nvm use lts/iron
+            nvm use lts/jod
             npm install
+            pm2 restart gazelle --update-env
