@@ -38,13 +38,13 @@ jobs:
         uses: easingthemes/ssh-deploy@v5.1.0
         with:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          ARGS: '-arvz --delete'
+          ARGS: '-arvz --delete -oHostKeyAlgorithms=+ssh-rsa,ssh-ed25519'
           SOURCE: '.'
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           TARGET: 'gazelle'
-          EXCLUDE: '/dist/, /node_modules/'
+          EXCLUDE: '/dist/, /node_modules/ /src/ /.vscode/ /.github/'
           SCRIPT_BEFORE: |
             export PATH=$PATH:/home/nodejs/.nvm/versions/node/v22.14.0/bin
             source ~/.nvm/nvm.sh
