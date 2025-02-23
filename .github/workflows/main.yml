@@ -30,7 +30,7 @@ jobs:
           envkey_HOST_API: ${{ vars.HOST_API }}
           envkey_GOOGLE_ID: ${{ secrets.GOOGLE_ID }}
           envkey_GOOGLE_SECRET: ${{ secrets.GOOGLE_SECRET }}
-          envkey_NEXT_AUTH_SECRET: ${{ secrets.NEXT_AUTH_SECRET }}
+          envkey_NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
           envkey_NEXTAUTH_URL: ${{ vars.NEXTAUTH_URL }}
           envkey_DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
