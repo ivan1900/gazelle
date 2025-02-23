@@ -45,3 +45,9 @@ jobs:
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           TARGET: 'gazelle'
           EXCLUDE: '/dist/, /node_modules/'
+          SCRIPT_BEFORE: |
+            export PATH=$PATH:/home/nodejs/.nvm/versions/node/v22.14.0/bin
+            source ~/.nvm/nvm.sh
+            nvm use v22.14.0
+            npm install
+            pm2 restart gazelle --update-env
