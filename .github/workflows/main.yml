@@ -38,7 +38,7 @@ jobs:
         uses: easingthemes/ssh-deploy@v5.1.0
         with:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          ARGS: '-aRvz --delete'
+          ARGS: '-avzr --delete'
           SOURCE: '.next/ next-env.d.ts next.config.mjs package-lock.json package.json tsconfig.json public/'
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
