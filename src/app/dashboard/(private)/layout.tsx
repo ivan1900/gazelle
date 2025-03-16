@@ -34,7 +34,7 @@ export default function DashboardLayout({
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'block' }}>
       <CssBaseline />
 
       <AppMainBar
@@ -53,7 +53,7 @@ export default function DashboardLayout({
         component="main"
         sx={{
           flexGrow: 1,
-          p: 3,
+          p: 2,
           width: { sm: `calc(100% - ${drawerWidth}px)` },
         }}
       >
