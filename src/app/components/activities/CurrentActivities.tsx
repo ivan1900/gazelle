@@ -8,6 +8,7 @@ import {
   Stack,
   Switch,
   Typography,
+  useMediaQuery,
 } from '@mui/material';
 import MyModal from '../shared/MyModal';
 import NewActivityForm from '../activity/NewActivityForm';
@@ -22,6 +23,7 @@ export default function CurrentActivities() {
   const { handleClickAdd, handleCloseModal, openModal } = useMyModal();
   const [activities, setActivities] = useState<ActivityInfo[]>([]);
   const [showFinished, setShowFinished] = useState(false);
+  const isMobile = useMediaQuery('(max-width:600px)');
 
   useEffect(() => {
     loadActivities();
@@ -49,7 +51,7 @@ export default function CurrentActivities() {
         isOpen={openModal}
         onClose={handleClose}
         title="Nueva Actividad"
-        width="600px"
+        width={isMobile ? '90vw' : '45vw'}
       >
         <NewActivityForm closeParent={handleClose} />
       </MyModal>

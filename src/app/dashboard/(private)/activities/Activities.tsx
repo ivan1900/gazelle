@@ -6,7 +6,7 @@ export default async function Activity() {
   return (
     <>
       <Paper sx={{ minHeight: '3%', mt: '-25px', mx: '-26px' }}>
-        <Typography variant="h6" sx={{ px: '15px', py: '2px' }}>
+        <Typography fontWeight={400} sx={{ px: '15px', mt: '12px' }}>
           Actividad
         </Typography>
       </Paper>
