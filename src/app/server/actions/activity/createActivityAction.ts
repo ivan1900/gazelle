@@ -20,7 +20,7 @@ export default async function createActivity(
     return {
       ok: true,
       message: 'Actividad creada',
-      data: result,
+      // data: result, can't return a object, should be serializable
     };
   } catch (e) {
     if (e instanceof Error) {

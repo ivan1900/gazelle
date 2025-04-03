@@ -1,3 +1,4 @@
+'use client';
 import getActivityType from '@/app/server/actions/activityType/getActivityTypeAction';
 import { ActivityTypeDto } from '@/Contexts/ActivityType/domain/ActivityTypeDto';
 import { useEffect, useState } from 'react';
