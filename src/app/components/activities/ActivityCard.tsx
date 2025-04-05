@@ -13,7 +13,8 @@ import {
 } from '@mui/material';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import NotesRoundedIcon from '@mui/icons-material/NotesRounded';
-import AvTimerRoundedIcon from '@mui/icons-material/AvTimerRounded';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import PauseIcon from '@mui/icons-material/Pause';
 import { ActivityStatusOption } from '@/Contexts/shared/domain/constants/ActivityStatus';
 import startActivityTimer from '@/app/server/actions/activity/startActivityTimer';
 import stopActivityTimer from '@/app/server/actions/activity/stopActivityTimer';
@@ -84,30 +85,28 @@ export default function ActivityCard(props: Props) {
         sx={{
           padding: '10px',
           margin: '10px',
+          width: '310px',
         }}
       >
         <Grid container spacing={1}>
-          <Grid size={12}>
+          <Grid size={12} minHeight={4}>
             {activity.status === ActivityStatusOption.ON_PROGRESS && (
               <LinearProgress />
             )}
           </Grid>
-          <Grid size={9} display={'flex'} direction={'row'}>
-            <Chip
-              size="small"
-              label={activity.type.isProductive ? 'Productiva' : 'Improdutiva'}
-              color={activity.type.isProductive ? 'primary' : 'secondary'}
-            />
-            <Chip
-              size="small"
-              variant="outlined"
-              label={activity.type.name}
-              sx={{
-                ml: '8px',
-                color: activity.type.color,
-                borderColor: activity.type.color,
-              }}
-            />
+          <Grid
+            size={9}
+            display={'flex'}
+            direction={'row'}
+            alignItems={'center'}
+          >
+            <Tooltip title={activity.name}>
+              <Typography fontWeight={700} fontSize={20}>
+                {activity.name.length > 20
+                  ? `${activity.name.substring(0, 20)}...`
+                  : activity.name}
+              </Typography>
+            </Tooltip>
           </Grid>
           <Grid
             size={3}
@@ -128,10 +127,35 @@ export default function ActivityCard(props: Props) {
           </Grid>
 
           <Grid size={12}>
-            <Typography fontWeight={700}>{activity.name}</Typography>
+            <Chip
+              size="small"
+              label={activity.type.isProductive ? 'Productiva' : 'Improdutiva'}
+              color={activity.type.isProductive ? 'primary' : 'secondary'}
+            />
+            <Chip
+              size="small"
+              variant="outlined"
+              label={activity.type.name}
+              sx={{
+                ml: '8px',
+                color: activity.type.color,
+                borderColor: activity.type.color,
+              }}
+            />
           </Grid>
 
-          <Grid size={4} display={'flex'} direction={'row'}>
+          <Grid size={12} display={'flex'} justifyContent={'center'}>
+            <Typography fontWeight={400} fontSize={16}>
+              Tiempo Total
+            </Typography>
+          </Grid>
+          <Grid size={12} display={'flex'} justifyContent={'center'}>
+            <Typography fontWeight={700} fontSize={24}>
+              {totalDuration}
+            </Typography>
+          </Grid>
+
+          <Grid size={12} display={'flex'} direction={'row'}>
             <Chip
               size="small"
               label={
@@ -141,20 +165,21 @@ export default function ActivityCard(props: Props) {
               }
             />
           </Grid>
-          <Grid size={6} display={'flex'} direction={'row'}>
-            <Typography>Tiempo Total: {totalDuration}</Typography>
-          </Grid>
 
-          <Grid size={4} display={'flex'} direction={'row'}>
+          <Grid size={6} display={'flex'} direction={'row'}>
             <Button
               disabled={activity.status === ActivityStatusOption.COMPLETED}
-              variant="outlined"
+              variant={
+                activity.status === ActivityStatusOption.ON_PROGRESS
+                  ? 'outlined'
+                  : 'contained'
+              }
               color="primary"
               endIcon={
                 activity.status === ActivityStatusOption.ON_PROGRESS ? (
-                  <CircularProgress size="20px" color="success" />
+                  <PauseIcon />
                 ) : (
-                  <AvTimerRoundedIcon />
+                  <PlayArrowIcon />
                 )
               }
               onClick={
@@ -168,7 +193,7 @@ export default function ActivityCard(props: Props) {
                 : 'Iniciar'}
             </Button>
           </Grid>
-          <Grid size={8} display={'flex'} justifyContent={'end'}>
+          <Grid size={6} display={'flex'} justifyContent={'end'}>
             {activity.status !== ActivityStatusOption.COMPLETED && (
               <Button
                 variant="outlined"
@@ -181,12 +206,12 @@ export default function ActivityCard(props: Props) {
           </Grid>
 
           <Grid size={6}>
-            <Typography color="text.secondary" fontSize={'12px'}>
+            <Typography color="text.secondary" fontSize={'8px'}>
               Creada: {activity.createdAt?.toLocaleString()}
             </Typography>
           </Grid>
           <Grid size={6}>
-            <Typography color="text.secondary" fontSize={'12px'}>
+            <Typography color="text.secondary" fontSize={'8px'}>
               Actualizada: {activity.updatedAt?.toLocaleString()}
             </Typography>
           </Grid>

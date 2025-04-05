@@ -54,7 +54,7 @@ export default function DashboardLayout({
         sx={{
           flexGrow: 1,
           p: 2,
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
+          width: { md: `calc(100% - ${drawerWidth}px)` },
         }}
       >
         <Toolbar />

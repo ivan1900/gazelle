@@ -52,13 +52,22 @@ export default function CurrentActivities(props: Props) {
           />
         </Stack>
         <Box sx={{ overflow: 'auto', maxHeight: '75vh' }}>
-          {activities.map((activity) => (
-            <ActivityCard
-              key={activity.id}
-              activity={activity}
-              update={loadActivities}
-            />
-          ))}
+          <Grid container>
+            {activities.map((activity) => (
+              <Grid
+                key={activity.id}
+                size={{ xs: 12, sm: 12, md: 12, lg: 6, xl: 4 }}
+                display={'flex'}
+                justifyContent={'center'}
+              >
+                <ActivityCard
+                  key={activity.id}
+                  activity={activity}
+                  update={loadActivities}
+                />
+              </Grid>
+            ))}
+          </Grid>
         </Box>
       </Paper>
     </>

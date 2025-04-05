@@ -22,8 +22,8 @@ export default function AppMainBar(props: Props) {
       position="fixed"
       sx={{
         zIndex: (theme) => theme.zIndex.drawer + 1, // for over drawer, next lines for drawer toolbar visible
-        width: { sm: `calc(100% - ${drawerWidth}px)` },
-        ml: { sm: `${drawerWidth}px` },
+        width: { md: `calc(100% - ${drawerWidth}px)` },
+        ml: { md: `${drawerWidth}px` },
       }}
     >
       <Toolbar>
@@ -33,7 +33,7 @@ export default function AppMainBar(props: Props) {
           color="inherit"
           aria-label="menu"
           onClick={handleDrawerToggle}
-          sx={{ mr: 2, display: { sm: 'none' } }}
+          sx={{ mr: 2, display: { md: 'none' } }}
         >
           <MenuIcon />
         </IconButton>

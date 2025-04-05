@@ -48,25 +48,27 @@ export default function OperationBoard(props: Props) {
         />
       </MyModal>
       <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-        <Box p={2}>
+        <Box p={1}>
           <Typography>Inicia una nueva actividad</Typography>
         </Box>
-        <Grid container spacing={2} p={2}>
-          {activityTypes.map((activityType) => (
-            <Grid size={12} key={activityType.id}>
-              <Button
-                variant="contained"
-                sx={{ background: activityType.color }}
-                fullWidth
-                onClick={() => {
-                  handleSelectedActivityType(activityType.id || 0);
-                }}
-              >
-                {activityType.name}
-              </Button>
-            </Grid>
-          ))}
-        </Grid>
+        <Box sx={{ overflow: 'auto', maxHeight: '30vh' }}>
+          <Grid container spacing={2} p={2}>
+            {activityTypes.map((activityType) => (
+              <Grid size={12} key={activityType.id}>
+                <Button
+                  variant="contained"
+                  sx={{ background: activityType.color }}
+                  fullWidth
+                  onClick={() => {
+                    handleSelectedActivityType(activityType.id || 0);
+                  }}
+                >
+                  {activityType.name}
+                </Button>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
       </Paper>
     </>
   );
