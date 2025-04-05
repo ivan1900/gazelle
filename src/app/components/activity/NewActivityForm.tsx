@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import useActivityType from '../shared/hooks/useActivityType';
 import SquareRoundedIcon from '@mui/icons-material/SquareRounded';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import createActivity from '@/app/server/actions/activity/createActivityAction';
 import { ActionResponse } from '@/app/server/shared/responseAction';
 import {
@@ -26,11 +26,12 @@ interface Inputs {
   activityName: string;
   activityDescription: string;
   activityStatus: string;
-  activityType: string;
+  activityType: number;
 }
 
 interface Props {
   closeParent: () => void;
+  preselectedActivityType?: number;
 }
 
 export default function NewActivityForm(props: Props) {
@@ -43,8 +44,17 @@ export default function NewActivityForm(props: Props) {
     activityName: '',
     activityDescription: '',
     activityStatus: ActivityStatusOption.WAITING,
-    activityType: '',
+    activityType: 0,
   });
+
+  useEffect(() => {
+    if (props.preselectedActivityType) {
+      setInputs((prevInputs) => ({
+        ...prevInputs,
+        activityType: props.preselectedActivityType || 0,
+      }));
+    }
+  }, [props.preselectedActivityType]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -119,7 +129,7 @@ export default function NewActivityForm(props: Props) {
             labelId="ActivityTypeLabel"
             id="activityType"
             name="activityType"
-            value={inputs.activityType}
+            value={inputs.activityType.toString()}
             label="Tipo"
             required
             onChange={handleSelectChange}
