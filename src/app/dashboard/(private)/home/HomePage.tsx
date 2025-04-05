@@ -3,7 +3,7 @@ import { Grid2 as Grid } from '@mui/material';
 import dynamic from 'next/dynamic';
 
 const DailyPieChart = dynamic(
-  () => import('@/app/components/dashboard/DailyPieChart'),
+  () => import('@/app/components/analytics/DailyPieChart'),
   { ssr: false }
 );
 
