@@ -1,6 +1,7 @@
 'use server';
 import CurrentActivities from '@/app/components/activities/CurrentActivities';
-import { Paper, Stack, Typography, Grid2 as Grid, Box } from '@mui/material';
+import OperationBoard from '@/app/components/activities/OperationBoard';
+import { Paper, Stack, Typography, Grid2 as Grid } from '@mui/material';
 
 export default async function Activity() {
   return (
@@ -11,8 +12,11 @@ export default async function Activity() {
         </Typography>
       </Paper>
       <Stack direction="column" spacing={2} py={'10px'}>
-        <Grid container>
-          <Grid size={12}>
+        <Grid container spacing={2}>
+          <Grid size={{ xs: 12, md: 3 }}>
+            <OperationBoard />
+          </Grid>
+          <Grid size={{ xs: 12, md: 9 }}>
             <CurrentActivities />
           </Grid>
         </Grid>

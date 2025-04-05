@@ -17,7 +17,10 @@ import SquareRoundedIcon from '@mui/icons-material/SquareRounded';
 import { useState } from 'react';
 import createActivity from '@/app/server/actions/activity/createActivityAction';
 import { ActionResponse } from '@/app/server/shared/responseAction';
-import { ActivityStatusDict } from '@/app/server/shared/constants/ActivityStatusOption';
+import {
+  ActivityStatusDict,
+  ActivityStatusOption,
+} from '@/app/server/shared/constants/ActivityStatusOption';
 
 interface Inputs {
   activityName: string;
@@ -39,7 +42,7 @@ export default function NewActivityForm(props: Props) {
   const [inputs, setInputs] = useState<Inputs>({
     activityName: '',
     activityDescription: '',
-    activityStatus: '',
+    activityStatus: ActivityStatusOption.WAITING,
     activityType: '',
   });
 
@@ -89,7 +92,7 @@ export default function NewActivityForm(props: Props) {
           onChange={handleChange}
         />
         <FormControl fullWidth>
-          <InputLabel id="statusLabel" required>
+          {/* <InputLabel id="statusLabel" required>
             Estado
           </InputLabel>
           <Select
@@ -106,7 +109,7 @@ export default function NewActivityForm(props: Props) {
                 {status.label}
               </MenuItem>
             ))}
-          </Select>
+          </Select> */}
         </FormControl>
         <FormControl fullWidth>
           <InputLabel id="ActivityTypeLabel" required>

@@ -15,7 +15,7 @@ import NewActivityForm from '../activity/NewActivityForm';
 import useMyModal from '../shared/useMyModal';
 import getActivitiesOnGoing from '@/app/server/actions/activity/getActivitiesOnGoing';
 import { useEffect, useState } from 'react';
-import ActivityCard from './activityCard';
+import ActivityCard from './ActivityCard';
 import ActivityInfo from '@/app/server/shared/types/ActivityInfo';
 import getActivitiesFinished from '@/app/server/actions/activity/getActivitiesFinished';
 

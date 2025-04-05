@@ -1,4 +1,4 @@
-import { AppBar, Box, IconButton, Toolbar, Typography } from '@mui/material';
+import { AppBar, IconButton, Toolbar, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { signOut } from 'next-auth/react';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
