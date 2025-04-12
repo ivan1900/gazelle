@@ -36,6 +36,9 @@ jobs:
 
       - name: Release
         uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            CHANGELOG.md
 
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
