@@ -1,8 +1,8 @@
 name: Deploy Gazelle
 on:
   push:
-    branches:
-      - main
+    tags:
+      - 'v*'
 jobs:
   deploy:
     name: 🚀 Deploy Gazelle
@@ -22,6 +22,11 @@ jobs:
 
       - name: Build Gazelle
         run: npm run build
+
+      - name: Generate Changelog
+        uses: TriPSs/conventional-changelog-action@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
