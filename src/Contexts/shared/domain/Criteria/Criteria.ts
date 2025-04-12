@@ -1,4 +1,3 @@
-import { Injectable } from '@nestjs/common';
 import { FilterType } from './FilterType';
 import type ICriteria from './ICriteria';
 import type OrderType from './OrderType';
@@ -12,7 +11,6 @@ interface CriteriaParams {
   limit?: number;
 }
 
-@Injectable()
 export default class Criteria implements ICriteria {
   private _order: OrderType;
   private _fields: string[];
