@@ -32,6 +32,10 @@ export default class Criteria implements ICriteria {
     return new Criteria(params);
   }
 
+  addFilter(filter: FilterType): void {
+    this._filters.push(filter);
+  }
+
   orderBy(): string {
     return this._order.by;
   }

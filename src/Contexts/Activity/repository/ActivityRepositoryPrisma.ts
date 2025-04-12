@@ -3,8 +3,9 @@ import ActivityRepository from '../domain/ActivityRepository';
 import Activity from '../domain/Activity';
 import { prismaErrorHandle } from '@/Contexts/shared/domain/constants/PrismaErrors';
 import { ActivityStatusOption } from '@/Contexts/shared/domain/constants/ActivityStatus';
-import { ActivityDto } from '../domain/AcitvityDto';
 import { ActivityInfo } from '../domain/ActivityInfo';
+import CriteriaToPrisma from '@/Contexts/shared/domain/Criteria/CriteriaToPrisma';
+import Criteria from '@/Contexts/shared/domain/Criteria/Criteria';
 
 export default class ActivityRepositoryPrisma implements ActivityRepository {
   async create(activity: Activity): Promise<Activity | null> {
@@ -183,6 +184,26 @@ export default class ActivityRepositoryPrisma implements ActivityRepository {
     } catch (e) {
       throw new Error(prismaErrorHandle(e));
     }
+  }
+
+  async getActivities(criteria: Criteria): Promise<ActivityInfo[]> {
+    const { where, orderBy, skip } = CriteriaToPrisma.convert(criteria);
+
+    const result = await prisma.activity.findMany({
+      where: where,
+      orderBy: orderBy,
+      skip: skip,
+      include: {
+        activity_type: true,
+        action_time: true,
+      },
+    });
+
+    const activities: ActivityInfo[] = result.map((activity) => {
+      return this.activityInfoMapper(activity);
+    });
+
+    return activities;
   }
 
   private activityInfoMapper(
