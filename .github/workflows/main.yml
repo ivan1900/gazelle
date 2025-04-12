@@ -26,11 +26,6 @@ jobs:
       - name: Build Gazelle
         run: npm run build
 
-      - name: Generate Changelog
-        uses: TriPSs/conventional-changelog-action@v6
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Release
         uses: softprops/action-gh-release@v2
 
