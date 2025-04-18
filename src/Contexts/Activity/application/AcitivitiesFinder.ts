@@ -5,7 +5,7 @@ import { ActivityInfo } from '../domain/ActivityInfo';
 export default class ActivitiesFinder {
   constructor(private readonly repository: ActivityRepository) {}
 
-  exec(criteria: Criteria): Promise<ActivityInfo[]> {
-    return this.repository.getActivities(criteria);
+  async exec(criteria: Criteria): Promise<ActivityInfo[]> {
+    return await this.repository.getActivities(criteria);
   }
 }

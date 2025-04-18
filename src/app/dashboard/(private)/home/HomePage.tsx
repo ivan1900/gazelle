@@ -1,4 +1,5 @@
 'use server';
+import ActionSummary from '@/app/components/actionSummary/ActionSummary';
 import { Grid2 as Grid } from '@mui/material';
 import dynamic from 'next/dynamic';
 
@@ -10,9 +11,12 @@ const DailyPieChart = dynamic(
 export default async function HomePage() {
   return (
     <>
-      <Grid container display="flex">
+      <Grid container display="flex" columnSpacing={2}>
         <Grid size={{ xs: 12, md: 6 }} justifyItems={'center'}>
           <DailyPieChart title="Hoy" />
+        </Grid>
+        <Grid size={{ xs: 12, md: 6 }} justifyItems={'center'}>
+          <ActionSummary />
         </Grid>
 
         <Grid size={{ xs: 12, md: 6 }}>

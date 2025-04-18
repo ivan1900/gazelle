@@ -7,8 +7,9 @@ import ActivitiesFinder from '@/Contexts/Activity/application/AcitivitiesFinder'
 import ActivityRepositoryPrisma from '@/Contexts/Activity/repository/ActivityRepositoryPrisma';
 
 export default async function getActivities(
-  criteria: Criteria
+  criteriaSerialized: string
 ): Promise<ActivityInfo[]> {
+  const criteria = new Criteria(JSON.parse(criteriaSerialized));
   try {
     const session = await isUserAuth();
     const activitiesFinder = new ActivitiesFinder(

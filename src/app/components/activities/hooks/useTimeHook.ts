@@ -1,3 +1,4 @@
+import { formatDurationTime } from '@/app/server/shared/helpers/dates';
 import { ActionTime } from '@/app/server/shared/types/ActivityInfo';
 import { useEffect, useState } from 'react';
 
@@ -34,14 +35,7 @@ export default function useTimeHook(actions: ActionTime[]) {
   }, [isRunning, time]);
 
   const formatTime = (time: number) => {
-    const totalTime = new Date(time);
-    const diffTZ = totalTime.getTimezoneOffset() * 60 * 1000; // this operation is because need diff in milliseconds
-    totalTime.setTime(totalTime.getTime() + diffTZ);
-    const duration =
-      totalTime.getHours().toString().padStart(2, '0') +
-      ':' +
-      totalTime.getMinutes().toString().padStart(2, '0') +
-      ' h';
+    const duration = formatDurationTime(time);
     setTotalDuration(duration);
   };
 

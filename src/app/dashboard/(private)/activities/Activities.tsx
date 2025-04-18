@@ -1,4 +1,5 @@
 'use client';
+import ActionSummary from '@/app/components/actionSummary/ActionSummary';
 import CurrentActivities from '@/app/components/activities/CurrentActivities';
 import OperationBoard from '@/app/components/activities/OperationBoard';
 import { Paper, Stack, Typography, Grid2 as Grid } from '@mui/material';
@@ -21,7 +22,10 @@ export default function Activity() {
       <Stack direction="column" spacing={2} py={'10px'}>
         <Grid container spacing={2}>
           <Grid size={{ xs: 12, md: 3 }}>
-            <OperationBoard handleReload={handleReload} />
+            <Stack spacing={2}>
+              <OperationBoard handleReload={handleReload} />
+              <ActionSummary />
+            </Stack>
           </Grid>
           <Grid size={{ xs: 12, md: 9 }}>
             <CurrentActivities refreshKey={refreshKey} />

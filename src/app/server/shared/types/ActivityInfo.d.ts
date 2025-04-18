@@ -9,7 +9,7 @@ export default interface ActivityInfo {
   actions: ActionTime[];
 }
 
-interface ActivityType {
+export interface ActivityType {
   name: string;
   isProductive: boolean;
   color: string;

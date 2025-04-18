@@ -187,18 +187,17 @@ export default class ActivityRepositoryPrisma implements ActivityRepository {
   }
 
   async getActivities(criteria: Criteria): Promise<ActivityInfo[]> {
-    const { where, orderBy, skip } = CriteriaToPrisma.convert(criteria);
-
+    const { where, orderBy, skip, take } = CriteriaToPrisma.convert(criteria);
     const result = await prisma.activity.findMany({
       where: where,
       orderBy: orderBy,
       skip: skip,
+      take: take,
       include: {
         activity_type: true,
         action_time: true,
       },
     });
-
     const activities: ActivityInfo[] = result.map((activity) => {
       return this.activityInfoMapper(activity);
     });
