@@ -39,6 +39,7 @@ jobs:
         with:
           files: |
             CHANGELOG.md
+          body_path: CHANGELOG.md
 
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
