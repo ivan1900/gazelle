@@ -6,7 +6,7 @@ import {
 import ActivityInfo, {
   ActivityType,
 } from '@/app/server/shared/types/ActivityInfo';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface ActionTypeSummary {
   type: string;
@@ -19,6 +19,11 @@ export default function useSummaryByType(activities: ActivityInfo[]) {
   const [summaryBytypes, setSummaryByTypes] = useState<ActionTypeSummary[]>([]);
 
   useEffect(() => {
+    if (activities.length === 0) {
+      setAvailableTypes([]);
+      setSummaryByTypes([]);
+      return;
+    }
     getTypes();
   }, [activities]);
 
@@ -32,7 +37,7 @@ export default function useSummaryByType(activities: ActivityInfo[]) {
     getSummaryByType();
   }, [availableTypes]);
 
-  const getSummaryByType = useCallback(() => {
+  const getSummaryByType = () => {
     const summary: ActionTypeSummary[] = [];
     const today = getDateStart(new Date());
     const yesterday = getDateDaysAgo(today, 1);
@@ -66,7 +71,7 @@ export default function useSummaryByType(activities: ActivityInfo[]) {
       });
       setSummaryByTypes(summary);
     }
-  }, [availableTypes, activities]);
+  };
 
   return { summaryBytypes };
 }

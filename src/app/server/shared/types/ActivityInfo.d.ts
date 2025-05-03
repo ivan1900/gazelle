@@ -17,6 +17,7 @@ export interface ActivityType {
 
 export interface ActionTime {
   id: number;
+  activityId: number;
   start: Date | null;
   end: Date | null;
 }

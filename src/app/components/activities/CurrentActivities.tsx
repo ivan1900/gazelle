@@ -9,7 +9,7 @@ import {
   Typography,
 } from '@mui/material';
 import getActivitiesOnGoing from '@/app/server/actions/activity/getActivitiesOnGoing';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ActivityCard from './ActivityCard';
 import ActivityInfo from '@/app/server/shared/types/ActivityInfo';
 import getActivitiesFinished from '@/app/server/actions/activity/getActivitiesFinished';
@@ -23,16 +23,16 @@ export default function CurrentActivities(props: Props) {
   const [activities, setActivities] = useState<ActivityInfo[]>([]);
   const [showFinished, setShowFinished] = useState(false);
 
-  const loadActivities = useCallback(async () => {
+  const loadActivities = async () => {
     const result = showFinished
       ? await getActivitiesFinished(90)
       : await getActivitiesOnGoing();
     setActivities(result);
-  }, [showFinished]);
+  };
 
   useEffect(() => {
     loadActivities();
-  }, [loadActivities, refreshKey]);
+  }, [refreshKey]);
 
   const handleOnChangeSwitch = () => {
     setShowFinished(!showFinished);

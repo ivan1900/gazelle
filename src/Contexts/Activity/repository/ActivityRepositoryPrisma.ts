@@ -3,7 +3,7 @@ import ActivityRepository from '../domain/ActivityRepository';
 import Activity from '../domain/Activity';
 import { prismaErrorHandle } from '@/Contexts/shared/domain/constants/PrismaErrors';
 import { ActivityStatusOption } from '@/Contexts/shared/domain/constants/ActivityStatus';
-import { ActivityInfo } from '../domain/ActivityInfo';
+import { ActivityInfo, ActionTime } from '../domain/ActivityInfo';
 import CriteriaToPrisma from '@/Contexts/shared/domain/Criteria/CriteriaToPrisma';
 import Criteria from '@/Contexts/shared/domain/Criteria/Criteria';
 
@@ -205,6 +205,27 @@ export default class ActivityRepositoryPrisma implements ActivityRepository {
     return activities;
   }
 
+  async getActions(criteria: Criteria): Promise<ActionTime[]> {
+    const { where, orderBy, skip, take } = CriteriaToPrisma.convert(criteria);
+    const result = await prisma.action_time.findMany({
+      where: where,
+      orderBy: orderBy,
+      skip: skip,
+      take: take,
+    });
+
+    const actions: ActionTime[] = result.map((action) => {
+      return {
+        id: action.id,
+        activityId: action.activity_id,
+        start: action.start,
+        end: action.end,
+      };
+    });
+
+    return actions;
+  }
+
   private activityInfoMapper(
     activity: {
       action_time: {
@@ -245,6 +266,7 @@ export default class ActivityRepositoryPrisma implements ActivityRepository {
       actions: activity.action_time.map((action) => {
         return {
           id: action.id,
+          activityId: action.activity_id,
           start: action.start,
           end: action.end,
         };

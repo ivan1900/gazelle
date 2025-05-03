@@ -9,14 +9,15 @@ export interface ActivityInfo {
   actions: ActionTime[];
 }
 
-interface ActivityType {
+export interface ActivityType {
   name: string;
   isProductive: boolean;
   color: string;
 }
 
-interface ActionTime {
+export interface ActionTime {
   id: number;
+  activityId: number;
   start: Date | null;
   end: Date | null;
 }
