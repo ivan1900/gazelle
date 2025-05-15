@@ -91,7 +91,13 @@ export default class ActivityRepositoryPrisma implements ActivityRepository {
     }
   }
 
-  async startTimer(activityId: number): Promise<void> {
+  async startTimer({
+    accountId,
+    activityId,
+  }: {
+    accountId: number;
+    activityId: number;
+  }): Promise<void> {
     try {
       await prisma.activity.update({
         where: {
@@ -104,6 +110,7 @@ export default class ActivityRepositoryPrisma implements ActivityRepository {
       await prisma.action_time.create({
         data: {
           activity_id: activityId,
+          account_id: accountId,
           start: new Date(),
         },
       });

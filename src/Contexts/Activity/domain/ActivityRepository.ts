@@ -13,7 +13,13 @@ export default interface ActivityRepository {
     accountId: number;
     lastDays: number;
   }): Promise<ActivityInfo[]>;
-  startTimer(activityId: number): Promise<void>;
+  startTimer({
+    accountId,
+    activityId,
+  }: {
+    accountId: number;
+    activityId: number;
+  }): Promise<void>;
   stopTimer(activityId: number): Promise<void>;
   getActivityOnGoing(accountId: number): Promise<ActivityInfo | null>;
   setActivityAsCompleted(activityId: number): Promise<void>;

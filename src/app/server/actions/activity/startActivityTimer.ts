@@ -8,12 +8,15 @@ import { ActionResponse } from '../../shared/responseAction';
 export default async function startActivityTimer(
   activityId: number
 ): Promise<ActionResponse> {
-  await isUserAuth();
+  const session = await isUserAuth();
   try {
     const startTimerActivity = new ActivityTimerStarter(
       new ActivityRepositoryPrisma()
     );
-    await startTimerActivity.exec(activityId);
+    await startTimerActivity.exec({
+      accountId: session.user.accountId,
+      activityId,
+    });
     return { ok: true, message: 'Timer started successfully' };
   } catch (e) {
     console.error(e);
