@@ -28,15 +28,17 @@ jobs:
       - name: Build Gazelle
         run: npm run build
 
-      - name: Conventional Changelog Action
-        uses: TriPSs/conventional-changelog-action@v5
+      - name: Update CHANGELOG
+        id: changelog
+        uses: requarks/changelog-action@v1
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          output-file: CHANGELOG.md
+          token: ${{ github.token }}
+          tag: ${{ github.ref_name }}
 
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
+          name: ${{ github.ref_name }}
           files: |
             CHANGELOG.md
           body_path: CHANGELOG.md
