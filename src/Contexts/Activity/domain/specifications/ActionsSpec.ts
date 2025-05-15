@@ -1,9 +1,12 @@
 import Criteria from '@/Contexts/shared/domain/Criteria/Criteria';
 
 export default class ActionsSpec {
-  static isSatisfiedByDate(action: { start: Date; end: Date }): Criteria {
+  static isSatisfiedByDate(action: {
+    start: Date;
+    end: Date;
+    accountId: number;
+  }): Criteria {
     const { start, end } = action;
-
     const criteria = Criteria.create({
       filters: [
         {
@@ -14,7 +17,12 @@ export default class ActionsSpec {
         {
           field: 'end',
           operator: 'lte',
-          value: end.toDateString(),
+          value: end.toISOString(),
+        },
+        {
+          field: 'account_id',
+          operator: 'eq',
+          value: action.accountId,
         },
       ],
     });

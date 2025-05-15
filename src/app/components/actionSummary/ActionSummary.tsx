@@ -7,19 +7,34 @@ import {
   Box,
   IconButton,
   Button,
+  Chip,
 } from '@mui/material';
-import { useState } from 'react';
-import useActionSummary from './hooks/useActionSummary';
-import useSummaryByType from './hooks/useSummaryByType';
+import { useEffect, useState } from 'react';
 import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
 import dayjs from 'dayjs';
 import 'dayjs/locale/es';
+import getTimeByTypes from '@/app/server/actions/reports/getTimeByTypes';
+import { TimeByTypes } from '@/app/server/shared/types/TimeByTipes';
+
+function formatMinutesToHHMM(minutes: number) {
+  return dayjs().startOf('day').add(minutes, 'minute').format('HH:mm');
+}
 
 export default function ActionSummary() {
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const { activities } = useActionSummary(selectedDate);
-  const { summaryBytypes } = useSummaryByType(activities);
+  const [report, setReport] = useState<TimeByTypes[]>([]);
+
+  useEffect(() => {
+    getReport();
+  }, [selectedDate]);
+
+  const getReport = async () => {
+    const start = dayjs(selectedDate).startOf('day').toDate();
+    const end = dayjs(selectedDate).endOf('day').toDate();
+    const report = await getTimeByTypes({ from: start, to: end });
+    setReport(report);
+  };
 
   const handlePrevDay = () => {
     const date = dayjs(selectedDate).subtract(1, 'day').toDate();
@@ -91,13 +106,22 @@ export default function ActionSummary() {
               <ArrowForwardIosRoundedIcon />
             </IconButton>
           </Stack>
-          {summaryBytypes.map((activity) => (
-            <Stack key={activity.type} direction="row" spacing={4}>
+          {report.map((item) => (
+            <Stack
+              key={item.type}
+              direction="row"
+              spacing={4}
+              justifyContent="space-between"
+              alignItems="center"
+              sx={{ width: '100%', mt: 1 }}
+              px={'10px'}
+            >
+              <Chip
+                label={item.type}
+                style={{ backgroundColor: item.color, color: '#fff' }}
+              />
               <Typography variant="body2" color="text.secondary">
-                {activity.type}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {activity.totalTime}
+                {formatMinutesToHHMM(item.totalMinutes)}
               </Typography>
             </Stack>
           ))}

@@ -1,22 +1,22 @@
 import ActivityRepository from '../domain/ActivityRepository';
 import ActionsSpec from '../domain/specifications/ActionsSpec';
 import ActivitySpec from '../domain/specifications/ActivitySpec';
+import { TimeByTypes } from '../domain/TimeByTypes';
 
 interface Params {
   from: Date;
   to: Date;
+  accountId: number;
 }
-
-// todo llamar a este servicio desde el action que obtiene el reporte
 
 export default class ReportByTypes {
   constructor(private readonly activityRepository: ActivityRepository) {}
 
   async execute(params: Params): Promise<TimeByTypes[]> {
-    const { from, to } = params;
+    const { from, to, accountId } = params;
 
     const actions = await this.activityRepository.getActions(
-      ActionsSpec.isSatisfiedByDate({ start: from, end: to })
+      ActionsSpec.isSatisfiedByDate({ start: from, end: to, accountId })
     );
 
     const uniqueActivityId = new Set(

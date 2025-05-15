@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "linux-arm64-openssl-1.1.x"]
 }
 
@@ -27,6 +27,7 @@ model action_time {
   activity_id Int
   start       DateTime? @db.DateTime(0)
   end         DateTime? @db.DateTime(0)
+  account_id  Int?
   activity    activity? @relation(fields: [activity_id], references: [id])
 
   @@index([activity_id])
@@ -40,7 +41,7 @@ model activity {
   account_id       Int
   activity_type_id Int
   created_at       DateTime?      @default(now()) @db.DateTime(0)
-  updated_at       DateTime?      @db.DateTime(0)
+  updated_at       DateTime       @default(now()) @db.Timestamp(0)
   action_time      action_time[]
   user             account?       @relation(fields: [account_id], references: [id])
   activity_type    activity_type? @relation(fields: [activity_type_id], references: [id])
