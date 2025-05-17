@@ -6,10 +6,16 @@ import { Paper, Stack, Typography, Grid2 as Grid } from '@mui/material';
 import { useState } from 'react';
 
 export default function Activity() {
-  const [refreshKey, setRefreshKey] = useState<number>(0);
+  const [refreshActivities, setRefreshActivities] = useState<number>(0);
+  const [refreshStatistics, setRefreshStatistics] = useState<number>(0);
 
   const handleReload = () => {
-    setRefreshKey((prevKey) => prevKey + 1);
+    setRefreshActivities((prevKey) => prevKey + 1);
+  };
+
+  const handleReloadStatistics = () => {
+    console.log('handleReloadStatistics');
+    setRefreshStatistics((prevKey) => prevKey + 1);
   };
 
   return (
@@ -24,11 +30,14 @@ export default function Activity() {
           <Grid size={{ xs: 12, md: 3 }}>
             <Stack spacing={2}>
               <OperationBoard handleReload={handleReload} />
-              <ActionSummary />
+              <ActionSummary refresh={refreshStatistics} />
             </Stack>
           </Grid>
           <Grid size={{ xs: 12, md: 9 }}>
-            <CurrentActivities refreshKey={refreshKey} />
+            <CurrentActivities
+              refresh={refreshActivities}
+              refreshStatistics={handleReloadStatistics}
+            />
           </Grid>
         </Grid>
       </Stack>

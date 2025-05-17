@@ -17,17 +17,22 @@ import 'dayjs/locale/es';
 import getTimeByTypes from '@/app/server/actions/reports/getTimeByTypes';
 import { TimeByTypes } from '@/app/server/shared/types/TimeByTipes';
 
+interface Props {
+  refresh?: number;
+}
+
 function formatMinutesToHHMM(minutes: number) {
   return dayjs().startOf('day').add(minutes, 'minute').format('HH:mm');
 }
 
-export default function ActionSummary() {
+export default function ActionSummary(props: Props) {
+  const { refresh } = props;
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [report, setReport] = useState<TimeByTypes[]>([]);
 
   useEffect(() => {
     getReport();
-  }, [selectedDate]);
+  }, [selectedDate, refresh]);
 
   const getReport = async () => {
     const start = dayjs(selectedDate).startOf('day').toDate();

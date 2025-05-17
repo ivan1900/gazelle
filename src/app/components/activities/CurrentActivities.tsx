@@ -15,11 +15,12 @@ import ActivityInfo from '@/app/server/shared/types/ActivityInfo';
 import getActivitiesFinished from '@/app/server/actions/activity/getActivitiesFinished';
 
 interface Props {
-  refreshKey: number;
+  refresh: number;
+  refreshStatistics: () => void;
 }
 
 export default function CurrentActivities(props: Props) {
-  const { refreshKey } = props;
+  const { refresh, refreshStatistics } = props;
   const [activities, setActivities] = useState<ActivityInfo[]>([]);
   const [showFinished, setShowFinished] = useState(false);
 
@@ -28,11 +29,13 @@ export default function CurrentActivities(props: Props) {
       ? await getActivitiesFinished(90)
       : await getActivitiesOnGoing();
     setActivities(result);
+    refreshStatistics();
   };
 
   useEffect(() => {
     loadActivities();
-  }, [refreshKey]);
+    refreshStatistics();
+  }, [refresh]);
 
   const handleOnChangeSwitch = () => {
     setShowFinished(!showFinished);

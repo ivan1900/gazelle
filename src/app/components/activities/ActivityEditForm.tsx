@@ -52,7 +52,6 @@ export default function ActivityEditForm({ activity, refresh }: Props) {
   const [disableSaveTime, setDisableSaveTime] = useState(false);
 
   useEffect(() => {
-    console.log('editValues', editValues);
     if (
       editValues.start &&
       editValues.end &&
