@@ -23,24 +23,29 @@ import finishActivity from '@/app/server/actions/activity/finishActivity';
 import MyDialog from '../shared/MyDialog';
 import useMyDialog from '../shared/useMyDialog';
 import removeActivity from '@/app/server/actions/activity/removeActivity';
+import MyModal from '../shared/MyModal';
+import ActivityEditForm from './ActivityEditForm';
+import useMyModal from '../shared/useMyModal';
 
 interface Props {
   activity: ActivityInfo;
-  update: () => void;
+  refresh: () => void;
 }
 
 export default function ActivityCard(props: Props) {
-  const { activity, update } = props;
+  const { activity, refresh } = props;
   const { totalDuration, startTimer, stopTimer } = useTimeHook(
     activity.actions
   );
   const { dialogDescription, dialogTitle, openDialog, setDialog, unsetDialog } =
     useMyDialog();
 
+  const { openModal, handleClickOpen, handleCloseModal } = useMyModal();
+
   const handleStartTimer = async () => {
     // todo: handle error
     const response = await startActivityTimer(activity.id);
-    update();
+    refresh();
     startTimer();
   };
 
@@ -48,14 +53,14 @@ export default function ActivityCard(props: Props) {
     // todo handle error
     const ok = await stopActivityTimer(activity.id);
     stopTimer();
-    update();
+    refresh();
   };
 
   const handleFinishActivity = async () => {
     // todo: handle error
     const response = await finishActivity(activity.id);
     stopTimer();
-    update();
+    refresh();
   };
 
   const showRemoveDialog = async () => {
@@ -68,9 +73,13 @@ export default function ActivityCard(props: Props) {
   const handleRemoveActivity = async (response: boolean) => {
     if (response) {
       await removeActivity(activity.id);
-      update();
+      refresh();
     }
     unsetDialog();
+  };
+
+  const handleEditActivity = () => {
+    handleClickOpen();
   };
 
   return (
@@ -81,6 +90,13 @@ export default function ActivityCard(props: Props) {
         isOpen={openDialog}
         response={handleRemoveActivity}
       ></MyDialog>
+      <MyModal
+        isOpen={openModal}
+        onClose={handleCloseModal}
+        title="Editar actividad"
+      >
+        <ActivityEditForm activity={activity} refresh={refresh} />
+      </MyModal>
       <Card
         sx={{
           padding: '10px',
@@ -115,7 +131,7 @@ export default function ActivityCard(props: Props) {
             justifyContent={'flex-end'}
           >
             <Tooltip title="Editar">
-              <IconButton>
+              <IconButton onClick={handleEditActivity}>
                 <NotesRoundedIcon />
               </IconButton>
             </Tooltip>

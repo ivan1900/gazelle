@@ -19,7 +19,7 @@ interface Props {
 
 export default function OperationBoard(props: Props) {
   const { handleReload } = props;
-  const { handleClickAdd, handleCloseModal, openModal } = useMyModal();
+  const { handleClickOpen, handleCloseModal, openModal } = useMyModal();
   const { activityTypes } = useActivityType();
   const isMobile = useMediaQuery('(max-width:600px)');
   const [selectedActivityType, setSelectedActivityType] = useState(0);
@@ -31,7 +31,7 @@ export default function OperationBoard(props: Props) {
 
   const handleSelectedActivityType = (activityType: number) => {
     setSelectedActivityType(activityType);
-    handleClickAdd();
+    handleClickOpen();
   };
 
   return (

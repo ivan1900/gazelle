@@ -6,6 +6,7 @@ import isUserAuth from '../../shared/checkUserAuth';
 import ActivitiesFinder from '@/Contexts/Activity/application/AcitivitiesFinder';
 import ActivityRepositoryPrisma from '@/Contexts/Activity/repository/ActivityRepositoryPrisma';
 
+// todo: revisar que hacer con este action, no se esta usando
 export default async function getActivities(
   criteriaSerialized: string
 ): Promise<ActivityInfo[]> {

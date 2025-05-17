@@ -32,7 +32,7 @@ export default function ActivityTypesConfig() {
   const [deleteActivityType, setDeleteActivityType] = useState('');
   const { dialogTitle, dialogDescription, openDialog, setDialog, unsetDialog } =
     useMyDialog();
-  const { openModal, handleClickAdd, handleCloseModal } = useMyModal();
+  const { openModal, handleClickOpen, handleCloseModal } = useMyModal();
 
   useEffect(() => {
     loadActivityTypes();
@@ -73,7 +73,7 @@ export default function ActivityTypesConfig() {
 
       <Paper sx={{ width: '100%', overflow: 'hidden' }}>
         <Stack direction="row" spacing={2} padding={'20px'}>
-          <Button variant="contained" color="primary" onClick={handleClickAdd}>
+          <Button variant="contained" color="primary" onClick={handleClickOpen}>
             Agregar
           </Button>
         </Stack>

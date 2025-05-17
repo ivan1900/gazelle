@@ -3,7 +3,7 @@ import { useState } from 'react';
 export default function useMyModal() {
   const [openModal, setOpenModal] = useState(false);
 
-  const handleClickAdd = () => {
+  const handleClickOpen = () => {
     setOpenModal(true);
   };
 
@@ -12,7 +12,7 @@ export default function useMyModal() {
   };
   return {
     openModal,
-    handleClickAdd,
+    handleClickOpen,
     handleCloseModal,
   };
 }

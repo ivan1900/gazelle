@@ -63,7 +63,7 @@ export default function CurrentActivities(props: Props) {
                 <ActivityCard
                   key={activity.id}
                   activity={activity}
-                  update={loadActivities}
+                  refresh={loadActivities}
                 />
               </Grid>
             ))}

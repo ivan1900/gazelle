@@ -6,6 +6,7 @@ import { ActivityStatusOption } from '@/Contexts/shared/domain/constants/Activit
 import { ActivityInfo, ActionTime } from '../domain/ActivityInfo';
 import CriteriaToPrisma from '@/Contexts/shared/domain/Criteria/CriteriaToPrisma';
 import Criteria from '@/Contexts/shared/domain/Criteria/Criteria';
+import { ActionUpdateDto } from '../domain/ActionUpdateDto';
 
 export default class ActivityRepositoryPrisma implements ActivityRepository {
   async create(activity: Activity): Promise<Activity | null> {
@@ -46,7 +47,11 @@ export default class ActivityRepositoryPrisma implements ActivityRepository {
         },
         include: {
           activity_type: true,
-          action_time: true,
+          action_time: {
+            orderBy: {
+              id: 'desc',
+            },
+          },
         },
       });
       const activities: ActivityInfo[] = result.map((activity) => {
@@ -151,7 +156,7 @@ export default class ActivityRepositoryPrisma implements ActivityRepository {
       },
       include: {
         activity_type: true,
-        action_time: true,
+        action_time: { orderBy: { id: 'desc' } },
       },
     });
     if (!activity) {
@@ -202,7 +207,11 @@ export default class ActivityRepositoryPrisma implements ActivityRepository {
       take: take,
       include: {
         activity_type: true,
-        action_time: true,
+        action_time: {
+          orderBy: {
+            id: 'desc',
+          },
+        },
       },
     });
     const activities: ActivityInfo[] = result.map((activity) => {
@@ -231,6 +240,45 @@ export default class ActivityRepositoryPrisma implements ActivityRepository {
     });
 
     return actions;
+  }
+
+  async getAction({
+    actionId,
+    accountId,
+  }: {
+    actionId: number;
+    accountId: number;
+  }): Promise<ActionTime | null> {
+    const action = await prisma.action_time.findFirst({
+      where: {
+        id: actionId,
+        account_id: accountId,
+      },
+    });
+
+    if (!action) {
+      return null;
+    }
+
+    const actionTime: ActionTime = {
+      id: action.id,
+      activityId: action.activity_id,
+      start: action.start,
+      end: action.end,
+    };
+    return actionTime;
+  }
+
+  async updateActionTime(dto: ActionUpdateDto): Promise<void> {
+    await prisma.action_time.update({
+      where: {
+        id: dto.id,
+      },
+      data: {
+        start: dto.start,
+        end: dto.end,
+      },
+    });
   }
 
   private activityInfoMapper(
