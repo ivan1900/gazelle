@@ -8,7 +8,6 @@ export default class ActivitiesOnGoingFinder {
 
   async exec(accountId: number): Promise<ActivityInfo[]> {
     try {
-      // const result = await this.repository.findAllOnGoing(accountId);
       const result = await this.repository.getActivities(
         ActivitySpec.isSatisfiedByStatusOnProgress(accountId)
       );

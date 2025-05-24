@@ -6,13 +6,6 @@ import { ActionUpdateDto } from './ActionUpdateDto';
 
 export default interface ActivityRepository {
   create(activity: Activity): Promise<Activity | null>;
-  findCompleted({
-    accountId,
-    lastDays,
-  }: {
-    accountId: number;
-    lastDays: number;
-  }): Promise<ActivityInfo[]>;
   startTimer({
     accountId,
     activityId,

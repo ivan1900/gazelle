@@ -14,7 +14,6 @@ export default function Activity() {
   };
 
   const handleReloadStatistics = () => {
-    console.log('handleReloadStatistics');
     setRefreshStatistics((prevKey) => prevKey + 1);
   };
 

@@ -35,7 +35,7 @@ export default function CurrentActivities(props: Props) {
   useEffect(() => {
     loadActivities();
     refreshStatistics();
-  }, [refresh]);
+  }, [refresh, showFinished]);
 
   const handleOnChangeSwitch = () => {
     setShowFinished(!showFinished);

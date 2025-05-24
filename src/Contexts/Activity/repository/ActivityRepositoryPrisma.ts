@@ -38,40 +38,6 @@ export default class ActivityRepositoryPrisma implements ActivityRepository {
     }
   }
 
-  // todo: cambiar para usar criteria con getActivities
-  async findCompleted({
-    accountId,
-    lastDays,
-  }: {
-    accountId: number;
-    lastDays: number;
-  }): Promise<ActivityInfo[]> {
-    try {
-      const currentLessLastDays = new Date(
-        new Date().setDate(new Date().getDate() - lastDays)
-      );
-      const result = await prisma.activity.findMany({
-        where: {
-          account_id: accountId,
-          status: ActivityStatusOption.COMPLETED,
-          updated_at: {
-            gte: currentLessLastDays,
-          },
-        },
-        include: {
-          activity_type: true,
-          action_time: true,
-        },
-      });
-      const activities: ActivityInfo[] = result.map((activity) => {
-        return this.activityInfoMapper(activity);
-      });
-      return activities;
-    } catch (e) {
-      throw new Error(prismaErrorHandle(e));
-    }
-  }
-
   async startTimer({
     accountId,
     activityId,
