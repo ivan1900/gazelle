@@ -38,31 +38,7 @@ export default class ActivityRepositoryPrisma implements ActivityRepository {
     }
   }
 
-  async findAllOnGoing(accountId: number): Promise<ActivityInfo[]> {
-    try {
-      const result = await prisma.activity.findMany({
-        where: {
-          account_id: accountId,
-          NOT: { status: ActivityStatusOption.COMPLETED },
-        },
-        include: {
-          activity_type: true,
-          action_time: {
-            orderBy: {
-              id: 'desc',
-            },
-          },
-        },
-      });
-      const activities: ActivityInfo[] = result.map((activity) => {
-        return this.activityInfoMapper(activity);
-      });
-      return activities;
-    } catch (e) {
-      throw new Error(prismaErrorHandle(e));
-    }
-  }
-
+  // todo: cambiar para usar criteria con getActivities
   async findCompleted({
     accountId,
     lastDays,
@@ -146,24 +122,6 @@ export default class ActivityRepositoryPrisma implements ActivityRepository {
     } catch (e) {
       throw new Error(prismaErrorHandle(e));
     }
-  }
-
-  async getActivityOnGoing(accountId: number): Promise<ActivityInfo | null> {
-    const activity = await prisma.activity.findFirst({
-      where: {
-        account_id: accountId,
-        status: ActivityStatusOption.ON_PROGRESS,
-      },
-      include: {
-        activity_type: true,
-        action_time: { orderBy: { id: 'desc' } },
-      },
-    });
-    if (!activity) {
-      return null;
-    }
-    const activityInfo: ActivityInfo = this.activityInfoMapper(activity);
-    return activityInfo;
   }
 
   async setActivityAsCompleted(activityId: number): Promise<void> {

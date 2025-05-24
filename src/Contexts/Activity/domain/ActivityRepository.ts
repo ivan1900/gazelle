@@ -6,7 +6,6 @@ import { ActionUpdateDto } from './ActionUpdateDto';
 
 export default interface ActivityRepository {
   create(activity: Activity): Promise<Activity | null>;
-  findAllOnGoing(accountId: number): Promise<ActivityInfo[]>;
   findCompleted({
     accountId,
     lastDays,
@@ -22,7 +21,6 @@ export default interface ActivityRepository {
     activityId: number;
   }): Promise<void>;
   stopTimer(activityId: number): Promise<void>;
-  getActivityOnGoing(accountId: number): Promise<ActivityInfo | null>;
   setActivityAsCompleted(activityId: number): Promise<void>;
   remove(activityId: number): Promise<void>;
   getActivities(criteria: Criteria): Promise<ActivityInfo[]>;
