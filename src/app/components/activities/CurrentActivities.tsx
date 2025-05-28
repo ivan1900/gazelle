@@ -63,11 +63,7 @@ export default function CurrentActivities(props: Props) {
                 display={'flex'}
                 justifyContent={'center'}
               >
-                <ActivityCard
-                  key={activity.id}
-                  activity={activity}
-                  refresh={loadActivities}
-                />
+                <ActivityCard activity={activity} refresh={loadActivities} />
               </Grid>
             ))}
           </Grid>

@@ -111,9 +111,9 @@ export default function ActionSummary(props: Props) {
               <ArrowForwardIosRoundedIcon />
             </IconButton>
           </Stack>
-          {report.map((item) => (
+          {report.map((item, index) => (
             <Stack
-              key={item.type}
+              key={item.type + index}
               direction="row"
               spacing={4}
               justifyContent="space-between"

@@ -38,6 +38,24 @@ export default class ActivityRepositoryPrisma implements ActivityRepository {
     }
   }
 
+  async update(activity: Activity): Promise<void> {
+    try {
+      await prisma.activity.update({
+        where: {
+          id: activity.id!,
+        },
+        data: {
+          name: activity.name.value,
+          description: activity.description.value,
+          activity_type_id: activity.activityTypeId.value,
+          updated_at: new Date(),
+        },
+      });
+    } catch (e) {
+      throw new Error(prismaErrorHandle(e));
+    }
+  }
+
   async startTimer({
     accountId,
     activityId,
@@ -238,6 +256,7 @@ export default class ActivityRepositoryPrisma implements ActivityRepository {
       description: activity.description || '',
       status: activity.status,
       type: {
+        id: activity.activity_type?.id || 0,
         name: activity.activity_type?.name || '',
         isProductive: activity.activity_type?.is_productive || false,
         color: activity.activity_type?.color || '',

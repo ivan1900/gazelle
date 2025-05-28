@@ -7,6 +7,7 @@ import ActivityStatus from './ActivityStatus';
 import ActivityTypeId from './ActivityTypeId';
 
 interface ActivityParms {
+  id?: number;
   name: ActivityName;
   description: ActivityDescription;
   status: ActivityStatus;
@@ -17,6 +18,7 @@ interface ActivityParms {
 }
 
 export default class Activity {
+  readonly id?: number;
   readonly name: ActivityName;
   readonly description: ActivityDescription;
   readonly status: ActivityStatus;
@@ -26,6 +28,7 @@ export default class Activity {
   readonly updatedAt: DateValueObject | null | undefined;
 
   constructor(props: ActivityParms) {
+    this.id = props.id;
     this.name = props.name;
     this.description = props.description;
     this.status = props.status;
@@ -41,6 +44,7 @@ export default class Activity {
 
   static fromPrimitives(dto: ActivityDto): Activity {
     return new Activity({
+      id: dto.id,
       name: new ActivityName(dto.name),
       description: new ActivityDescription(dto.description),
       status: new ActivityStatus(dto.status),
@@ -51,6 +55,7 @@ export default class Activity {
 
   toPrimitives(): ActivityDto {
     return {
+      id: this.id,
       name: this.name.value,
       description: this.description.value,
       status: this.status.value,

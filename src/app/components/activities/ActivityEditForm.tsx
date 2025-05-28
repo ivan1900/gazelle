@@ -2,29 +2,20 @@ import { ActivityInfo } from '@/Contexts/Activity/domain/ActivityInfo';
 import {
   Stack,
   TextField,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-  Typography,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  SelectChangeEvent,
+  Button,
   Box,
-  IconButton,
-  Alert,
-  Snackbar,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
-import EditIcon from '@mui/icons-material/Edit';
-import SaveIcon from '@mui/icons-material/Save';
-import CancelIcon from '@mui/icons-material/Cancel';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import dayjs, { Dayjs } from 'dayjs';
-import 'dayjs/locale/es';
-import actionTimeUpdate from '@/app/server/actions/activity/actionTimeUpdate';
 import MyAlert from '../shared/MyAlert';
-import { DateTimeValidationError } from '@mui/x-date-pickers/models';
+import useActivityType from '../shared/hooks/useActivityType';
+import updateActivity from '@/app/server/actions/activity/updateActivity';
 
 interface Props {
   activity: ActivityInfo;
@@ -32,13 +23,10 @@ interface Props {
 }
 
 export default function ActivityEditForm({ activity, refresh }: Props) {
-  const [editingActionId, setEditingActionId] = useState<number | null>(null);
-  const [editValues, setEditValues] = useState<{
-    start: Dayjs | null;
-    end: Dayjs | null;
-  }>({
-    start: null,
-    end: null,
+  const [inputs, setInputs] = useState({
+    name: activity.name,
+    description: activity.description,
+    activityType: activity.type.id,
   });
   const [notification, setNotification] = useState<{
     open: boolean;
@@ -49,37 +37,26 @@ export default function ActivityEditForm({ activity, refresh }: Props) {
     message: '',
     severity: 'success',
   });
-  const [disableSaveTime, setDisableSaveTime] = useState(false);
+  const { activityTypes, loadActivityTypes } = useActivityType();
 
   useEffect(() => {
-    if (
-      editValues.start &&
-      editValues.end &&
-      editValues.start.isAfter(editValues.end)
-    ) {
-      setDisableSaveTime(true);
-    } else {
-      setDisableSaveTime(false);
-    }
-  }, [editValues]);
+    loadActivityTypes();
+  }, []);
 
-  const handleStartEditing = (
-    actionId: number,
-    start: Date | null,
-    end: Date | null
-  ) => {
-    setEditingActionId(actionId);
-    setEditValues({
-      start: start ? dayjs(start) : null,
-      end: end ? dayjs(end) : null,
-    });
+  const handleSelectChange = (event: SelectChangeEvent<string>) => {
+    const { name, value } = event.target;
+    setInputs((prevInputs) => ({ ...prevInputs, [name]: value }));
   };
 
-  const handleUpdateTime = async (actionId: number) => {
+  const handleSave = async () => {
     try {
-      const startDate = editValues.start?.toDate() || null;
-      const endDate = editValues.end?.toDate() || null;
-      const result = await actionTimeUpdate(actionId, startDate, endDate);
+      const result = await updateActivity({
+        id: activity.id,
+        name: inputs.name,
+        description: inputs.description,
+        activityTypeId: parseInt(inputs.activityType?.toString() || '0'),
+        status: activity.status, // Mantenemos el estado actual
+      });
 
       if (result.ok) {
         setNotification({
@@ -98,24 +75,11 @@ export default function ActivityEditForm({ activity, refresh }: Props) {
     } catch (error) {
       setNotification({
         open: true,
-        message: 'Error al actualizar los tiempos',
+        message: 'Error al guardar los cambios',
         severity: 'error',
       });
       console.error('Error al guardar', error);
-    } finally {
-      setEditingActionId(null);
     }
-  };
-
-  const handleCancelEdit = () => {
-    setEditingActionId(null);
-  };
-
-  const handleDateChange = (field: 'start' | 'end', value: Dayjs | null) => {
-    setEditValues({
-      ...editValues,
-      [field]: value,
-    });
   };
 
   const handleCloseNotification = () => {
@@ -138,135 +102,45 @@ export default function ActivityEditForm({ activity, refresh }: Props) {
           <TextField
             label="Actividad"
             variant="outlined"
-            value={activity.name}
+            value={inputs.name}
             onChange={(e) => {
-              /* handle change */
+              setInputs({ ...inputs, name: e.target.value });
             }}
           />
           <TextField
             label="Descripción"
             variant="outlined"
-            value={activity.description}
+            value={inputs.description}
             onChange={(e) => {
-              /* handle change */
+              setInputs({ ...inputs, description: e.target.value });
             }}
           />
-
-          <Box mt={2}>
-            <Typography variant="h6">Registro de tiempos</Typography>
-            <Table size="small">
-              <TableHead>
-                <TableRow>
-                  <TableCell>ID</TableCell>
-                  <TableCell>Inicio</TableCell>
-                  <TableCell>Fin</TableCell>
-                  <TableCell>Duración</TableCell>
-                  <TableCell>Acciones</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {activity.actions.map((action) => (
-                  <TableRow key={action.id}>
-                    <TableCell>{action.id}</TableCell>
-                    <TableCell>
-                      {editingActionId === action.id ? (
-                        <DateTimePicker
-                          value={editValues.start}
-                          onChange={(newValue) =>
-                            handleDateChange('start', newValue)
-                          }
-                          maxDateTime={editValues.end || undefined}
-                          slotProps={{
-                            textField: {
-                              size: 'small',
-                              fullWidth: true,
-                            },
-                          }}
-                        />
-                      ) : action.start ? (
-                        action.start.toLocaleString()
-                      ) : (
-                        'No iniciado'
-                      )}
-                    </TableCell>
-                    <TableCell>
-                      {editingActionId === action.id ? (
-                        action.end === null ? (
-                          'En curso'
-                        ) : (
-                          <DateTimePicker
-                            value={editValues.end}
-                            minDateTime={editValues.start || undefined}
-                            maxDateTime={dayjs()}
-                            onChange={(newValue) =>
-                              handleDateChange('end', newValue)
-                            }
-                            slotProps={{
-                              textField: {
-                                size: 'small',
-                                fullWidth: true,
-                              },
-                            }}
-                            disabled={action.end === null}
-                          />
-                        )
-                      ) : action.end ? (
-                        action.end.toLocaleString()
-                      ) : (
-                        'En curso'
-                      )}
-                    </TableCell>
-                    <TableCell>
-                      {action.start && action.end
-                        ? `${Math.round((action.end.getTime() - action.start.getTime()) / (1000 * 60))} min`
-                        : '-'}
-                    </TableCell>
-                    <TableCell>
-                      {editingActionId === action.id ? (
-                        <>
-                          <IconButton
-                            disabled={disableSaveTime}
-                            size="small"
-                            color="primary"
-                            onClick={() => handleUpdateTime(action.id)}
-                          >
-                            <SaveIcon fontSize="small" />
-                          </IconButton>
-                          <IconButton
-                            size="small"
-                            color="error"
-                            onClick={handleCancelEdit}
-                          >
-                            <CancelIcon fontSize="small" />
-                          </IconButton>
-                        </>
-                      ) : (
-                        <IconButton
-                          size="small"
-                          color="primary"
-                          onClick={() =>
-                            handleStartEditing(
-                              action.id,
-                              action.start,
-                              action.end
-                            )
-                          }
-                        >
-                          <EditIcon fontSize="small" />
-                        </IconButton>
-                      )}
-                    </TableCell>
-                  </TableRow>
-                ))}
-                {activity.actions.length === 0 && (
-                  <TableRow>
-                    <TableCell colSpan={5} align="center">
-                      No hay registros de tiempo para esta actividad
-                    </TableCell>
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
+          <FormControl fullWidth>
+            <InputLabel id="typeLabel" required>
+              Estado
+            </InputLabel>
+            <Select
+              labelId="typeLabel"
+              id="activityType"
+              name="activityType"
+              value={inputs.activityType?.toString() || ''}
+              label="Estado"
+              required
+              onChange={handleSelectChange}
+            >
+              {activityTypes.map((type) => (
+                <MenuItem key={type.id} value={type.id}>
+                  {type.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <Box
+            sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, mt: 2 }}
+          >
+            <Button variant="contained" color="primary" onClick={handleSave}>
+              Guardar Cambios
+            </Button>
           </Box>
         </Stack>
       </LocalizationProvider>

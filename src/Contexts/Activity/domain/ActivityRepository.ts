@@ -6,6 +6,7 @@ import { ActionUpdateDto } from './ActionUpdateDto';
 
 export default interface ActivityRepository {
   create(activity: Activity): Promise<Activity | null>;
+  update(activity: Activity): Promise<void>;
   startTimer({
     accountId,
     activityId,

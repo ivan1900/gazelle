@@ -5,6 +5,7 @@ import {
   Card,
   Chip,
   CircularProgress,
+  Divider,
   Grid2 as Grid,
   IconButton,
   LinearProgress,
@@ -26,6 +27,8 @@ import removeActivity from '@/app/server/actions/activity/removeActivity';
 import MyModal from '../shared/MyModal';
 import ActivityEditForm from './ActivityEditForm';
 import useMyModal from '../shared/useMyModal';
+import ActivityTimeForm from './ActivityTimeForm';
+import { useState } from 'react';
 
 interface Props {
   activity: ActivityInfo;
@@ -41,19 +44,30 @@ export default function ActivityCard(props: Props) {
     useMyDialog();
 
   const { openModal, handleClickOpen, handleCloseModal } = useMyModal();
+  const [isTimerLoading, setIsTimerLoading] = useState(false);
 
   const handleStartTimer = async () => {
-    // todo: handle error
-    const response = await startActivityTimer(activity.id);
-    refresh();
-    startTimer();
+    setIsTimerLoading(true);
+    try {
+      // todo: handle error
+      const response = await startActivityTimer(activity.id);
+      refresh();
+      startTimer();
+    } finally {
+      setIsTimerLoading(false);
+    }
   };
 
   const handleStopTimer = async () => {
-    // todo handle error
-    const ok = await stopActivityTimer(activity.id);
-    stopTimer();
-    refresh();
+    setIsTimerLoading(true);
+    try {
+      // todo handle error
+      const ok = await stopActivityTimer(activity.id);
+      stopTimer();
+      refresh();
+    } finally {
+      setIsTimerLoading(false);
+    }
   };
 
   const handleFinishActivity = async () => {
@@ -94,8 +108,11 @@ export default function ActivityCard(props: Props) {
         isOpen={openModal}
         onClose={handleCloseModal}
         title="Editar actividad"
+        width="850px"
       >
         <ActivityEditForm activity={activity} refresh={refresh} />
+        <Divider sx={{ my: 2 }} />
+        <ActivityTimeForm activity={activity} refresh={refresh} />
       </MyModal>
       <Card
         sx={{
@@ -184,7 +201,7 @@ export default function ActivityCard(props: Props) {
 
           <Grid size={6} display={'flex'} direction={'row'}>
             <Button
-              disabled={activity.status === ActivityStatusOption.COMPLETED}
+              disabled={activity.status === ActivityStatusOption.COMPLETED || isTimerLoading}
               variant={
                 activity.status === ActivityStatusOption.ON_PROGRESS
                   ? 'outlined'
@@ -192,7 +209,9 @@ export default function ActivityCard(props: Props) {
               }
               color="primary"
               endIcon={
-                activity.status === ActivityStatusOption.ON_PROGRESS ? (
+                isTimerLoading ? (
+                  <CircularProgress size={16} color="inherit" />
+                ) : activity.status === ActivityStatusOption.ON_PROGRESS ? (
                   <PauseIcon />
                 ) : (
                   <PlayArrowIcon />

@@ -10,6 +10,7 @@ export default interface ActivityInfo {
 }
 
 export interface ActivityType {
+  id?: number;
   name: string;
   isProductive: boolean;
   color: string;
