@@ -196,12 +196,20 @@ export default function ActivityCard(props: Props) {
                   (item) => item.value === activity.status
                 )[0].label
               }
+              color={
+                activity.status === ActivityStatusOption.ON_PROGRESS
+                  ? 'success'
+                  : 'default'
+              }
             />
           </Grid>
 
           <Grid size={6} display={'flex'} direction={'row'}>
             <Button
-              disabled={activity.status === ActivityStatusOption.COMPLETED || isTimerLoading}
+              disabled={
+                activity.status === ActivityStatusOption.COMPLETED ||
+                isTimerLoading
+              }
               variant={
                 activity.status === ActivityStatusOption.ON_PROGRESS
                   ? 'outlined'
