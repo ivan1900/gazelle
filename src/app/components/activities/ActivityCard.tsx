@@ -162,16 +162,17 @@ export default function ActivityCard(props: Props) {
           <Grid size={12}>
             <Chip
               size="small"
+              variant="outlined"
               label={activity.type.isProductive ? 'Productiva' : 'Improdutiva'}
               color={activity.type.isProductive ? 'primary' : 'secondary'}
             />
             <Chip
               size="small"
-              variant="outlined"
               label={activity.type.name}
               sx={{
                 ml: '8px',
-                color: activity.type.color,
+                color: '#fff',
+                backgroundColor: activity.type.color,
                 borderColor: activity.type.color,
               }}
             />
