@@ -9,7 +9,7 @@ interface Params {
   accountId: number;
 }
 
-export default class ReportByTypes {
+export default class ReportByActivity {
   constructor(private readonly activityRepository: ActivityRepository) {}
 
   async execute(params: Params): Promise<TimeByTypes[]> {
@@ -27,8 +27,7 @@ export default class ReportByTypes {
       ActivitySpec.isSatisfiedByIds(Array.from(uniqueActivityId))
     );
 
-    const typeMap = new Map<string, { color: string; totalMinutes: number }>();
-
+    const report: TimeByTypes[] = [];
     for (const activity of activities) {
       const activityActions = actions.filter(
         (action) => action.activityId === activity.id
@@ -38,28 +37,12 @@ export default class ReportByTypes {
         const end = action.end ? new Date(action.end) : new Date();
         return acc + (end.getTime() - start.getTime());
       }, 0);
-
-      const totalMinutes = totalTime / 60000; // Convert milliseconds to minutes
-      const typeName = activity.type.name;
-
-      if (typeMap.has(typeName)) {
-        const existing = typeMap.get(typeName)!;
-        existing.totalMinutes += totalMinutes;
-      } else {
-        typeMap.set(typeName, {
-          color: activity.type.color,
-          totalMinutes: totalMinutes,
-        });
-      }
+      report.push({
+        type: activity.type.name,
+        color: activity.type.color,
+        totalMinutes: totalTime / 60000, // Convert milliseconds to minutes
+      });
     }
-
-    const report: TimeByTypes[] = Array.from(typeMap.entries()).map(
-      ([type, data]) => ({
-        type,
-        color: data.color,
-        totalMinutes: data.totalMinutes,
-      })
-    );
 
     return report;
   }
