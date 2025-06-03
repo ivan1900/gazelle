@@ -7,7 +7,7 @@ export const config = {
 export async function middleware(request: NextRequest) {
   // Solo aplicar a rutas de API que requieren autenticación
   if (request.nextUrl.pathname.startsWith('/api/activity')) {
-    const apiKey = process.env.API_KEY;
+    const apiKey = process.env.HOST_API_KEY;
 
     const xApiKey = request.headers.get('x-api-key');
     if (apiKey === xApiKey) {
