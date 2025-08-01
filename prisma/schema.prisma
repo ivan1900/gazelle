@@ -60,3 +60,9 @@ model activity_type {
 
   @@unique([account_id, name], map: "activity_type_account_id_IDX")
 }
+
+model conversation_history {
+  id           Int   @id @default(autoincrement())
+  account_id   Int
+  conversation Json?
+}
