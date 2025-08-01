@@ -41,3 +41,4 @@ docker/mysql
 
 # idea
 .idea
+.vscode/settings.json
