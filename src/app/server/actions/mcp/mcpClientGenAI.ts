@@ -2,6 +2,7 @@ import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
 import { GoogleGenAI, Content, mcpToTool } from '@google/genai';
 import MCPRepository from './repository/mcpRepository';
+import path from 'path';
 
 const LIMIT_HISTORY = 10;
 
@@ -22,6 +23,7 @@ export default class MCPClientGenAi {
     this.transport = new StdioClientTransport({
       command: 'npx',
       args: serverScriptPath.split(' '),
+      cwd: path.resolve(process.cwd(), '../mcp-server-gazelle'),
     });
     this.conversationHistory = [];
     this.repository = new MCPRepository();
@@ -61,8 +63,6 @@ export default class MCPClientGenAi {
     });
 
     this.repository.saveConversation(this.accountId, this.conversationHistory);
-
-    console.log(`history:`, this.getHistory());
 
     this.cleanup();
     return responseText;
