@@ -10,7 +10,7 @@ import {
   TextField,
 } from '@mui/material';
 import { MuiColorInput } from 'mui-color-input';
-import { useEffect, useState } from 'react';
+import { useActionState, useEffect, useState } from 'react';
 import { useFormState } from 'react-dom';
 
 interface Props {
@@ -24,7 +24,7 @@ export default function FormAddType(props: Props) {
     ok: true,
     message: '',
   };
-  const [state, dispatch] = useFormState(createActivityType, initialState);
+  const [state, dispatch] = useActionState(createActivityType, initialState);
 
   useEffect(() => {
     if (state.ok && state.message.length > 0) {
