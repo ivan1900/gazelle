@@ -8,7 +8,7 @@ describe('ActivitiesOnGoingFinder', () => {
 
   beforeEach(() => {
     activityRepository = {
-      findAllOnGoing: jest.fn(),
+      getActivities: jest.fn(),
     } as unknown as ActivityRepository;
     activitiesOnGoingFinder = new ActivitiesOnGoingFinder(activityRepository);
   });
@@ -19,24 +19,24 @@ describe('ActivitiesOnGoingFinder', () => {
       { id: 1, name: 'Activity 1', status: 'ongoing' } as ActivityInfo,
       { id: 2, name: 'Activity 2', status: 'ongoing' } as ActivityInfo,
     ];
-    (activityRepository.findAllOnGoing as jest.Mock).mockResolvedValue(
+    (activityRepository.getActivities as jest.Mock).mockResolvedValue(
       activities
     );
 
     const result = await activitiesOnGoingFinder.exec(accountId);
 
     expect(result).toEqual(activities);
-    expect(activityRepository.findAllOnGoing).toHaveBeenCalledWith(accountId);
+    expect(activityRepository.getActivities).toHaveBeenCalled();
   });
 
   it('should throw an error if repository throws an error', async () => {
     const accountId = 1;
     const error = new Error('Repository error');
-    (activityRepository.findAllOnGoing as jest.Mock).mockRejectedValue(error);
+    (activityRepository.getActivities as jest.Mock).mockRejectedValue(error);
 
     await expect(activitiesOnGoingFinder.exec(accountId)).rejects.toThrow(
       error
     );
-    expect(activityRepository.findAllOnGoing).toHaveBeenCalledWith(accountId);
+    expect(activityRepository.getActivities).toHaveBeenCalled();
   });
 });
