@@ -1,4 +1,1 @@
-{
-  "makefile.configureOnOpen": false,
-  "prisma.pinToPrisma6": true
-}
+{ "makefile.configureOnOpen": false, "prisma.pinToPrisma6": false }

@@ -1,4 +1,7 @@
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
+import { Prisma } from '@/generated/prisma/client';
+
+type PrismaClientKnownRequestError = Prisma.PrismaClientKnownRequestError;
+const PrismaClientKnownRequestError = Prisma.PrismaClientKnownRequestError;
 
 const PrismaErrors: { [key: string]: string } = {
   P2002: 'No se pudo guardar, ya existe un registro con el mismo nombre o id',
