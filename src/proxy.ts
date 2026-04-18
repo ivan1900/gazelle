@@ -4,7 +4,7 @@ export const config = {
   matcher: '/api/:function*',
 };
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   // Solo aplicar a rutas de API que requieren autenticación
   if (request.nextUrl.pathname.startsWith('/api/activity')) {
     const apiKey = process.env.HOST_API_KEY;

@@ -1,8 +1,9 @@
 import { Alert, Button, Stack, Typography } from '@mui/material';
 import { headers } from 'next/headers';
 
-export default function Home() {
-  const csrfToken = headers().get('X-CSRF-Token') || 'missing';
+export default async function Home() {
+  const headersList = await headers();
+  const csrfToken = headersList.get('X-CSRF-Token') || 'missing';
 
   return (
     <main>
