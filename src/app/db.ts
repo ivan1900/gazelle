@@ -2,7 +2,10 @@ import { PrismaClient } from '@/generated/prisma/client';
 import { PrismaMariaDb } from '@prisma/adapter-mariadb';
 
 const prismaClientSingleton = () => {
-  const adapter = new PrismaMariaDb(process.env.DATABASE_URL!);
+  const adapter = new PrismaMariaDb({
+    database: process.env.DATABASE_URL!,
+    allowPublicKeyRetrieval: true,
+  });
   return new PrismaClient({ adapter });
 };
 
