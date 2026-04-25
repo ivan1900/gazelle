@@ -1,10 +1,10 @@
-import { getServerSession, type NextAuthOptions } from 'next-auth';
+import NextAuth, { type NextAuthConfig } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { accountServiceAuth } from '@/Contexts/Account/application/AccountServiceAuth';
 import getAccountByEmail from '@server/actions/account/getAccountByEmail';
 
-export const authOptions: NextAuthOptions = {
+export const authOptions: NextAuthConfig = {
   session: { strategy: 'jwt' },
   callbacks: {
     async jwt({ token, account, user }) {
@@ -69,4 +69,6 @@ export const authOptions: NextAuthOptions = {
   ],
 };
 
-export const getServerAuthSession = () => getServerSession(authOptions);
+export const { handlers, auth } = NextAuth(authOptions);
+
+export const getServerAuthSession = () => auth();
