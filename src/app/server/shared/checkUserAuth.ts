@@ -1,9 +1,9 @@
 import { redirect } from 'next/navigation';
-import { getServerAuthSession } from '../auth/auth';
 import { linkTo } from './linkTo';
+import { getServerSession } from 'next-auth';
 
 export default async function isUserAuth() {
-  const session = await getServerAuthSession();
+  const session = await getServerSession();
   if (!session) {
     redirect(linkTo.LOGIN);
   }

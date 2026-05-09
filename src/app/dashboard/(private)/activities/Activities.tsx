@@ -2,7 +2,7 @@
 import ActionSummary from '@/app/components/actionSummary/ActionSummary';
 import CurrentActivities from '@/app/components/activities/CurrentActivities';
 import OperationBoard from '@/app/components/activities/OperationBoard';
-import { Paper, Stack, Typography, Grid2 as Grid } from '@mui/material';
+import { Paper, Stack, Typography, Grid } from '@mui/material';
 import { useState } from 'react';
 
 export default function Activity() {
@@ -20,11 +20,13 @@ export default function Activity() {
   return (
     <>
       <Paper sx={{ minHeight: '3%', mt: '-25px', mx: '-26px' }}>
-        <Typography fontWeight={400} sx={{ px: '15px', mt: '12px' }}>
+        <Typography sx={{ fontWeight: 400, px: '15px', mt: '12px' }}>
           Actividad
         </Typography>
       </Paper>
-      <Stack direction="column" spacing={2} py={'10px'}>
+      <Stack direction="column" spacing={2} sx={{
+        py: '10px'
+      }}>
         <Grid container spacing={2}>
           <Grid size={{ xs: 12, md: 3 }}>
             <Stack spacing={2}>

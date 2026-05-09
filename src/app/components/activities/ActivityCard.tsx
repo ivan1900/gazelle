@@ -6,7 +6,7 @@ import {
   Chip,
   CircularProgress,
   Divider,
-  Grid2 as Grid,
+  Grid,
   IconButton,
   LinearProgress,
   Tooltip,
@@ -122,19 +122,26 @@ export default function ActivityCard(props: Props) {
         }}
       >
         <Grid container spacing={1}>
-          <Grid size={12} minHeight={4}>
+          <Grid size={12} sx={{
+            minHeight: 4
+          }}>
             {activity.status === ActivityStatusOption.ON_PROGRESS && (
               <LinearProgress />
             )}
           </Grid>
           <Grid
             size={9}
-            display={'flex'}
             direction={'row'}
-            alignItems={'center'}
-          >
+            sx={{
+              display: 'flex',
+              alignItems: 'center'
+            }}>
             <Tooltip title={activity.name}>
-              <Typography fontWeight={700} fontSize={20}>
+              <Typography
+                sx={{
+                  fontWeight: 700,
+                  fontSize: 20
+                }}>
                 {activity.name.length > 20
                   ? `${activity.name.substring(0, 20)}...`
                   : activity.name}
@@ -143,10 +150,11 @@ export default function ActivityCard(props: Props) {
           </Grid>
           <Grid
             size={3}
-            display={'flex'}
             direction={'row'}
-            justifyContent={'flex-end'}
-          >
+            sx={{
+              display: 'flex',
+              justifyContent: 'flex-end'
+            }}>
             <Tooltip title="Editar">
               <IconButton onClick={handleEditActivity}>
                 <NotesRoundedIcon />
@@ -178,18 +186,38 @@ export default function ActivityCard(props: Props) {
             />
           </Grid>
 
-          <Grid size={12} display={'flex'} justifyContent={'center'}>
-            <Typography fontWeight={400} fontSize={16}>
+          <Grid
+            size={12}
+            sx={{
+              display: 'flex',
+              justifyContent: 'center'
+            }}>
+            <Typography
+              sx={{
+                fontWeight: 400,
+                fontSize: 16
+              }}>
               Tiempo Total
             </Typography>
           </Grid>
-          <Grid size={12} display={'flex'} justifyContent={'center'}>
-            <Typography fontWeight={700} fontSize={24}>
+          <Grid
+            size={12}
+            sx={{
+              display: 'flex',
+              justifyContent: 'center'
+            }}>
+            <Typography
+              sx={{
+                fontWeight: 700,
+                fontSize: 24
+              }}>
               {totalDuration}
             </Typography>
           </Grid>
 
-          <Grid size={12} display={'flex'} direction={'row'}>
+          <Grid size={12} direction={'row'} sx={{
+            display: 'flex'
+          }}>
             <Chip
               size="small"
               label={
@@ -205,7 +233,9 @@ export default function ActivityCard(props: Props) {
             />
           </Grid>
 
-          <Grid size={6} display={'flex'} direction={'row'}>
+          <Grid size={6} direction={'row'} sx={{
+            display: 'flex'
+          }}>
             <Button
               disabled={
                 activity.status === ActivityStatusOption.COMPLETED ||
@@ -237,7 +267,12 @@ export default function ActivityCard(props: Props) {
                 : 'Iniciar'}
             </Button>
           </Grid>
-          <Grid size={6} display={'flex'} justifyContent={'end'}>
+          <Grid
+            size={6}
+            sx={{
+              display: 'flex',
+              justifyContent: 'end'
+            }}>
             {activity.status !== ActivityStatusOption.COMPLETED && (
               <Button
                 variant="outlined"
@@ -250,12 +285,20 @@ export default function ActivityCard(props: Props) {
           </Grid>
 
           <Grid size={6}>
-            <Typography color="text.secondary" fontSize={'8px'}>
+            <Typography
+              sx={{
+                color: "text.secondary",
+                fontSize: '8px'
+              }}>
               Creada: {activity.createdAt?.toLocaleString()}
             </Typography>
           </Grid>
           <Grid size={6}>
-            <Typography color="text.secondary" fontSize={'8px'}>
+            <Typography
+              sx={{
+                color: "text.secondary",
+                fontSize: '8px'
+              }}>
               Actualizada: {activity.updatedAt?.toLocaleString()}
             </Typography>
           </Grid>

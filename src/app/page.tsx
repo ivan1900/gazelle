@@ -9,8 +9,12 @@ export default async function Home() {
     <main>
       <Stack>
         <Typography> Prueba de texto</Typography>
-        <Typography color={'text.primary'}> Prueba de texto</Typography>
-        <Typography color={'text.secondary'}> Prueba de texto</Typography>
+        <Typography sx={{
+          color: 'text.primary'
+        }}> Prueba de texto</Typography>
+        <Typography sx={{
+          color: 'text.secondary'
+        }}> Prueba de texto</Typography>
         <Typography color={'error'}> Prueba de texto</Typography>
         <Typography color={'warning'}> Prueba de texto</Typography>
 

@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { auth } from '@/app/server/auth/auth';
 import { redirect } from 'next/navigation';
+import { getServerSession } from 'next-auth';
 
 export default async function PrivateLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const session = await auth();
+  const session = await getServerSession();
 
   if (!session) {
     redirect('/signin');

@@ -2,7 +2,7 @@
 import {
   Box,
   Button,
-  Grid2 as Grid,
+  Grid,
   IconButton,
   Paper,
   Typography,
@@ -66,7 +66,6 @@ export default function OperationBoard(props: Props) {
           preselectedActivityType={selectedActivityType}
         />
       </MyModal>
-
       {/* Modal de Chat IA */}
       <MyModal
         isOpen={openModalAI}
@@ -76,14 +75,14 @@ export default function OperationBoard(props: Props) {
       >
         <ChatAI onClose={handleCloseAI} />
       </MyModal>
-
       <Paper sx={{ width: '100%', overflow: 'hidden' }}>
         <Box
-          p={1}
-          display="flex"
-          alignItems="center"
-          justifyContent="space-between"
-        >
+          sx={{
+            p: 1,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between"
+          }}>
           <Typography>Inicia una nueva actividad</Typography>
           <IconButton
             color="primary"
@@ -96,7 +95,9 @@ export default function OperationBoard(props: Props) {
           </IconButton>
         </Box>
         <Box sx={{ overflow: 'auto', maxHeight: '30vh' }}>
-          <Grid container spacing={2} p={2}>
+          <Grid container spacing={2} sx={{
+            p: 2
+          }}>
             {activityTypes.map((activityType) => (
               <Grid size={12} key={activityType.id}>
                 <Button

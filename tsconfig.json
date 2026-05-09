@@ -1,13 +1,8 @@
 {
   "compilerOptions": {
-    "lib": [
-      "dom",
-      "esnext"
-    ],
-    "types": [
-      "node",
-      "jest"
-    ],
+    "rootDir": "./",
+    "lib": ["dom", "esnext"],
+    "types": ["node", "jest"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -25,15 +20,9 @@
       }
     ],
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "@components/*": [
-        "./src/app/components/*"
-      ],
-      "@server/*": [
-        "./src/app/server/*"
-      ]
+      "@/*": ["./src/*"],
+      "@components/*": ["./src/app/components/*"],
+      "@server/*": ["./src/app/server/*"]
     },
     "target": "ES2025"
   },
@@ -44,7 +33,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"],
+  "ignoreDeprecations": "6.0"
 }

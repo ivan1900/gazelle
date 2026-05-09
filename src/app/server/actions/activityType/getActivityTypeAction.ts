@@ -2,16 +2,16 @@
 
 import { GetActivityType } from '@/Contexts/ActivityType/application/GetActivityType';
 import ActivityTypeRepositoryPrisma from '@/Contexts/ActivityType/repository/ActivityTypeRepositoryPrimsa';
-import { getServerAuthSession } from '@server/auth/auth';
 import { ActivityTypeDto } from '@/Contexts/ActivityType/domain/ActivityTypeDto';
 import { linkTo } from '../../shared/linkTo';
 import { redirect } from 'next/navigation';
+import { getServerSession } from 'next-auth';
 
 export default async function getActivityType(): Promise<
   ActivityTypeDto[] | []
 > {
   try {
-    const session = await getServerAuthSession();
+    const session = await getServerSession();
     if (!session) {
       redirect(linkTo.LOGIN);
     }

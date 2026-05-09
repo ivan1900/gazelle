@@ -69,12 +69,27 @@ export default function ActionSummary(props: Props) {
 
   return (
     <Paper style={{ width: '100%' }}>
-      <Box m={1}>
-        <Stack direction="column" justifyContent="center" alignItems="center">
-          <Typography variant="h6" color="text.primary">
+      <Box sx={{
+        m: 1
+      }}>
+        <Stack
+          direction="column"
+          sx={{
+            justifyContent: "center",
+            alignItems: "center"
+          }}>
+          <Typography variant="h6" sx={{
+            color: "text.primary"
+          }}>
             Resumen de actividades
           </Typography>
-          <Stack direction="row" spacing={2} alignItems="center" mb={1}>
+          <Stack
+            direction="row"
+            spacing={2}
+            sx={{
+              alignItems: "center",
+              mb: 1
+            }}>
             <Button
               variant="outlined"
               color="primary"
@@ -96,11 +111,15 @@ export default function ActionSummary(props: Props) {
               Hoy
             </Button>
           </Stack>
-          <Stack direction="row" spacing={2} alignItems="center">
+          <Stack direction="row" spacing={2} sx={{
+            alignItems: "center"
+          }}>
             <IconButton onClick={handlePrevDay} color="primary">
               <ArrowBackIosRoundedIcon />
             </IconButton>
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="body2" sx={{
+              color: "text.secondary"
+            }}>
               {dayjs(selectedDate).format('DD/MM/YYYY')}
             </Typography>
             <IconButton
@@ -116,16 +135,20 @@ export default function ActionSummary(props: Props) {
               key={item.type + index}
               direction="row"
               spacing={4}
-              justifyContent="space-between"
-              alignItems="center"
-              sx={{ width: '100%', mt: 1 }}
-              px={'10px'}
-            >
+              sx={{
+                justifyContent: "space-between",
+                alignItems: "center",
+                px: '10px',
+                width: '100%',
+                mt: 1
+              }}>
               <Chip
                 label={item.type}
                 style={{ backgroundColor: item.color, color: '#fff' }}
               />
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="body2" sx={{
+                color: "text.secondary"
+              }}>
                 {formatMinutesToHHMM(item.totalMinutes)}
               </Typography>
             </Stack>

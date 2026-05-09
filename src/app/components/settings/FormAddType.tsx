@@ -32,7 +32,9 @@ export default function FormAddType(props: Props) {
   });
   return (
     <form action={dispatch}>
-      <Stack spacing={2} pt={'32px'}>
+      <Stack spacing={2} sx={{
+        pt: '32px'
+      }}>
         <TextField
           id="name"
           name="name"

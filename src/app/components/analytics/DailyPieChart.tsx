@@ -57,8 +57,15 @@ export default function DailyPieChart(props: Props) {
 
   return (
     <Paper style={{ width: '100%' }}>
-      <Stack direction="column" justifyContent="center" alignItems="center">
-        <Typography variant="h6" py={1}>
+      <Stack
+        direction="column"
+        sx={{
+          justifyContent: "center",
+          alignItems: "center"
+        }}>
+        <Typography variant="h6" sx={{
+          py: 1
+        }}>
           {title}
         </Typography>
         <PieChart width={300} height={300}>

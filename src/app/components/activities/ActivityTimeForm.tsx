@@ -134,7 +134,7 @@ export default function ActivityTimeForm({ activity, refresh }: Props) {
       />
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
         <Stack spacing={2}>
-          <Box mt={2}>
+          <Box sx={{ mt: 2 }}>
             <Typography variant="h6">Registro de tiempos</Typography>
             <TableContainer
               component={Paper}

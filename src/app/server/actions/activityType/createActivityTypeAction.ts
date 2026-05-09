@@ -4,9 +4,9 @@ import ActivityTypeCreator from '@/Contexts/ActivityType/application/ActivityTyp
 import ActivityTypeRepositoryPrisma from '@/Contexts/ActivityType/repository/ActivityTypeRepositoryPrimsa';
 import { ActionResponse } from '@/app/server/shared/responseAction';
 import { z } from 'zod';
-import { getServerAuthSession } from '../../auth/auth';
 import { redirect } from 'next/navigation';
 import { linkTo } from '../../shared/linkTo';
+import { getServerSession } from 'next-auth';
 
 const FormSchema = z.object({
   name: z
@@ -25,7 +25,7 @@ export async function createActivityType(
   prevState: ActionResponse,
   formDate: FormData
 ): Promise<ActionResponse> {
-  const session = await getServerAuthSession();
+  const session = await getServerSession();
   if (!session) {
     redirect(linkTo.LOGIN);
   }

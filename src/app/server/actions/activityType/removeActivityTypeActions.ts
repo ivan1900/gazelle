@@ -1,14 +1,14 @@
 'use server';
 import { redirect } from 'next/navigation';
-import { getServerAuthSession } from '../../auth/auth';
 import ActivityTypeRepositoryPrisma from '@/Contexts/ActivityType/repository/ActivityTypeRepositoryPrimsa';
 import { ActionResponse } from '@/app/server/shared/responseAction';
 import { linkTo } from '../../shared/linkTo';
+import { getServerSession } from 'next-auth';
 
 export default async function removeActivityTypeAction(
   name: string
 ): Promise<ActionResponse> {
-  const session = await getServerAuthSession();
+  const session = await getServerSession();
   if (!session) {
     redirect(linkTo.LOGIN);
   }

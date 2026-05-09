@@ -129,16 +129,17 @@ export default function ChatAI({ onClose }: Props) {
               />
               <Typography
                 variant="caption"
-                color="text.secondary"
-                sx={{ mt: 1, display: 'block' }}
-              >
+                sx={{
+                  color: "text.secondary",
+                  mt: 1,
+                  display: 'block'
+                }}>
                 {message.timestamp.toLocaleTimeString()}
               </Typography>
             </Paper>
           </Box>
         ))}
       </Box>
-
       {/* Área de entrada de mensaje */}
       <Box sx={{ display: 'flex', gap: 1 }}>
         <TextField

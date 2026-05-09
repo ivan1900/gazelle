@@ -83,7 +83,9 @@ export default function NewActivityForm(props: Props) {
 
   return (
     <form action="submit" onSubmit={handleSubmit}>
-      <Stack spacing={2} pt={'32px'}>
+      <Stack spacing={2} sx={{
+        pt: '32px'
+      }}>
         <TextField
           id="activityName"
           name="activityName"

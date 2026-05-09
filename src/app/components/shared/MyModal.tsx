@@ -2,7 +2,7 @@
 import {
   Box,
   Fade,
-  Grid2,
+  Grid,
   Grow,
   Modal,
   Paper,
@@ -33,17 +33,19 @@ export default function MyModal(props: MyModalProps) {
             transform: 'translate(-50%, -50%)',
           }}
         >
-          <Box p={2}>
-            <Grid2 container>
-              <Grid2 size={10}>
+          <Box sx={{
+            p: 2
+          }}>
+            <Grid container>
+              <Grid size={10}>
                 <Typography variant="h5">{props.title}</Typography>
-              </Grid2>
-              <Grid2 size={2}>
+              </Grid>
+              <Grid size={2}>
                 <Typography align="right" variant="h5" onClick={onClose}>
                   <CloseRoundedIcon sx={{ cursor: 'pointer' }} />
                 </Typography>
-              </Grid2>
-            </Grid2>
+              </Grid>
+            </Grid>
             {props.children}
           </Box>
         </Paper>

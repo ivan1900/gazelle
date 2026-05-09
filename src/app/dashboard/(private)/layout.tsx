@@ -34,7 +34,7 @@ export default function DashboardLayout({
   };
 
   return (
-    <Box display={{ xs: 'block', md: 'flex' }}>
+    <Box sx={{ display: { xs: 'block', md: 'flex' } }}>
       <CssBaseline />
 
       <AppMainBar

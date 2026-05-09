@@ -70,14 +70,15 @@ export default function ActivityTypesConfig() {
       >
         <FormAddType closeParent={handleCloseModal} />
       </MyModal>
-
       <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-        <Stack direction="row" spacing={2} padding={'20px'}>
+        <Stack direction="row" spacing={2} sx={{
+          padding: '20px'
+        }}>
           <Button variant="contained" color="primary" onClick={handleClickOpen}>
             Agregar
           </Button>
         </Stack>
-        <Box padding={'20px'}>
+        <Box sx={{ padding: '20px' }}>
           <TableContainer sx={{ maxHeight: 300 }}>
             <Table stickyHeader arial-label="Tipos de actividad">
               <TableHead>
