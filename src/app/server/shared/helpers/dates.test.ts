@@ -25,7 +25,7 @@ describe('dates helper functions', () => {
     const now = new Date('2025-04-13T12:00:00Z');
     const daysAgo = 5;
     const result = getDateDaysAgo(now, daysAgo);
-    const expected = new Date('2025-04-08T00:00:00Z');
+    const expected = new Date(2025, 3, 8); // April 8 at midnight local time (matches setHours behaviour)
 
     expect(result).toEqual(expected);
   });

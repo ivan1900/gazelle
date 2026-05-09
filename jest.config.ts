@@ -11,6 +11,7 @@ const config: Config.InitialOptions = {
   collectCoverageFrom: [`${baseDir}/**/*.ts`],
   testMatch: [`${baseTestDir}/**/*test.ts`, `${baseTestDir}/**/*test.ts`],
   moduleNameMapper: {
+    '^@/generated/prisma/client$': '<rootDir>/src/__mocks__/prismaClient.ts',
     '^@/(.*)$': '<rootDir>/src/$1',
   },
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
