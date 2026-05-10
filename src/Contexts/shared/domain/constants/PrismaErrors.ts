@@ -15,11 +15,35 @@ const prismaErrorMessage = (code: string): string => {
 };
 
 export const prismaErrorHandle = (e: unknown): string => {
-  console.error(
-    e instanceof PrismaClientKnownRequestError ? e.message : 'unknown error'
-  );
+  console.error('[prismaErrorHandle]', e);
+
+  // instanceof may fail across module instances; fall back to duck-typing
   if (e instanceof PrismaClientKnownRequestError) {
     return prismaErrorMessage(e.code);
   }
+
+  // Duck-typed fallback for PrismaClientKnownRequestError
+  if (
+    e &&
+    typeof e === 'object' &&
+    'code' in e &&
+    typeof (e as { code: unknown }).code === 'string'
+  ) {
+    const code = (e as { code: string }).code;
+    if (code.startsWith('P')) {
+      return prismaErrorMessage(code);
+    }
+  }
+
+  // PrismaClientValidationError — bad input types / missing required fields
+  if (
+    e &&
+    typeof e === 'object' &&
+    'name' in e &&
+    (e as { name: unknown }).name === 'PrismaClientValidationError'
+  ) {
+    return 'Datos inválidos en la solicitud';
+  }
+
   return prismaErrorMessage('unknown');
 };

@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import NoteAltIcon from '@mui/icons-material/NoteAlt';
 import Link from 'next/link';
 import { use, useEffect, useState } from 'react';
 import { grey } from '@mui/material/colors';
@@ -26,6 +27,12 @@ const menuItems = [
     label: 'Actividad',
     icon: AppRegistrationIcon,
     path: '/dashboard/activities',
+  },
+  {
+    name: 'Notes',
+    label: 'Bitácora',
+    icon: NoteAltIcon,
+    path: '/dashboard/notes',
   },
 ];
 

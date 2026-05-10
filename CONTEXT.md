@@ -9,7 +9,8 @@ This project is a tool for user activity tracking and dashboarding. It allows us
 - **Activity**: A record of a user's action or event, including details such as type, duration, and timestamp.
 - **Account**: Represents a user in the system, including authentication and profile information.
 - **Dashboard**: A visual representation of a user's activities and metrics, providing insights and trends.
-- [more entities...]
+- **Note**: A daily journal entry (bitácora) written by a user — one note per day per account. Notes have free-text content, an explicit date chosen by the user (defaults to today), and optional user-defined tags. Displayed as a chronological timeline with filtering by date range, content search, and tag.
+- **Tag**: A user-defined label scoped to an account, used to categorize Notes. Tags are created on demand and can be reused across multiple notes. The UI offers "high impact", "discovery", and "improve" as quick-add suggestions, but any custom name is allowed.
 
 ## Architecture
 
