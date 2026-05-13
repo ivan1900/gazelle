@@ -7,6 +7,7 @@ jobs:
   deploy:
     name: 🚀 Deploy Gazelle
     runs-on: ubuntu-latest
+    environment: production
     permissions:
       contents: write
 
@@ -67,6 +68,11 @@ jobs:
           envkey_NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
           envkey_NEXTAUTH_URL: ${{ vars.NEXTAUTH_URL }}
           envkey_DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          envkey_MYSQL_HOST: ${{ secrets.MYSQL_HOST }}
+          envkey_MYSQL_PORT: ${{ secrets.MYSQL_PORT }}
+          envkey_MYSQL_USER: ${{ secrets.MYSQL_USER }}
+          envkey_MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+          envkey_MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
 
       - name: Deploy with rsync
         run: rsync -aRvz -e "ssh -p ${{ secrets.REMOTE_PORT }}" --delete .env .next node_modules next-env.d.ts next.config.mjs package-lock.json package.json tsconfig.json public ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:gazelle
