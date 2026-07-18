@@ -25,8 +25,8 @@ module.exports = {
       ignore_watch: ['node_modules', '.next', 'coverage'],
 
       // Logging
-      out_file: '/home/.pm2/logs/gazelle-out.log',
-      error_file: '/home/.pm2/logs/gazelle-error.log',
+      // out_file: '/home/.pm2/logs/gazelle-out.log',
+      // error_file: '/home/.pm2/logs/gazelle-error.log',
       log_date_format: 'YYYY-MM-DD HH:mm:ss Z',
     },
   ],
