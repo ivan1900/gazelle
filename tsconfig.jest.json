@@ -2,8 +2,7 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "module": "commonjs",
-    "moduleResolution": "node",
-    "isolatedModules": true,
-    "ignoreDeprecations": "6.0"
+    "moduleResolution": "bundler",
+    "isolatedModules": true
   }
 }

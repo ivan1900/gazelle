@@ -33,6 +33,5 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
   ],
-  "exclude": ["node_modules"],
-  "ignoreDeprecations": "6.0"
+  "exclude": ["node_modules"]
 }

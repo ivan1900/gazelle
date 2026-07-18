@@ -31,6 +31,9 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
+      - name: Type check (TypeScript 7)
+        run: npx tsc --noEmit
+
       - name: Build Gazelle
         run: npm run build
 
