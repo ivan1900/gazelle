@@ -88,5 +88,4 @@ jobs:
             nvm use v22.14.0
             cd gazelle
             pm2 startOrReload ecosystem.config.cjs --env production
-            pm2 save
           '
