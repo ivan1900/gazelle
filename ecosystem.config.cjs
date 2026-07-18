@@ -5,7 +5,6 @@ module.exports = {
       script: 'npm',
       args: 'start',
       exec_mode: 'fork',
-      cwd: '/home/gazelle',
       instances: 1,
       env: {
         NODE_ENV: 'production',
@@ -25,8 +24,8 @@ module.exports = {
       ignore_watch: ['node_modules', '.next', 'coverage'],
 
       // Logging
-      out_file: '/home/.pm2/logs/gazelle-out.log',
-      error_file: '/home/.pm2/logs/gazelle-error.log',
+      out_file: '../.pm2/logs/gazelle-out.log',
+      error_file: '../.pm2/logs/gazelle-error.log',
       log_date_format: 'YYYY-MM-DD HH:mm:ss Z',
     },
   ],
