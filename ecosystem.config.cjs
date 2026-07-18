@@ -6,6 +6,7 @@ module.exports = {
       args: 'start',
       exec_mode: 'fork',
       instances: 1,
+      env_file: '.env',
       env: {
         NODE_ENV: 'production',
       },
