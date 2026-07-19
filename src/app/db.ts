@@ -21,4 +21,8 @@ const prisma = globalThis.prismaGlobal ?? prismaClientSingleton();
 
 export default prisma;
 
+export async function checkDb() {
+  await prisma.$queryRaw`SELECT 1`;
+}
+
 if (process.env.NODE_ENV !== 'production') globalThis.prismaGlobal = prisma;
