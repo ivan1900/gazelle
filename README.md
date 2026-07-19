@@ -46,3 +46,4 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## More about MCP server for Gazelle
 
 Here is the repo [link](https://github.com/ivan1900/gazelle-mcp)
+.
