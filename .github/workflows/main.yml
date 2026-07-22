@@ -77,8 +77,13 @@ jobs:
           envkey_MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
           envkey_MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
 
+      - name: Copy static assets into standalone
+        run: |
+          cp -r .next/static .next/standalone/.next/static
+          cp -r public .next/standalone/public
+
       - name: Deploy with rsync
-        run: rsync -aRvz -e "ssh -p ${{ secrets.REMOTE_PORT }}" --delete .env .next ecosystem.config.cjs node_modules next-env.d.ts next.config.mjs package-lock.json package.json tsconfig.json public ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:gazelle
+        run: rsync -aRvz -e "ssh -p ${{ secrets.REMOTE_PORT }}" --delete .env .next/standalone ecosystem.config.cjs next.config.mjs ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:gazelle
 
       - name: Deploy with PM2 ecosystem
         run: |
