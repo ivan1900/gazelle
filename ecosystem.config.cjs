@@ -2,8 +2,7 @@ module.exports = {
   apps: [
     {
       name: 'gazelle',
-      script: 'node',
-      args: '.next/standalone/server.js',
+      script: '.next/standalone/server.js',
       exec_mode: 'fork',
       instances: 1,
       env_file: '.env',
