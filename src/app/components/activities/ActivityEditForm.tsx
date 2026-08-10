@@ -98,51 +98,86 @@ export default function ActivityEditForm({ activity, refresh }: Props) {
         handleClose={handleCloseNotification}
       />
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
-        <Stack spacing={2}>
-          <TextField
-            label="Actividad"
-            variant="outlined"
-            value={inputs.name}
-            onChange={(e) => {
-              setInputs({ ...inputs, name: e.target.value });
-            }}
-          />
-          <TextField
-            label="Descripción"
-            variant="outlined"
-            value={inputs.description}
-            onChange={(e) => {
-              setInputs({ ...inputs, description: e.target.value });
-            }}
-          />
-          <FormControl fullWidth>
-            <InputLabel id="typeLabel" required>
-              Estado
-            </InputLabel>
-            <Select
-              labelId="typeLabel"
-              id="activityType"
-              name="activityType"
-              value={inputs.activityType?.toString() || ''}
-              label="Estado"
+        <Box component="form" sx={{ display: 'flex', flexDirection: 'column' }}>
+          <Stack spacing={2.5}>
+            <TextField
+              id="activity-name"
+              label="Nombre de la actividad"
+              variant="outlined"
+              fullWidth
+              value={inputs.name}
+              onChange={(e) => {
+                setInputs({ ...inputs, name: e.target.value });
+              }}
               required
-              onChange={handleSelectChange}
-            >
-              {activityTypes.map((type) => (
-                <MenuItem key={type.id} value={type.id}>
-                  {type.name}
+              aria-required="true"
+              slotProps={{
+                input: {
+                  'aria-label': 'Nombre de la actividad',
+                },
+              }}
+            />
+            <TextField
+              id="activity-description"
+              label="Descripción"
+              variant="outlined"
+              fullWidth
+              multiline
+              rows={3}
+              value={inputs.description}
+              onChange={(e) => {
+                setInputs({ ...inputs, description: e.target.value });
+              }}
+              slotProps={{
+                input: {
+                  'aria-label': 'Descripción de la actividad',
+                },
+              }}
+            />
+            <FormControl fullWidth required>
+              <InputLabel id="typeLabel">
+                Tipo de actividad
+              </InputLabel>
+              <Select
+                labelId="typeLabel"
+                id="activityType"
+                name="activityType"
+                value={inputs.activityType?.toString() || ''}
+                label="Tipo de actividad"
+                required
+                aria-required="true"
+                onChange={handleSelectChange}
+              >
+                <MenuItem value="" disabled>
+                  <em>Selecciona una opción</em>
                 </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <Box
-            sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, mt: 2 }}
-          >
-            <Button variant="contained" color="primary" onClick={handleSave}>
-              Guardar Cambios
-            </Button>
-          </Box>
-        </Stack>
+                {activityTypes.map((type) => (
+                  <MenuItem key={type.id} value={type.id}>
+                    {type.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                gap: 2,
+                mt: 2,
+              }}
+            >
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleSave}
+                aria-label="Guardar los cambios en la actividad"
+                type="button"
+              >
+                Guardar Cambios
+              </Button>
+            </Box>
+          </Stack>
+        </Box>
       </LocalizationProvider>
     </>
   );

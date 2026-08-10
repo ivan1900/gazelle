@@ -55,12 +55,17 @@ export default function AppMainBar(props: Props) {
             size="large"
             edge="start"
             color="inherit"
-            aria-label="menu"
+            aria-label="Abrir menú de navegación"
+            aria-expanded={false}
             onClick={handleDrawerToggle}
             sx={{
               mr: spacing.sm,
               display: { md: 'none' },
               color: theme.palette.text.primary,
+              '&:focus-visible': {
+                outline: `2px solid ${theme.palette.primary.main}`,
+                outlineOffset: '2px',
+              },
             }}
           >
             <MenuIcon />
@@ -84,25 +89,35 @@ export default function AppMainBar(props: Props) {
           <IconButton
             component={Link}
             href="/dashboard/settings"
-            aria-label="Configuración"
+            aria-label="Abrir configuración de usuario"
+            title="Configuración"
             size="large"
             sx={{
               color: theme.palette.text.primary,
               '&:hover': {
                 backgroundColor: theme.palette.action.hover,
               },
+              '&:focus-visible': {
+                outline: `2px solid ${theme.palette.primary.main}`,
+                outlineOffset: '2px',
+              },
             }}
           >
             <SettingsRoundedIcon />
           </IconButton>
           <IconButton
-            aria-label="Cerrar sesión"
+            aria-label="Cerrar sesión actual"
+            title="Cerrar sesión"
             size="large"
             onClick={handleLogout}
             sx={{
               color: theme.palette.text.primary,
               '&:hover': {
                 backgroundColor: theme.palette.action.hover,
+              },
+              '&:focus-visible': {
+                outline: `2px solid ${theme.palette.primary.main}`,
+                outlineOffset: '2px',
               },
             }}
           >
