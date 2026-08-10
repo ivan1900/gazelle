@@ -1,6 +1,12 @@
 'use client';
 import { Paper, Stack, Typography } from '@mui/material';
-import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
+import {
+  PieChart,
+  Pie,
+  Cell,
+  ResponsiveContainer,
+  PieLabelRenderProps,
+} from 'recharts';
 
 interface Props {
   title: string;
@@ -17,25 +23,22 @@ export default function DailyPieChart(props: Props) {
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
   const RADIAN = Math.PI / 180;
-  const renderCustomizedLabel = ({
-    cx,
-    cy,
-    midAngle,
-    innerRadius,
-    outerRadius,
-    percent,
-    index,
-    name,
-  }: {
-    cx: number;
-    cy: number;
-    midAngle: number;
-    innerRadius: number;
-    outerRadius: number;
-    percent: number;
-    index: number;
-    name: string;
-  }) => {
+  const renderCustomizedLabel = (props: PieLabelRenderProps) => {
+    const { cx, cy, midAngle, innerRadius, outerRadius, percent, name } = props;
+
+    // Guard against null values during animations
+    if (
+      cx == null ||
+      cy == null ||
+      midAngle == null ||
+      innerRadius == null ||
+      outerRadius == null ||
+      percent == null ||
+      name == null
+    ) {
+      return null;
+    }
+
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
     const x = cx + radius * Math.cos(-midAngle * RADIAN);
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
@@ -60,12 +63,16 @@ export default function DailyPieChart(props: Props) {
       <Stack
         direction="column"
         sx={{
-          justifyContent: "center",
-          alignItems: "center"
-        }}>
-        <Typography variant="h6" sx={{
-          py: 1
-        }}>
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Typography
+          variant="h6"
+          sx={{
+            py: 1,
+          }}
+        >
           {title}
         </Typography>
         <PieChart width={300} height={300}>

@@ -35,7 +35,7 @@ export async function createActivityType(
     isProductive: !formDate.get('isProductive') ? false : true,
   });
   if (!validateFields.success) {
-    const errors = validateFields.error.errors.map((error) => error.message);
+    const errors = validateFields.error.issues.map((issue) => issue.message);
     return {
       message: errors.join(', '),
       ok: false,
