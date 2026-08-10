@@ -1,9 +1,19 @@
-import { AppBar, IconButton, Toolbar, Typography } from '@mui/material';
+'use client';
+import {
+  AppBar,
+  IconButton,
+  Toolbar,
+  Typography,
+  useTheme,
+  useMediaQuery,
+  Box,
+} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { signOut } from 'next-auth/react';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import Link from 'next/link';
+import { spacing } from '@/app/designTokens';
 
 interface Props {
   drawerWidth: number;
@@ -12,6 +22,7 @@ interface Props {
 
 export default function AppMainBar(props: Props) {
   const { drawerWidth, handleDrawerToggle } = props;
+  const theme = useTheme();
 
   const handleLogout = async () => {
     await signOut();
@@ -21,42 +32,83 @@ export default function AppMainBar(props: Props) {
     <AppBar
       position="fixed"
       sx={{
-        zIndex: (theme) => theme.zIndex.drawer + 1, // for over drawer, next lines for drawer toolbar visible
+        zIndex: (theme) => theme.zIndex.drawer + 1,
         width: { md: `calc(100% - ${drawerWidth}px)` },
         ml: { md: `${drawerWidth}px` },
+        backgroundColor: '#FFFFFF',
+        boxShadow: `0 1px 3px rgba(0, 0, 0, 0.08)`,
+        borderBottom: `1px solid ${theme.palette.divider}`,
       }}
     >
-      <Toolbar>
-        <IconButton
-          size="large"
-          edge="start"
-          color="inherit"
-          aria-label="menu"
-          onClick={handleDrawerToggle}
-          sx={{ mr: 2, display: { md: 'none' } }}
-        >
-          <MenuIcon />
-        </IconButton>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Gazelle
-        </Typography>
-        <IconButton
-          component={Link}
-          href="/dashboard/settings"
-          aria-label="settings"
-          color="inherit"
-          size="large"
-        >
-          <SettingsRoundedIcon />
-        </IconButton>
-        <IconButton
-          aria-label="exit"
-          color="inherit"
-          size="large"
-          onClick={handleLogout}
-        >
-          <LogoutRoundedIcon />
-        </IconButton>
+      <Toolbar
+        sx={{
+          minHeight: { xs: '56px', md: '64px' },
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          px: { xs: spacing.md, md: spacing.lg },
+        }}
+      >
+        {/* Left section - Menu & Logo */}
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: spacing.md }}>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            onClick={handleDrawerToggle}
+            sx={{
+              mr: spacing.sm,
+              display: { md: 'none' },
+              color: theme.palette.text.primary,
+            }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{
+              fontWeight: 700,
+              fontSize: { xs: '1.125rem', md: '1.25rem' },
+              color: theme.palette.primary.main,
+              letterSpacing: '-0.5px',
+            }}
+          >
+            Gazelle
+          </Typography>
+        </Box>
+
+        {/* Right section - Settings & Logout */}
+        <Box sx={{ display: 'flex', gap: spacing.sm }}>
+          <IconButton
+            component={Link}
+            href="/dashboard/settings"
+            aria-label="Configuración"
+            size="large"
+            sx={{
+              color: theme.palette.text.primary,
+              '&:hover': {
+                backgroundColor: theme.palette.action.hover,
+              },
+            }}
+          >
+            <SettingsRoundedIcon />
+          </IconButton>
+          <IconButton
+            aria-label="Cerrar sesión"
+            size="large"
+            onClick={handleLogout}
+            sx={{
+              color: theme.palette.text.primary,
+              '&:hover': {
+                backgroundColor: theme.palette.action.hover,
+              },
+            }}
+          >
+            <LogoutRoundedIcon />
+          </IconButton>
+        </Box>
       </Toolbar>
     </AppBar>
   );

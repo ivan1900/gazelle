@@ -66,7 +66,7 @@ export default function ActivityTypesConfig() {
         isOpen={openModal}
         onClose={handleCloseModal}
         title="Agregar tipo de actividad"
-        width="312px"
+        maxWidth="lg"
       >
         <FormAddType closeParent={handleCloseModal} />
       </MyModal>

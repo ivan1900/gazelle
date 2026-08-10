@@ -108,7 +108,7 @@ export default function ActivityCard(props: Props) {
         isOpen={openModal}
         onClose={handleCloseModal}
         title="Editar actividad"
-        width="850px"
+        maxWidth="lg"
       >
         <ActivityEditForm activity={activity} refresh={refresh} />
         <Divider sx={{ my: 2 }} />

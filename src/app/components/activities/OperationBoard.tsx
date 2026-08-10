@@ -59,7 +59,7 @@ export default function OperationBoard(props: Props) {
         isOpen={openModal}
         onClose={handleClose}
         title="Nueva Actividad"
-        width={isMobile ? '90vw' : '45vw'}
+        maxWidth="md"
       >
         <NewActivityForm
           closeParent={handleClose}
@@ -71,7 +71,7 @@ export default function OperationBoard(props: Props) {
         isOpen={openModalAI}
         onClose={handleCloseAI}
         title="Asistente de IA"
-        width={isMobile ? '95vw' : '60vw'}
+        maxWidth="lg"
       >
         <ChatAI onClose={handleCloseAI} />
       </MyModal>

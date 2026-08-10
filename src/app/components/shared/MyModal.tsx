@@ -1,55 +1,103 @@
 'use client';
 import {
   Box,
-  Fade,
-  Grid,
-  Grow,
-  Modal,
-  Paper,
-  Typography,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  useTheme,
+  useMediaQuery,
 } from '@mui/material';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import { spacing, borderRadius } from '@/app/designTokens';
 
 interface MyModalProps {
   isOpen: boolean;
   onClose: () => void;
-  width?: string;
+  maxWidth?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   title: string;
   children: React.ReactNode;
+  showCloseButton?: boolean;
 }
 
 export default function MyModal(props: MyModalProps) {
-  const { isOpen, onClose, width } = props;
+  const {
+    isOpen,
+    onClose,
+    maxWidth = 'sm',
+    title,
+    children,
+    showCloseButton = true,
+  } = props;
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
-    <Modal open={isOpen}>
-      <Grow in={isOpen} timeout={500}>
-        <Paper
-          style={{
-            width: width || 'auto',
-            position: 'absolute',
-            top: '40%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-          }}
-        >
-          <Box sx={{
-            p: 2
-          }}>
-            <Grid container>
-              <Grid size={10}>
-                <Typography variant="h5">{props.title}</Typography>
-              </Grid>
-              <Grid size={2}>
-                <Typography align="right" variant="h5" onClick={onClose}>
-                  <CloseRoundedIcon sx={{ cursor: 'pointer' }} />
-                </Typography>
-              </Grid>
-            </Grid>
-            {props.children}
-          </Box>
-        </Paper>
-      </Grow>
-    </Modal>
+    <Dialog
+      open={isOpen}
+      onClose={onClose}
+      maxWidth={maxWidth}
+      fullWidth
+      fullScreen={isSmallScreen}
+      slotProps={{
+        paper: {
+          sx: {
+            borderRadius: isSmallScreen ? 0 : borderRadius.lg,
+            boxShadow: `0 20px 60px rgba(0, 0, 0, 0.15)`,
+          },
+        },
+      }}
+    >
+      <DialogTitle
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          fontSize: '1.25rem',
+          fontWeight: 600,
+          paddingRight: spacing.sm,
+          borderBottom: `1px solid ${theme.palette.divider}`,
+          minHeight: '64px',
+        }}
+      >
+        <Box sx={{ flex: 1 }}>{title}</Box>
+        {showCloseButton && (
+          <IconButton
+            onClick={onClose}
+            size="small"
+            aria-label="cerrar"
+            sx={{
+              color: theme.palette.text.secondary,
+              '&:hover': {
+                backgroundColor: theme.palette.action.hover,
+              },
+            }}
+          >
+            <CloseRoundedIcon />
+          </IconButton>
+        )}
+      </DialogTitle>
+      <DialogContent
+        sx={{
+          paddingTop: spacing.lg,
+          paddingBottom: spacing.lg,
+          '&::-webkit-scrollbar': {
+            width: '8px',
+          },
+          '&::-webkit-scrollbar-track': {
+            backgroundColor: 'transparent',
+          },
+          '&::-webkit-scrollbar-thumb': {
+            backgroundColor: theme.palette.divider,
+            borderRadius: '4px',
+            '&:hover': {
+              backgroundColor: theme.palette.action.active,
+            },
+          },
+        }}
+      >
+        {children}
+      </DialogContent>
+    </Dialog>
   );
 }
