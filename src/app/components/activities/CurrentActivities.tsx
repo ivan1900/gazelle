@@ -49,8 +49,10 @@ export default function CurrentActivities(props: Props) {
           spacing={2}
           sx={{
             padding: '20px',
-            alignItems: "center"
-          }}>
+            alignItems: 'center',
+            width: '100%',
+          }}
+        >
           <Typography>Actividades:</Typography>
           <FormControlLabel
             checked={showFinished}
@@ -60,16 +62,17 @@ export default function CurrentActivities(props: Props) {
             onChange={handleOnChangeSwitch}
           />
         </Stack>
-        <Box sx={{ overflow: 'auto', maxHeight: '75vh' }}>
-          <Grid container>
+        <Box sx={{ overflow: 'auto', maxHeight: '75vh', width: '100%' }}>
+          <Grid container spacing={2} sx={{ p: 2, m: 0 }}>
             {activities.map((activity) => (
               <Grid
                 key={activity.id}
-                size={{ xs: 12, sm: 12, md: 12, lg: 6, xl: 4 }}
+                size={{ xs: 12, sm: 6, md: 4, lg: 3 }}
                 sx={{
                   display: 'flex',
-                  justifyContent: 'center'
-                }}>
+                  justifyContent: 'center',
+                }}
+              >
                 <ActivityCard activity={activity} refresh={loadActivities} />
               </Grid>
             ))}
