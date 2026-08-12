@@ -61,11 +61,11 @@ export default function DashboardLayout({
             minHeight: { xs: '56px', md: '64px' },
           }}
         />
-        
+
         {/* Content container with consistent padding */}
         <Box
           sx={{
-            p: { xs: spacing.lg, sm: spacing.xl, md: spacing.xl },
+            p: { xs: spacing.sm, sm: spacing.sm, md: spacing.sm },
             maxWidth: '1400px',
             mx: 'auto',
             width: '100%',

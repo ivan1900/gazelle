@@ -3,7 +3,7 @@ import { ActionTime } from '@/app/server/shared/types/ActivityInfo';
 import { useEffect, useState } from 'react';
 
 export default function useTimeHook(actions: ActionTime[]) {
-  const [totalDuration, setTotalDuration] = useState<string>('');
+  const [totalDuration, setTotalDuration] = useState<string>('00:00 h');
   const [time, setTime] = useState<number>(0);
   const [isRunning, setIsRunning] = useState<boolean>(false);
 

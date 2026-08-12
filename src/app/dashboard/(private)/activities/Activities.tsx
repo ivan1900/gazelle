@@ -2,7 +2,7 @@
 import ActionSummary from '@/app/components/actionSummary/ActionSummary';
 import CurrentActivities from '@/app/components/activities/CurrentActivities';
 import OperationBoard from '@/app/components/activities/OperationBoard';
-import { Paper, Stack, Typography, Grid, Box } from '@mui/material';
+import { Paper, Stack, Typography, Grid } from '@mui/material';
 import { useState } from 'react';
 
 export default function Activity() {
@@ -19,7 +19,7 @@ export default function Activity() {
 
   return (
     <>
-      <Paper sx={{ minHeight: '3%', mt: '-25px', mx: '-26px' }}>
+      <Paper sx={{ minHeight: '3%' }}>
         <Typography sx={{ fontWeight: 400, px: '15px', mt: '12px' }}>
           Actividad
         </Typography>

@@ -120,6 +120,7 @@ export default function ActivityCard(props: Props) {
           margin: '10px',
           width: '100%',
           maxWidth: '320px',
+          minWidth: '280px',
           minHeight: '100%',
         }}
       >
@@ -139,7 +140,8 @@ export default function ActivityCard(props: Props) {
             direction={'row'}
             sx={{
               display: 'flex',
-              alignItems: 'center',
+              // alignItems: 'center',
+              minHeight: 80,
             }}
           >
             <Tooltip title={activity.name}>
@@ -161,6 +163,7 @@ export default function ActivityCard(props: Props) {
             sx={{
               display: 'flex',
               justifyContent: 'flex-end',
+              alignItems: 'flex-start',
             }}
           >
             <Tooltip title="Editar">
@@ -305,21 +308,21 @@ export default function ActivityCard(props: Props) {
             )}
           </Grid>
 
-          <Grid size={6}>
+          <Grid size={12} sx={{ pt: 2 }}>
             <Typography
               sx={{
                 color: 'text.secondary',
-                fontSize: '8px',
+                fontSize: '10px',
               }}
             >
               Creada: {activity.createdAt?.toLocaleString()}
             </Typography>
           </Grid>
-          <Grid size={6}>
+          <Grid size={12}>
             <Typography
               sx={{
                 color: 'text.secondary',
-                fontSize: '8px',
+                fontSize: '10px',
               }}
             >
               Actualizada: {activity.updatedAt?.toLocaleString()}

@@ -67,7 +67,7 @@ export default function CurrentActivities(props: Props) {
             {activities.map((activity) => (
               <Grid
                 key={activity.id}
-                size={{ xs: 12, sm: 6, md: 4, lg: 3 }}
+                size={{ md: 4 }}
                 sx={{
                   display: 'flex',
                   justifyContent: 'center',
